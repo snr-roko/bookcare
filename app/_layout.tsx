@@ -10,7 +10,6 @@ import { SplashScreen } from "expo-router"
 import { ActivityIndicator } from "react-native"
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { useColorScheme } from "nativewind"
-import {Appearance} from "react-native"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -37,8 +36,7 @@ const RootLayout = () => {
             const savedTheme = await loadMode()
             if (savedTheme) setColorScheme(savedTheme)
             else {
-                await setMode("system")
-                setColorScheme("system")
+                setMode("system")
         }
         }
         initializeTheme()

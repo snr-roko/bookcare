@@ -5,9 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 export const useThemeStore = create<ThemeType>((set, get) => (
     {
         mode: "system",
-        setMode: async (mode) => {
-            await AsyncStorage.setItem("themeMode", mode)
+        setMode: (mode) => {
             set({mode})
+            AsyncStorage.setItem("themeMode", mode)
         },
         loadMode: async () => {
             const mode = await AsyncStorage.getItem("themeMode")

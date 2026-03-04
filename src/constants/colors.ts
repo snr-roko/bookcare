@@ -24,27 +24,27 @@ export const colors = {
 
 
 /*
-  bookcare-primaryMain buttons, active states, logo, key headings
+  bookcare-primary Main buttons, active states, logo, key headings
 
-  bookcare-accentPrice tags, badges, highlights, CTAs, icons
+  bookcare-accent Price tags, badges, highlights, CTAs, icons
 
-  bookcare-creamScreen backgrounds (light mode)
+  bookcare-cream Screen backgrounds (light mode)
 
-  bookcare-surfaceCard backgrounds, input backgrounds, modals
+  bookcare-surface Card backgrounds, input backgrounds, modals
 
-  bookcare-midDividers, borders, subtle separators
+  bookcare-mid Dividers, borders, subtle separators
 
-  bookcare-textDarkAll body text, headings (light mode)
+  bookcare-textDark All body text, headings (light mode)
 
-  bookcare-textMutedCaptions, metadata, author names, placeholders
+  bookcare-textMuted Captions, metadata, author names, placeholders
 
-  bookcare-successOrder confirmed, added to cart feedback
+  bookcare-success Order confirmed, added to cart feedback
 
-  bookcare-errorForm errors, failed states
+  bookcare-error Form errors, failed states
 
-  bookcare-darkBgScreen backgrounds (dark mode)
+  bookcare-darkBg Screen backgrounds (dark mode)
 
-  bookcare-darkSurfaceCard backgrounds (dark mode)
+  bookcare-darkSurface Card backgrounds (dark mode)
   
-  bookcare-darkTextAll text (dark mode)
+  bookcare-darkText All text (dark mode)
 */

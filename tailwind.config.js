@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : 'class',
+  darkMode: 'class',
   content: [
     './app/**/*.{html,js,jsx,ts,tsx,mdx}',
     './components/**/*.{html,js,jsx,ts,tsx,mdx}',
@@ -19,6 +19,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        bookcare: {
+        primary:     "#5C3D2E", // Main buttons, active states, logo, key headings
+        accent:      "#C8873A", // Price tags, badges, highlights, CTAs, icons
+        cream:       "#FAF3E0", // Screen backgrounds (light mode)
+        surface:     "#FFFFFF", // Card backgrounds, input backgrounds, modals
+        mid:         "#E8D5B7", // Dividers, borders, subtle separators
+        textDark:    "#2C1810", // All body text, headings (light mode)
+        textMuted:   "#8B6F5E", // Captions, metadata, author names, placeholders
+        success:     "#4A7C59", // bookcare-success Order confirmed, added to cart feedback
+        error:       "#C0392B", // Form errors, failed states
+        darkBg:      "#1A0F0A", // bookcare-darkBg Screen backgrounds (dark mode)
+        darkSurface: "#2C1810", // bookcare-darkSurface Card backgrounds (dark mode)
+        darkText:    "#FAF3E0", // bookcare-darkText All text (dark mode)
+      },
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
           50: 'rgb(var(--color-primary-50)/<alpha-value>)',
@@ -201,20 +215,6 @@ module.exports = {
         'soft-3': '0px 0px 30px rgba(38, 38, 38, 0.1)',
         'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)',
       },
-      bookcare: {
-        primary:     "#5C3D2E",
-        accent:      "#C8873A",
-        cream:       "#FAF3E0",
-        surface:     "#FFFFFF",
-        mid:         "#E8D5B7",
-        textDark:    "#2C1810",
-        textMuted:   "#8B6F5E",
-        success:     "#4A7C59",
-        error:       "#C0392B",
-        darkBg:      "#1A0F0A",
-        darkSurface: "#2C1810",
-        darkText:    "#FAF3E0",
-      }
     },
   },
 };

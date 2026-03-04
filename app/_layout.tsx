@@ -9,7 +9,7 @@ import { useEffect } from "react"
 import { SplashScreen } from "expo-router"
 import { ActivityIndicator } from "react-native"
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import { useColorScheme } from "nativewind"
+import { colorScheme, useColorScheme } from "nativewind"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -23,7 +23,9 @@ const RootLayout = () => {
     ))
 
     const mode = useThemeStore((state) => state.mode)
-    const {loadMode, setMode} = useThemeStore((state) => ({loadMode: state.loadMode, setMode: state.setMode}))
+    const { loadMode, setMode } = useThemeStore(
+    useShallow(state => ({ loadMode: state.loadMode, setMode: state.setMode }))
+    )
 
     const {setColorScheme} = useColorScheme()
 
@@ -34,13 +36,10 @@ const RootLayout = () => {
     useEffect(() => {
         const initializeTheme = async () => {
             const savedTheme = await loadMode()
-            if (savedTheme) setColorScheme(savedTheme)
-            else {
-                setMode("system")
+            setMode(savedTheme ?? "system")
         }
-        }
-        initializeTheme()
-    }, [])
+            initializeTheme()
+        }, [])
 
     useEffect(() => {
         setColorScheme(mode)

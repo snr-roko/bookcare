@@ -18,21 +18,22 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        bookcare: {
-        primary:     "#5C3D2E", // Main buttons, active states, logo, key headings
-        accent:      "#C8873A", // Price tags, badges, highlights, CTAs, icons
-        cream:       "#FAF3E0", // Screen backgrounds (light mode)
-        surface:     "#FFFFFF", // Card backgrounds, input backgrounds, modals
-        mid:         "#E8D5B7", // Dividers, borders, subtle separators
-        textDark:    "#2C1810", // All body text, headings (light mode)
-        textMuted:   "#8B6F5E", // Captions, metadata, author names, placeholders
-        success:     "#4A7C59", // bookcare-success Order confirmed, added to cart feedback
-        error:       "#C0392B", // Form errors, failed states
-        darkBg:      "#1A0F0A", // bookcare-darkBg Screen backgrounds (dark mode)
-        darkSurface: "#2C1810", // bookcare-darkSurface Card backgrounds (dark mode)
-        darkText:    "#FAF3E0", // bookcare-darkText All text (dark mode)
-      },
+      colors: 
+        {
+          "bookcare":{
+            "cream":       "#FAF3E0", // Screen backgrounds (light mode) → bg-bookcare-cream dark:bg-bookcare-darkBg
+            "darkBg":      "#1A0F0A", // Screen backgrounds (dark mode)  → bg-bookcare-cream dark:bg-bookcare-darkBg
+            "surface":     "#FFFFFF", // Cards, inputs, modals (light)   → bg-bookcare-surface dark:bg-bookcare-darkSurface
+            "darkSurface": "#2C1810", // Cards, inputs, modals (dark)    → bg-bookcare-surface dark:bg-bookcare-darkSurface
+            "textDark":    "#2C1810", // All main text (light mode)      → text-bookcare-textDark dark:text-bookcare-darkText
+            "darkText":    "#FAF3E0", // All main text (dark mode)       → text-bookcare-textDark dark:text-bookcare-darkText
+            "textMuted":   "#8B6F5E", // Captions, authors, placeholders → text-bookcare-textMuted (same both modes)
+            "primary":     "#5C3D2E", // Buttons, active states, logo    → bg-bookcare-primary (same both modes)
+            "accent":      "#C8873A", // Prices, badges, highlights      → text-bookcare-accent (same both modes)
+            "mid":         "#E8D5B7", // Borders, dividers, separators   → border-bookcare-mid (same both modes)
+            "success":     "#4A7C59", // Order confirmed, cart added     → text-bookcare-success (same both modes)
+            "error":       "#C0392B"  // Form errors, failed states      → text-bookcare-error (same both modes)
+          },
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
           50: 'rgb(var(--color-primary-50)/<alpha-value>)',

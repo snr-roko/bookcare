@@ -14,6 +14,7 @@ const LoginScreen = () => {
 
     const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [errorLoggingIn, setErrorLoggingIn] = useState<string | null>(null)
 
     const {control, handleSubmit, reset} = useForm<LoginFormType>({
         defaultValues: {
@@ -29,6 +30,13 @@ const LoginScreen = () => {
             setIsLoggingIn(true)
             const response = await supabase.auth.signInWithPassword({email, password})
             console.log(response)
+            const {data: {session}} = response
+            if (!session) {
+                setErrorLoggingIn("Username or Password is incorrect")
+                setTimeout(() => {
+                    setErrorLoggingIn(null)
+                }, 3000)
+            }
         } catch(error) {
             console.log(error)
         } finally {
@@ -44,6 +52,12 @@ const LoginScreen = () => {
                     <Text className="text-bookcare-textMuted text-2xl ">Welcome Back</Text>
                     <Text className="text-bookcare-primary text-3xl">Login to Bookcare</Text>
                 </View>
+                {errorLoggingIn && (
+                    <View className="flex-row gap-2 items-center p-3 bg-bookcare-error">
+                        <Ionicons name="alert-circle-sharp" color={colors.darkText} />
+                        <Text className="text-bookcare-darkText">{errorLoggingIn}</Text>
+                    </View>
+                )}
                 <Controller
                     name="email"
                     control={control}

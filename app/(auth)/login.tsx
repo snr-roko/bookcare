@@ -54,7 +54,7 @@ const LoginScreen = () => {
                 </View>
                 {errorLoggingIn && (
                     <View className="flex-row gap-2 items-center p-3 bg-bookcare-error">
-                        <Ionicons name="alert-circle-sharp" color={colors.darkText} />
+                        <Ionicons name="warning-outline" color={colors.darkText} />
                         <Text className="text-bookcare-darkText">{errorLoggingIn}</Text>
                     </View>
                 )}

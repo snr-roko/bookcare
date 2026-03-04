@@ -201,6 +201,20 @@ module.exports = {
         'soft-3': '0px 0px 30px rgba(38, 38, 38, 0.1)',
         'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)',
       },
+      bookcare: {
+        primary:     "#5C3D2E",
+        accent:      "#C8873A",
+        cream:       "#FAF3E0",
+        surface:     "#FFFFFF",
+        mid:         "#E8D5B7",
+        textDark:    "#2C1810",
+        textMuted:   "#8B6F5E",
+        success:     "#4A7C59",
+        error:       "#C0392B",
+        darkBg:      "#1A0F0A",
+        darkSurface: "#2C1810",
+        darkText:    "#FAF3E0",
+      }
     },
   },
 };

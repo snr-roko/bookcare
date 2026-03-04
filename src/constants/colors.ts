@@ -21,3 +21,30 @@ export const colors = {
   darkSurface:"#2C1810",
   darkText:   "#FAF3E0",
 };
+
+
+/*
+  bookcare-primaryMain buttons, active states, logo, key headings
+
+  bookcare-accentPrice tags, badges, highlights, CTAs, icons
+
+  bookcare-creamScreen backgrounds (light mode)
+
+  bookcare-surfaceCard backgrounds, input backgrounds, modals
+
+  bookcare-midDividers, borders, subtle separators
+
+  bookcare-textDarkAll body text, headings (light mode)
+
+  bookcare-textMutedCaptions, metadata, author names, placeholders
+
+  bookcare-successOrder confirmed, added to cart feedback
+
+  bookcare-errorForm errors, failed states
+
+  bookcare-darkBgScreen backgrounds (dark mode)
+
+  bookcare-darkSurfaceCard backgrounds (dark mode)
+  
+  bookcare-darkTextAll text (dark mode)
+*/

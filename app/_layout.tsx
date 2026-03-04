@@ -1,0 +1,56 @@
+import "../global.css"
+import {QueryClientProvider} from "@tanstack/react-query"
+import { queryClient } from "@/src/lib/queryClient"
+import {Stack} from "expo-router"
+import {SafeAreaProvider} from "react-native-safe-area-context"
+import { useAuthStore } from "@/src/store"
+import {useShallow} from "zustand/shallow"
+import { useEffect } from "react"
+import { SplashScreen } from "expo-router"
+import { ActivityIndicator } from "react-native"
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
+
+SplashScreen.preventAutoHideAsync()
+
+const RootLayout = () => {
+    const {loadAuth, isLoggedIn, isLoading} = useAuthStore(useShallow(
+        (state) => ({
+            loadAuth: state.loadAuth,
+            isLoggedIn: state.session !== null,
+            isLoading: state.isLoading
+        })
+    ))
+
+    useEffect(() => {
+        loadAuth().finally(() => SplashScreen.hideAsync())
+    }, [])
+
+    if (isLoading) return (
+        <ActivityIndicator />
+    )
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <GluestackUIProvider mode="dark">
+                <SafeAreaProvider>
+                    <Stack screenOptions={{
+                        headerShown: false
+                    }}>
+                        <Stack.Protected guard={isLoggedIn}>
+                            <Stack.Screen
+                                name="(tabs)"
+                            />
+                        </Stack.Protected>
+                        <Stack.Protected guard={!isLoggedIn}>
+                            <Stack.Screen
+                                name="(auth)"
+                            />
+                        </Stack.Protected>
+                    </Stack>
+                </SafeAreaProvider>
+            </GluestackUIProvider>
+        </QueryClientProvider>   
+    )
+}
+
+export default RootLayout

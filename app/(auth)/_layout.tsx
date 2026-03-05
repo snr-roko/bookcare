@@ -8,6 +8,9 @@ const AuthRootLayout = () => {
             <Stack.Screen
                 name="login"
             />
+            <Stack.Screen
+                name="signup"
+            />
         </Stack>
     )
 }

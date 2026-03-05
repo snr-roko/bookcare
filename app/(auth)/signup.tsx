@@ -81,7 +81,7 @@ const SignUpScreen = () => {
                                             value={field.value}
                                             placeholder="John Doe"
                                             placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText"
+                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
                                         />
                     
                                     <Text className="text-bookcare-textMuted">Please enter your real full name</Text>
@@ -110,7 +110,7 @@ const SignUpScreen = () => {
                                             value={field.value}
                                             placeholder="john.doe@bookcare.com"
                                             placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText"
+                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
                                         />
                     
                                     <Text className="text-bookcare-textMuted">A valid email should have @ and .com/.org</Text>
@@ -139,7 +139,7 @@ const SignUpScreen = () => {
                                             value={field.value}
                                             placeholder="********************"
                                             placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText"
+                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
                                         />
                     
                                     <Text className="text-bookcare-textMuted">Password should be atleast 8 characters</Text>
@@ -168,7 +168,7 @@ const SignUpScreen = () => {
                                             value={field.value}
                                             placeholder="********************"
                                             placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText"
+                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
                                         />
                     
                                     <Text className="text-bookcare-textMuted">Passwords should match</Text>

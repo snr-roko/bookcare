@@ -9,8 +9,11 @@ import { colors } from "@/src/constants"
 import { Button, ButtonText, ButtonSpinner } from "@/components/ui/button"
 import { supabase } from "@/src/lib/supabase"
 import { useState } from "react"
+import { useRouter } from "expo-router"
 
 const LoginScreen = () => {
+
+    const router = useRouter()
 
     const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -28,17 +31,20 @@ const LoginScreen = () => {
     const logintoSupabase = async (email: string, password: string) => {
         try{
             setIsLoggingIn(true)
-            const response = await supabase.auth.signInWithPassword({email, password})
-            console.log(response)
-            const {data: {session}} = response
+            const {data: {session}, error} = await supabase.auth.signInWithPassword({email, password})
             if (!session) {
-                setErrorLoggingIn("Username or Password is incorrect")
+                console.log("error: ", error?.message)
+                setErrorLoggingIn(error?.message ?? "Login Failed")
                 setTimeout(() => {
                     setErrorLoggingIn(null)
                 }, 3000)
             }
         } catch(error) {
-            console.log(error)
+            console.log("Error contacting Auth" , error)
+            setErrorLoggingIn("Something went wrong, Try Again")
+                setTimeout(() => {
+                    setErrorLoggingIn(null)
+                }, 3000)
         } finally {
             setIsLoggingIn(false)
             reset()
@@ -120,7 +126,7 @@ const LoginScreen = () => {
                 <Button className="bg-bookcare-primary" size="xl" onPress={handleSubmit(({email, password}) => {logintoSupabase(email, password)})}>
                     {isLoggingIn ? <ButtonSpinner color={colors.darkText} /> : <ButtonText size="xl" className="text-bookcare-darkText">Login</ButtonText>}
                 </Button>
-                <Button variant="link"><ButtonText className="text-bookcare-textMuted">Don't have an account? Register</ButtonText></Button>
+                <Button onPress={() => router.push("/signup")} variant="link"><ButtonText className="text-bookcare-textMuted">Don't have an account? Register</ButtonText></Button>
             </KeyboardAvoidingView>
         </SafeAreaView>
     )

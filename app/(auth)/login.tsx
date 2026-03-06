@@ -34,10 +34,33 @@ const LoginScreen = () => {
             const {data: {session}, error} = await supabase.auth.signInWithPassword({email, password})
             if (!session) {
                 console.log("error: ", error?.message)
-                setErrorLoggingIn(error?.message ?? "Login Failed")
-                setTimeout(() => {
-                    setErrorLoggingIn(null)
-                }, 3000)
+                if (error?.code !== "email_not_confirmed") {
+                    setErrorLoggingIn(error?.message ?? "Login Failed")
+                    setTimeout(() => {
+                        setErrorLoggingIn(null)
+                    }, 3000)
+                } else {
+                    const {error} = await supabase.auth.resend({
+                                    email,
+                                    type: "signup"
+                            })
+                
+                            if (error) {
+                                        console.log("error: ", error?.message)
+                                        setErrorLoggingIn(error?.message ?? "Verification failed")
+                                        setTimeout(() => {
+                                            setErrorLoggingIn(null)
+                                        }, 3000)
+                                        return
+                                    }
+                            
+                            router.push({
+                                pathname: "confirmsignup",
+                                params: {
+                                    email
+                                }
+                            })
+                }
             }
         } catch(error) {
             console.log("Error contacting Auth" , error)

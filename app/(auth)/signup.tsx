@@ -32,21 +32,27 @@ const SignUpScreen = () => {
     const signUpUserToSupabase = async (signUpData: SignUpFormType) => {
         setIsSigningUp(true)
         try{
-            const {data: {session}, error} = await supabase.auth.signUp(
+            const {data, error} = await supabase.auth.signUp(
             {email: signUpData.email, password: signUpData.password, options: {
                 data: {
                     "full_name": signUpData.fullName
                 }
             }}
         )
-        if (!session) {
-                console.log("error: ", error?.message)
-                setErrorSigningUp(error?.message ?? "SignUp Failed")
-                setTimeout(() => {
-                    setErrorSigningUp(null)
-                }, 3000)
-                return
-            }
+            console.log("data: ", data)
+            if (error) {
+                    console.log("error: ", error?.message)
+                    setErrorSigningUp(error?.message ?? "SignUp Failed")
+                    setTimeout(() => {
+                        setErrorSigningUp(null)
+                    }, 3000)
+                    return
+                }
+            
+            router.push({
+                pathname: "/confirmsignup",
+                params: {"email": signUpData.email}
+            })
     } catch(error) {console.log(error)}
     finally {
         setIsSigningUp(false)

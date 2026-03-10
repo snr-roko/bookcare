@@ -5,25 +5,20 @@
     "version": "1.0.0",
     "scheme": "bookcare",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/bookcare-app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/bookcare-app-icon.png",
+        "backgroundColor": "#FFFFFF"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.snrroko.bookcare"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -31,7 +26,27 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
-    ]
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/bookcare-splash-light.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FAF3E0",
+          "dark": {
+            "image": "./assets/bookcare-splash-dark.png",
+            "backgroundColor": "#8d4a1a"
+          }
+        }
+      ],
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3bfce9b5-f387-428d-ac3d-42fbe57702d9"
+      }
+    }
   }
 }

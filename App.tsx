@@ -1,6 +1,5 @@
 import "./global.css"
 import { Text} from "react-native";
-import { Box } from "./components/ui/box";
  
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';

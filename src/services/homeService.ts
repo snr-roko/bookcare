@@ -13,8 +13,7 @@ export const fetchPopularBooks = async () => {
         throw new Error("Error fetching Popular books")
     }
 
-    const payload = await response.json()
-    
+    const payload = await response.json()    
     return retrieveWorksFromPayload(payload.works)
 }
 

@@ -20,6 +20,9 @@ export const colors = {
   darkBg:     "#1A0F0A",
   darkSurface:"#2C1810",
   darkText:   "#FAF3E0",
+
+  // blur hash for book
+  bookCardBlurHash: "L1L_L6r?03$%^$jtWVj[03oLxsWV"
 };
 
 

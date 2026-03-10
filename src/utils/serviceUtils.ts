@@ -13,18 +13,17 @@ export const getAuthorCoverByOLID = (authorOlid: string, size: CoverSizeType) =>
 }
 
 export const retrieveWorksFromPayload = (works: any[]) => {
-    const data: OpenLibraryResponseBook[] = works.map((work) => (
-        {
+    const data: OpenLibraryResponseBook[] = works.map((work) => {
+
+        return {
             authorKey: work.author_key[0],
             authorName: work.author_name[0],
-            coverId: work.docs[0].cover_i,
-            isbn: work.docs[0].availability.isbn,
-            subtitle: work.docs[0].subtitle ?? null,
-            title: work.docs[0].title,
+            coverId: work.cover_i,
+            title: work.title,
             yearFirstPublished: work.first_publish_year,
-            workKey: work.docs[0].key
+            workKey: work.key
         }
-    ))
+})
     
     return data
 }

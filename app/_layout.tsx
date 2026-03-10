@@ -6,12 +6,10 @@ import {SafeAreaProvider} from "react-native-safe-area-context"
 import { useAuthStore, useThemeStore } from "@/src/store"
 import {useShallow} from "zustand/shallow"
 import { useEffect } from "react"
-import { SplashScreen } from "expo-router"
 import { ActivityIndicator } from "react-native"
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { colorScheme, useColorScheme } from "nativewind"
-
-SplashScreen.preventAutoHideAsync()
+import * as SplashScreen from "expo-splash-screen"
 
 const RootLayout = () => {
     const {loadAuth, isLoggedIn, isLoading} = useAuthStore(useShallow(

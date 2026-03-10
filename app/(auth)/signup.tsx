@@ -64,7 +64,7 @@ const SignUpScreen = () => {
         <SafeAreaView className="flex-1 py-20 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-5" >
                     <View>
-                        <Text className="text-bookcare-textMuted text-xl ">Your Story starts here</Text>
+                        <Text className="text-bookcare-textMuted text-xl ">Your Story begins here</Text>
                         <Text className="text-bookcare-primary text-4xl">Join Bookcare</Text>
                     </View>
                     {errorSigningUp && (

@@ -1,7 +1,7 @@
 import { Pressable, View, Text } from "react-native"
 import {Image} from "expo-image"
 import { OpenLibraryResponseBook } from "@/src/types"
-import {getBookCoverUrl } from "@/src/utils"
+import {derivePrice, deriveRating, getBookCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { colors } from "@/src/constants"
 import { useColorScheme } from "nativewind"
@@ -10,6 +10,8 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
     const {colorScheme} = useColorScheme()
 
     const imageUrl = getBookCoverUrl(work.coverId, "L")
+    const bookPrice = derivePrice(work.coverId, work.yearFirstPublished)
+    const bookRating = deriveRating(work.workKey, work.editionCount)
 
     return (
         <Pressable 
@@ -26,14 +28,14 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
                 }}
             >
   
-            <View style={{ height: 190, width: 150, overflow: 'hidden', borderRadius: 12 }}>
+            <View style={{ height: 185, width: 150, overflow: 'hidden', borderRadius: 12 }}>
                 {work.coverId === -1 ? (
-                <View style={{ height: 190, width: 150, backgroundColor: '#E8D5B7', alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: 185, width: 150, backgroundColor: '#E8D5B7', alignItems: 'center', justifyContent: 'center' }}>
                     <Ionicons name="book" size={48} color="#5C3D2E" />
                 </View>
                 ) : (
                 <Image
-                    style={{ height: 190, width: 150 }}
+                    style={{ height: 185, width: 150 }}
                     source={{ uri: imageUrl }}
                     placeholder={colors.bookCardBlurHash}
                     transition={300}
@@ -42,7 +44,7 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
                 )}
             </View>
 
-            <View style={{ height: 80, paddingHorizontal: 4, paddingTop: 6, justifyContent: "space-between"}}>
+            <View style={{ height: 85, paddingHorizontal: 4, paddingVertical: 6, justifyContent: "space-between"}}>
                 <View>
                     <Text numberOfLines={2} className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
                     {work.title}
@@ -52,9 +54,22 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
                     <Text numberOfLines={1} className="text-bookcare-textMuted text-xs">
                     {work.authorName}
                     </Text>
-                    <View className="flex-row justify-between mt-1">
-                    <Text className="text-bookcare-accent text-xs">★★★★☆</Text>
-                    <Text className="font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS 59</Text>
+                    <View className="flex-row justify-between mt-1 items-center">
+                    {[1, 2, 3, 4, 5].map(star => (
+                        <Ionicons
+                            key={star}
+                            name={
+                            star <= Math.floor(bookRating)
+                                ? 'star'
+                                : star - 0.5 <= bookRating
+                                ? 'star-half'
+                                : 'star-outline'
+                            }
+                            size={10}
+                            color={colors.accent}
+                        />
+                        ))}
+                    <Text className="font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {bookPrice}</Text>
                 </View>
                 </View>
             </View>

@@ -1,6 +1,6 @@
 import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import { colors } from "@/src/constants"
-import { useTrendingBooks } from "@/src/hooks"
+import { usePopularBooks, useTrendingNowBooks } from "@/src/hooks"
 import { supabase } from "@/src/lib/supabase"
 import { Ionicons } from "@expo/vector-icons"
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native"
@@ -13,9 +13,11 @@ const DiscoverScreen = () => {
         await supabase.auth.signOut()
     }
 
-    const {data, isLoading} = useTrendingBooks()
+    const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
+    const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
+
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row justify-between">
                 <Text className="text-bookcare-primary text-3xl" >Discover</Text>
                 <Button size="xs" className="bg-transparent">
@@ -30,21 +32,41 @@ const DiscoverScreen = () => {
                     className="p-4 border border-bookcare-mid rounded-lg h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"         
                 />
             </View>
-            <View className="gap-3">
-                <Text className="text-bookcare-primary font-semibold text-xl" >Popular</Text>
-                {isLoading ? 
-                <ButtonSpinner /> : 
-                <ScrollView
-                    contentContainerClassName="gap-5"
-                    horizontal
-                    showsVerticalScrollIndicator={false} 
-                    showsHorizontalScrollIndicator={false}
-                    >
-                    {data?.map((work: OpenLibraryResponseBook) => (
-                        <BookCard key={work.workKey} work={work}/>
-                    ))}
-                </ScrollView>}
-            </View>
+            <ScrollView
+                contentContainerClassName="pb-5 gap-5"
+                showsVerticalScrollIndicator={false}
+            >
+                <View className="gap-3">
+                    <Text className="text-bookcare-primary font-semibold text-xl" >Popular</Text>
+                    {isPopularBooksLoading ?
+                    <ButtonSpinner /> :
+                    <ScrollView
+                        contentContainerClassName="gap-5"
+                        horizontal
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        >
+                        {popularBooks?.map((work: OpenLibraryResponseBook) => (
+                            <BookCard key={work.workKey} work={work}/>
+                        ))}
+                    </ScrollView>}
+                </View>
+                <View className="gap-3">
+                    <Text className="text-bookcare-primary font-semibold text-xl" >Trending Now</Text>
+                    {isTrendingNowBooksLoading ?
+                    <ButtonSpinner /> :
+                    <ScrollView
+                        contentContainerClassName="gap-5"
+                        horizontal
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        >
+                        {trendingNowBooks?.map((work: OpenLibraryResponseBook) => (
+                            <BookCard key={work.workKey} work={work}/>
+                        ))}
+                    </ScrollView>}
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

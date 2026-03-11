@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchPopularBooks, fetchTrendingNowBooks, searchForBook } from "../services"
 
-export const useTrendingBooks = () => {
+export const usePopularBooks = () => {
     return useQuery({
         queryKey: ["trending"],
         queryFn: fetchPopularBooks,
@@ -9,7 +9,7 @@ export const useTrendingBooks = () => {
     })
 }
 
-export const useNewBooks = () => {
+export const useTrendingNowBooks = () => {
     return useQuery({
         queryKey: ["new"],
         queryFn: fetchTrendingNowBooks,

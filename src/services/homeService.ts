@@ -81,11 +81,10 @@ export const searchForBook = async (subject: string): Promise<OpenLibraryRespons
             authorKey: work.author_key[0],
             authorName: work.author_name[0],
             coverId: work.cover_i,
-            isbn: work.isbn ?? null,
-            subtitle: work.subtitle ?? null,
             title: work.title,
             workKey: work.key,
-            yearFirstPublished: work.first_publish_year
+            yearFirstPublished: work.first_publish_year,
+            editionCount: work.edition_count
         }
     ))
     

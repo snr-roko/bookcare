@@ -21,7 +21,8 @@ export const retrieveWorksFromPayload = (works: any[]) => {
             coverId: work.cover_i,
             title: work.title,
             yearFirstPublished: work.first_publish_year,
-            workKey: work.key
+            workKey: work.key,
+            editionCount: work.edition_count
         }
 })
     

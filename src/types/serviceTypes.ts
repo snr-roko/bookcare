@@ -7,4 +7,5 @@ export type OpenLibraryResponseBook = {
     yearFirstPublished: number
     title: string
     workKey: string
+    editionCount: number
 }

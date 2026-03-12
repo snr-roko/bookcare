@@ -5,16 +5,37 @@ import {derivePrice, deriveRating, getBookCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { colors } from "@/src/constants"
 import { useColorScheme } from "nativewind"
+import { useRouter } from "expo-router"
 
 const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
     const {colorScheme} = useColorScheme()
+    const router = useRouter()
 
     const imageUrl = getBookCoverUrl(work.coverId, "L")
     const bookPrice = derivePrice(work.coverId, work.yearFirstPublished)
     const bookRating = deriveRating(work.workKey, work.editionCount)
 
+    const navigateToBookDetailsScreen = () => {
+        router.push({
+            pathname: "/book/[id]",
+            params: {
+                id: work.workKey.replace('/works/', ''),
+                title: work.title,
+                coverId: String(work.coverId),
+                coverUrl: imageUrl,
+                authorName: work.authorName,
+                authorKey: work.authorKey,
+                price: String(bookPrice),
+                rating: String(bookRating),
+                editionCount: String(work.editionCount ?? 1),
+                yearFirstPublished: String(work.yearFirstPublished)
+            }
+        })
+    }
+
     return (
-        <Pressable 
+        <Pressable
+            onPress={navigateToBookDetailsScreen} 
             style={{
                 height: 270,
                 width: 150,

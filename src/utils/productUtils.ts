@@ -8,11 +8,11 @@ export const derivePrice = (coverId?: number, publishYear?: number) => {
 
     let base: number
 
-    if (bookAge <= 2) base = 65
-    else if (bookAge <= 5) base = 50
-    else if (bookAge <= 10) base = 40
-    else if (bookAge <= 20) base = 30
-    else base = 20
+    if (bookAge <= 2) base = 90
+    else if (bookAge <= 5) base = 70
+    else if (bookAge <= 10) base = 60
+    else if (bookAge <= 20) base = 50
+    else base = 40
 
     return base + variation
 }

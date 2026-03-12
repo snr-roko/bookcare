@@ -19,7 +19,7 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
                 height: 270,
                 width: 150,
                 padding: 2,
-                shadowColor: '#5C3D2E',
+                shadowColor: colors.primary,
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.15,
                 shadowRadius: 8,
@@ -30,8 +30,8 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
   
             <View style={{ height: 185, width: 150, overflow: 'hidden', borderRadius: 12 }}>
                 {work.coverId === -1 ? (
-                <View style={{ height: 185, width: 150, backgroundColor: '#E8D5B7', alignItems: 'center', justifyContent: 'center' }}>
-                    <Ionicons name="book" size={48} color="#5C3D2E" />
+                <View style={{ height: 185, width: 150, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
+                    <Ionicons name="book" size={48} color={colors.primary} />
                 </View>
                 ) : (
                 <Image

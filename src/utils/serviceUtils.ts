@@ -1,15 +1,11 @@
-import { CoverSizeType, OpenLibraryResponseBook } from "../types"
+import { AuthorDetailsResponse, BookDetailsResponse, CoverSizeType, OpenLibraryResponseBook } from "../types"
 
 export const getBookCoverUrl = (coverId: number, size: CoverSizeType) => {
     return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`
 }
 
-export const getBookCoverByOLID = (olid: string, size: CoverSizeType) => {
-    return `https://covers.openlibrary.org/b/olid/${olid}-${size}.jpg`
-} 
-
-export const getAuthorCoverByOLID = (authorOlid: string, size: CoverSizeType) => {
-    return `https://covers.openlibrary.org/a/olid/${authorOlid}-${size}.jpg`
+export const getAuthorCoverUrl = (coverId: string, size: CoverSizeType) => {
+    return `https://covers.openlibrary.org/a/id/${coverId}-${size}.jpg`
 }
 
 export const retrieveWorksFromPayload = (works: any[]) => {
@@ -27,6 +23,31 @@ export const retrieveWorksFromPayload = (works: any[]) => {
 })
     
     return data
+}
+
+const getDescription = (description: any): string => {
+  if (typeof description === 'string') return description
+  if (typeof description === 'object' && description?.value) return description.value
+  return 'No description available.'
+}
+
+export const retrieveBookDetailsFromPayload = (work: any): BookDetailsResponse => {
+    
+    const description = getDescription(work.description)
+
+    return {
+        title: work.title,
+        description,
+        subjects: work.subjects
+    }
+}
+
+export const retrieveAuthorDetailsFromPayload = (author: any): AuthorDetailsResponse => {
+    return {
+        name: author.name,
+        coverId: author.photos?.[0],
+        birthDate: author.birth_date
+    }
 }
 
 

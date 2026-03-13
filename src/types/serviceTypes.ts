@@ -9,3 +9,15 @@ export type OpenLibraryResponseBook = {
     workKey: string
     editionCount: number
 }
+
+export type BookDetailsResponse = {
+    title: string
+    description: string
+    subjects: string[]
+}
+
+export type AuthorDetailsResponse = {
+    name: string
+    coverId?: number
+    birthDate?: string
+}

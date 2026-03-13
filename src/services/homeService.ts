@@ -1,10 +1,9 @@
 import { OpenLibraryResponseBook } from "../types"
 import { retrieveWorksFromPayload } from "../utils"
-
-const baseUrl = "https://www.openlibrary.org"
+import { openLibraryBaseUrl } from "../constants"
 
 export const fetchPopularBooks = async () => {
-    const url = `${baseUrl}/trending/daily.json?limit=5`
+    const url = `${openLibraryBaseUrl}/trending/daily.json?limit=5`
     const response = await fetch(url, {
         method: "GET"
     })
@@ -18,7 +17,7 @@ export const fetchPopularBooks = async () => {
 }
 
 export const fetchTrendingNowBooks = async () => {
-    const url = `${baseUrl}/trending/now.json?limit=5`
+    const url = `${openLibraryBaseUrl}/trending/now.json?limit=5`
 const response = await fetch(url, {
         method: "GET"
     })
@@ -33,7 +32,7 @@ const response = await fetch(url, {
 }
 
 export const fetchBooksBySubjectFew = async (subject: string) => {
-    const url = `${baseUrl}/subjects/${subject}.json?limit=5`
+    const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=5`
     const response = await fetch(url, {
         method: "GET"
     })
@@ -48,7 +47,7 @@ export const fetchBooksBySubjectFew = async (subject: string) => {
 }
 
 export const fetchBooksBySubject = async (subject: string) => {
-    const url = `${baseUrl}/subjects/${subject}.json?limit=20`
+    const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=20`
     const response = await fetch(url, {
         method: "GET"
     })
@@ -64,7 +63,7 @@ export const fetchBooksBySubject = async (subject: string) => {
 
 export const searchForBook = async (subject: string): Promise<OpenLibraryResponseBook[]> => {
     const formattedString = subject.replaceAll(" ", "+")
-    const url = `${baseUrl}/search.json?q=${formattedString}&limit=10`
+    const url = `${openLibraryBaseUrl}/search.json?q=${formattedString}&limit=10`
     const response = await fetch(url, {
         method: "GET"
     })

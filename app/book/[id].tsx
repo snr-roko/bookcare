@@ -1,14 +1,19 @@
-import { Button } from "@/components/ui/button"
-import { colors } from "@/src/constants"
+import { Button, ButtonText } from "@/components/ui/button"
+import Skeleton from "@/src/components/common/skeleton"
+import { CHAR_LIMIT, colors } from "@/src/constants"
+import { useAuthorDetails, useBookDetails } from "@/src/hooks"
+import { getAuthorCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
 import { useLocalSearchParams } from "expo-router"
-import { Text, View } from "react-native"
+import { useState } from "react"
+import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const BookDetailsScreen = () => {
+    const [expanded, setExpanded] = useState(false)
 
-    const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished} = useLocalSearchParams<{
+    const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
         coverId: string,
         coverUrl: string, 
@@ -16,11 +21,25 @@ const BookDetailsScreen = () => {
         rating: string,
         price: string,
         editionCount: string,
-        yearFirstPublished: string
+        yearFirstPublished: string,
+        id: string,
+        authorKey: string
     }>()
 
+    
+    const {isLoading: isBookDetailsLoading, data: bookDetails, isError, error} = useBookDetails(id)
+    
+    let isLong = false;
+    if (!isBookDetailsLoading && bookDetails) isLong = bookDetails.description.length > 40
+
+    if (isError) console.log(error)
+    if(!isBookDetailsLoading && !isError) console.log(bookDetails)
+    
+
+    const {isLoading: isAuthorDetailsLoading, data: authorDetails} = useAuthorDetails(authorKey)
+
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row gap-5">
                 <View style={{overflow: 'hidden', borderRadius: 12, elevation: 2 }}>
                     {parseInt(coverId)  === -1 ? (
@@ -71,6 +90,93 @@ const BookDetailsScreen = () => {
                     </View>
                 </View>
             </View>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerClassName="gap-5"
+            >
+                {
+                    isBookDetailsLoading ?
+                    (<View className="gap-3">
+                        <Skeleton height={10} width={250} />
+                        <Skeleton height={10} width={250} />
+                        <Skeleton height={10} width={100} />
+                        <Skeleton height={10} width={100} />
+                        <Skeleton height={10} width={100} />
+                    </View>):
+                    (<View className="gap-5">
+                        <Text
+                            className="text-bookcare-textDark dark:text-bookcare-darkText text-sm leading-6"
+                        >
+                            {expanded ? bookDetails?.description : bookDetails?.description.slice(0, CHAR_LIMIT) + (isLong ? '...' : '')}
+                        </Text>
+                        {isLong && (
+                            <Text
+                                onPress={() => setExpanded(!expanded)}
+                                className="text-bookcare-primary font-semibold mt-1"
+                            >
+                                {expanded ? 'Show less ↑' : 'Read more ↓'}
+                            </Text>
+                        )}
+                    </View>)
+                }
+                <View className="gap-3">
+                    <Text className="text-bookcare-primary font-bold">About The Author</Text>
+                    {
+                        isAuthorDetailsLoading ?
+                            (
+                                <View className="flex-row gap-5">
+                                    <Skeleton height={100} width={100} />
+                                    <View className="gap-5">
+                                        <View className="gap-3">
+                                            <Skeleton height={10} width={140} />
+                                            <Skeleton height={10} width={140} />
+                                        </View>
+                                        <Skeleton height={10} width={140} />
+                                    </View>
+                                </View>
+                            ) : (
+                                <View className="flex-row gap-5">
+                                    <View style={{overflow: 'hidden', borderRadius: 8, elevation: 2 }}>
+                                        {parseInt(coverId)  === -1 ? (
+                                        <View style={{ height: 150, width: 100, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Ionicons name="person" size={48} color={colors.primary} />
+                                        </View>
+                                    ) : (
+                                        <Image
+                                            style={{ height: 100, width: 100}}
+                                            source={{ uri: getAuthorCoverUrl(String(authorDetails?.coverId), "L") }}
+                                            placeholder={colors.bookCardBlurHash}
+                                            transition={300}
+                                            contentFit="cover"
+                                        />
+                                    )}
+                                    </View>
+                                    <View className="gap-5">
+                                        <View>
+                                            <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">{authorDetails?.name}</Text>
+                                            {
+                                                authorDetails?.birthDate ?
+                                                    <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">{authorDetails?.birthDate}</Text> :
+                                                    null
+                                            }
+                                        </View>
+                                        <Button className="bg-bookcare-primary">
+                                            <ButtonText className="bg-bookcare-darkText">See Other Works</ButtonText>
+                                        </Button>
+                                    </View>
+                                </View>)      
+                    }
+                </View>
+                <View className="gap-3">
+                    <Text className="text-bookcare-primary text-lg font-bold">Related Books</Text>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        
+                    </ScrollView>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

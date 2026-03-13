@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchPopularBooks, fetchTrendingNowBooks, searchForBook } from "../services"
-import { fetchBookAuthorDetails, fetchBookDetails } from "../services/bookService"
+import { fetchBookAuthorDetails, fetchBookDetails, fetchBooksBySubjectFew } from "../services/bookService"
 
 export const usePopularBooks = () => {
     return useQuery({
@@ -40,6 +40,15 @@ export const useAuthorDetails = (key: string) => {
         queryKey: ["author", key],
         queryFn: () => fetchBookAuthorDetails(key),
         staleTime: 1000 * 60 * 60
+    })
+}
+
+export const useSearchBooksBySubjectFew = (subject: string) => {
+    return useQuery({
+        queryKey: ["search", "subject", subject, "few"],
+        queryFn: () => fetchBooksBySubjectFew(subject),
+        staleTime: 1000 * 60 * 60,
+        enabled: !!subject
     })
 }
 

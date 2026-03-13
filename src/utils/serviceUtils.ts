@@ -25,6 +25,23 @@ export const retrieveWorksFromPayload = (works: any[]) => {
     return data
 }
 
+export const retrieveWorksFromPayloadForSubjects = (works: any[]) => {
+    const data: OpenLibraryResponseBook[] = works.map((work) => {
+
+        return {
+            authorKey: work.authors[0].key,
+            authorName: work.authors[0].name,
+            coverId: work.cover_id,
+            title: work.title,
+            yearFirstPublished: work.first_publish_year,
+            workKey: work.key,
+            editionCount: work.edition_count
+        }
+})
+    
+    return data
+}
+
 const getDescription = (description: any): string => {
   if (typeof description === 'string') return description
   if (typeof description === 'object' && description?.value) return description.value

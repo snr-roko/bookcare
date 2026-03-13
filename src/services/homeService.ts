@@ -31,21 +31,6 @@ const response = await fetch(url, {
     return retrieveWorksFromPayload(payload.works)
 }
 
-export const fetchBooksBySubjectFew = async (subject: string) => {
-    const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=5`
-    const response = await fetch(url, {
-        method: "GET"
-    })
-
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
-
-    const payload = await response.json()
-    
-    return retrieveWorksFromPayload(payload.works)
-}
-
 export const fetchBooksBySubject = async (subject: string) => {
     const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=20`
     const response = await fetch(url, {

@@ -1,7 +1,10 @@
 import { Button, ButtonText } from "@/components/ui/button"
+import BookCard from "@/src/components/books/BookCard"
+import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
 import Skeleton from "@/src/components/common/skeleton"
 import { CHAR_LIMIT, colors } from "@/src/constants"
-import { useAuthorDetails, useBookDetails } from "@/src/hooks"
+import { useAuthorDetails, useBookDetails, useSearchBooksBySubjectFew } from "@/src/hooks"
+import { OpenLibraryResponseBook } from "@/src/types"
 import { getAuthorCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
@@ -12,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 
 const BookDetailsScreen = () => {
     const [expanded, setExpanded] = useState(false)
+    const [quantity, setQuantity] = useState<number>(0)
 
     const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
@@ -27,20 +31,19 @@ const BookDetailsScreen = () => {
     }>()
 
     
-    const {isLoading: isBookDetailsLoading, data: bookDetails, isError, error} = useBookDetails(id)
+    const {isLoading: isBookDetailsLoading, data: bookDetails} = useBookDetails(id)
     
     let isLong = false;
     if (!isBookDetailsLoading && bookDetails) isLong = bookDetails.description.length > 40
-
-    if (isError) console.log(error)
-    if(!isBookDetailsLoading && !isError) console.log(bookDetails)
     
 
     const {isLoading: isAuthorDetailsLoading, data: authorDetails} = useAuthorDetails(authorKey)
 
+    const {isLoading: isRelatedBooksLoading, data: relatedBooks} = useSearchBooksBySubjectFew(bookDetails?.subjects?.[0] ?? "")
+
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <View className="flex-row gap-5">
+        <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
+            <View className="flex-row gap-5 px-5 pb-5">
                 <View style={{overflow: 'hidden', borderRadius: 12, elevation: 2 }}>
                     {parseInt(coverId)  === -1 ? (
                     <View style={{ height: 180, width: 140, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
@@ -92,8 +95,8 @@ const BookDetailsScreen = () => {
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerClassName="gap-5"
-            >
+                contentContainerClassName="gap-5 pb-5 px-5"
+                >
                 {
                     isBookDetailsLoading ?
                     (<View className="gap-3">
@@ -168,15 +171,57 @@ const BookDetailsScreen = () => {
                     }
                 </View>
                 <View className="gap-3">
-                    <Text className="text-bookcare-primary text-lg font-bold">Related Books</Text>
+                    <Text className="text-bookcare-primary font-semibold text-xl" >Related Boooks</Text>
                     <ScrollView
+                        contentContainerClassName="gap-5"
                         horizontal
+                        showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                    >
-                        
+                        >
+                        {isRelatedBooksLoading ? 
+                        [1, 2, 3, 4, 5].map((_, index) => (
+                            <SkeletonBookCard key={index} />
+                        )) : 
+                        relatedBooks?.map((work: OpenLibraryResponseBook) => (
+                            <BookCard key={work.workKey} work={work} />
+                        ))
+                    }
                     </ScrollView>
                 </View>
             </ScrollView>
+            <View 
+                className="p-4 flex-row items-center justify-between"
+                style={{
+                    borderTopWidth: 2,
+                    borderTopColor: colors.mid,
+                    // shadowColor: colors.mid,
+                    // shadowOffset: {width: 0, height: -3},
+                    // shadowOpacity: 0.08,
+                    // shadowRadius: 8,
+                    // elevation: 1
+                }}
+                >
+                <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-xl">GHS {price}</Text>
+                <View className="flex-row items-center gap-1">
+                    <Button size="sm" className="rounded-full bg-bookcare-mid">
+                        <ButtonText className="text-bookcare-primary font-bold">-</ButtonText>
+                    </Button>
+                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{quantity}</Text>
+                    <Button size="sm" className="rounded-full bg-bookcare-mid">
+                        <ButtonText className="text-bookcare-primary font-bold">+</ButtonText>
+                    </Button>
+                </View>
+                <View className="flex-row items-center gap-3">
+                    <Button className="bg-bookcare-primary rounded-xl px-6">
+                        <ButtonText className="text-white font-semibold">
+                            Add to Cart
+                        </ButtonText>
+                    </Button>
+                    <Button className="bg-bookcare-primary rounded-xl px-6">
+                        <Ionicons name="heart" color={"#fff"} size={22}/>
+                    </Button>
+                </View>
+            </View>
         </SafeAreaView>
     )
 }

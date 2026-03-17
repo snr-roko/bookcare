@@ -8,11 +8,9 @@ const WishlistScreen = () => {
         await supabase.auth.signOut()
     }
     return (
-        <SafeAreaView className="flex-1 py-20 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <View className="flex-1 items-center justify-center">
-                <Text className="text-white">Wishlist</Text>
-                <Button onPress={logoutUser}><ButtonText>Logout</ButtonText></Button>
-            </View>
+        <SafeAreaView className="flex-1 py-10 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+            <Text className="text-bookcare-primary text-3xl">Wishlist</Text>
+
         </SafeAreaView>
     )
 }

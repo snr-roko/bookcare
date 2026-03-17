@@ -164,7 +164,7 @@ const BookDetailsScreen = () => {
                                             }
                                         </View>
                                         <Button className="bg-bookcare-primary">
-                                            <ButtonText className="bg-bookcare-darkText">See Other Works</ButtonText>
+                                            <ButtonText className="text-bookcare-darkText">See Other Works</ButtonText>
                                         </Button>
                                     </View>
                                 </View>)      
@@ -190,7 +190,7 @@ const BookDetailsScreen = () => {
                 </View>
             </ScrollView>
             <View 
-                className="p-4 flex-row items-center justify-between"
+                className="p-3 flex-row items-center justify-between"
                 style={{
                     borderTopWidth: 2,
                     borderTopColor: colors.mid,
@@ -202,13 +202,13 @@ const BookDetailsScreen = () => {
                 }}
                 >
                 <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-xl">GHS {price}</Text>
-                <View className="flex-row items-center gap-1">
-                    <Button size="sm" className="rounded-full bg-bookcare-mid">
-                        <ButtonText className="text-bookcare-primary font-bold">-</ButtonText>
+                <View className="flex-row items-center gap-2">
+                    <Button size="sm" className="rounded-xl bg-bookcare-mid">
+                        <ButtonText className="text-bookcare-primary font-bold text-2xl">-</ButtonText>
                     </Button>
                     <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{quantity}</Text>
-                    <Button size="sm" className="rounded-full bg-bookcare-mid">
-                        <ButtonText className="text-bookcare-primary font-bold">+</ButtonText>
+                    <Button size="sm" className="rounded-xl bg-bookcare-mid">
+                        <ButtonText className="text-bookcare-primary font-bold text-2xl">+</ButtonText>
                     </Button>
                 </View>
                 <View className="flex-row items-center gap-3">

@@ -4,7 +4,8 @@ import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
 import Skeleton from "@/src/components/common/skeleton"
 import { CHAR_LIMIT, colors } from "@/src/constants"
 import { useAuthorDetails, useBookDetails, useSearchBooksBySubjectFew } from "@/src/hooks"
-import { OpenLibraryResponseBook } from "@/src/types"
+import { useWhishlistStore } from "@/src/store/useWishlistStore"
+import { BookDetailsResponse, OpenLibraryResponseBook, WishlistItem } from "@/src/types"
 import { getAuthorCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
@@ -16,6 +17,8 @@ import { SafeAreaView } from "react-native-safe-area-context"
 const BookDetailsScreen = () => {
     const [expanded, setExpanded] = useState(false)
     const [quantity, setQuantity] = useState<number>(0)
+
+    const addTowishlist = useWhishlistStore((state) => state.addToWishlist)
 
     const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
@@ -40,6 +43,22 @@ const BookDetailsScreen = () => {
     const {isLoading: isAuthorDetailsLoading, data: authorDetails} = useAuthorDetails(authorKey)
 
     const {isLoading: isRelatedBooksLoading, data: relatedBooks} = useSearchBooksBySubjectFew(bookDetails?.subjects?.[0] ?? "")
+
+    const wishlistBook = () => {
+        const book: WishlistItem = {
+            id,
+            title,
+            coverId,
+            coverUrl,
+            authorName,
+            authorKey,
+            price,
+            rating,
+            editionCount,
+            yearFirstPublished
+        }
+        addTowishlist(book)
+    }
 
     return (
         <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
@@ -212,12 +231,12 @@ const BookDetailsScreen = () => {
                     </Button>
                 </View>
                 <View className="flex-row items-center gap-3">
-                    <Button className="bg-bookcare-primary rounded-xl px-6">
+                    <Button className="bg-bookcare-primary rounded-xl px-5">
                         <ButtonText className="text-white font-semibold">
                             Add to Cart
                         </ButtonText>
                     </Button>
-                    <Button className="bg-bookcare-primary rounded-xl px-6">
+                    <Button onPress={wishlistBook}  className="bg-bookcare-primary rounded-xl px-6">
                         <Ionicons name="heart" color={"#fff"} size={22}/>
                     </Button>
                 </View>

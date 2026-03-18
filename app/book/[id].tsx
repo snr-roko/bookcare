@@ -19,6 +19,8 @@ const BookDetailsScreen = () => {
     const [quantity, setQuantity] = useState<number>(0)
 
     const addTowishlist = useWhishlistStore((state) => state.addToWishlist)
+    const wishlistedItems = useWhishlistStore(state => state.items)
+    const removeFromWishlist = useWhishlistStore(state => state.removeFromWishlist)
 
     const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
@@ -59,6 +61,12 @@ const BookDetailsScreen = () => {
         }
         addTowishlist(book)
     }
+
+    const RemoveBookFromwishlist = () => {
+        removeFromWishlist(id)
+    }
+
+    const isWishlisted = wishlistedItems.some(item => item.id === id)
 
     return (
         <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
@@ -236,8 +244,8 @@ const BookDetailsScreen = () => {
                             Add to Cart
                         </ButtonText>
                     </Button>
-                    <Button onPress={wishlistBook}  className="bg-bookcare-primary rounded-xl px-6">
-                        <Ionicons name="heart" color={"#fff"} size={22}/>
+                    <Button onPress={isWishlisted ? RemoveBookFromwishlist : wishlistBook}  className="bg-bookcare-mid rounded-xl px-6">
+                        <Ionicons name="heart" color={isWishlisted ? colors.error : "white"} size={28}/>
                     </Button>
                 </View>
             </View>

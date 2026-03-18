@@ -71,7 +71,7 @@ const BookDetailsScreen = () => {
     return (
         <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row gap-5 px-5 pb-5">
-                <View style={{overflow: 'hidden', borderRadius: 12, elevation: 2 }}>
+                <View style={{overflow: 'hidden', borderRadius: 1, shadowRadius: 1, elevation: 2}}>
                     {parseInt(coverId)  === -1 ? (
                     <View style={{ height: 180, width: 140, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
                         <Ionicons name="book" size={48} color={colors.primary} />
@@ -166,7 +166,7 @@ const BookDetailsScreen = () => {
                                 </View>
                             ) : (
                                 <View className="flex-row gap-5">
-                                    <View style={{overflow: 'hidden', borderRadius: 8, elevation: 2 }}>
+                                    <View style={{overflow: 'hidden', borderRadius: 1, shadowRadius: 1, elevation: 2, }}>
                                         {parseInt(coverId)  === -1 ? (
                                         <View style={{ height: 150, width: 100, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
                                             <Ionicons name="person" size={48} color={colors.primary} />

@@ -15,8 +15,9 @@ const SkeletonBookCard = () => {
                 shadowColor: colors.primary,
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.15,
-                shadowRadius: 8,
-                elevation: 5,
+                borderRadius: 1,
+                shadowRadius: 1,
+                elevation: 2,
                 backgroundColor: colorScheme === "dark" ? '#231208' : '#F5EDD8'
                 }}
             >

@@ -4,9 +4,10 @@ import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
 import Skeleton from "@/src/components/common/skeleton"
 import { CHAR_LIMIT, colors } from "@/src/constants"
 import { useAuthorDetails, useBookDetails, useSearchBooksBySubjectFew } from "@/src/hooks"
+import { useCartStore } from "@/src/store/useCartStore"
 import { useWhishlistStore } from "@/src/store/useWishlistStore"
-import { BookDetailsResponse, OpenLibraryResponseBook, WishlistItem } from "@/src/types"
-import { getAuthorCoverUrl } from "@/src/utils"
+import { BookDetailsResponse, CartItemType, OpenLibraryResponseBook, WishlistItem } from "@/src/types"
+import { cn, getAuthorCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
 import { useLocalSearchParams } from "expo-router"
@@ -21,6 +22,9 @@ const BookDetailsScreen = () => {
     const addTowishlist = useWhishlistStore((state) => state.addToWishlist)
     const wishlistedItems = useWhishlistStore(state => state.items)
     const removeFromWishlist = useWhishlistStore(state => state.removeFromWishlist)
+
+    const addToCart = useCartStore((state) => state.addToCart)
+    const removeFromCart = useCartStore(state => state.removeFromCart)
 
     const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
@@ -67,6 +71,42 @@ const BookDetailsScreen = () => {
     }
 
     const isWishlisted = wishlistedItems.some(item => item.id === id)
+
+    const increaseQuantity = () => {
+        if (quantity === 20) return
+        setQuantity(prev => prev + 1)
+    }
+
+    const decreaseQuantity = () => {
+        if (quantity === 0) return
+        setQuantity(prev => prev - 1)
+    }
+
+    const addCartItemToCart = () => {
+        if (quantity === 0) return
+        const book: WishlistItem = {
+            id,
+            title,
+            coverId,
+            coverUrl,
+            authorName,
+            authorKey,
+            price,
+            rating,
+            editionCount,
+            yearFirstPublished
+        }
+
+        const cartItemQuantity = quantity
+
+        const cartItem: CartItemType = {
+            itemDetails: book,
+            quantity: cartItemQuantity
+        }
+
+        addToCart(cartItem)
+
+    }
 
     return (
         <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
@@ -230,16 +270,19 @@ const BookDetailsScreen = () => {
                 >
                 <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-xl">GHS {price}</Text>
                 <View className="flex-row items-center gap-2">
-                    <Button size="sm" className="rounded-xl bg-bookcare-mid">
+                    <Button onPress={decreaseQuantity} size="sm" className="rounded-xl bg-bookcare-mid">
                         <ButtonText className="text-bookcare-primary font-bold text-2xl">-</ButtonText>
                     </Button>
                     <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{quantity}</Text>
-                    <Button size="sm" className="rounded-xl bg-bookcare-mid">
+                    <Button onPress={increaseQuantity} size="sm" className="rounded-xl bg-bookcare-mid">
                         <ButtonText className="text-bookcare-primary font-bold text-2xl">+</ButtonText>
                     </Button>
                 </View>
                 <View className="flex-row items-center gap-3">
-                    <Button className="bg-bookcare-primary rounded-xl px-5">
+                    <Button disabled={quantity < 1} onPress={addCartItemToCart} className={cn([
+                        {"bg-bookcare-primary": quantity > 0, "bg-bookcare-mid": quantity < 1},
+                        "rounded-xl", "px-5" 
+                    ])}>
                         <ButtonText className="text-white font-semibold">
                             Add to Cart
                         </ButtonText>

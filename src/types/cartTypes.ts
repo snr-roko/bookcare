@@ -11,4 +11,5 @@ export type CartStoreType = {
     removeFromCart: (cartKey: string) => void
     increaseCartItemQuantity: (cartKey: string) => void
     decreateCartItemQuantity: (cartKey: string) => void
+    clearCart: () => void
 }

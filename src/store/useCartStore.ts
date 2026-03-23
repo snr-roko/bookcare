@@ -25,6 +25,9 @@ export const useCartStore = create<CartStoreType>()(
                 cart: state.cart.map((cartItem) => cartItem.itemDetails.id === cartKey ? 
                 {...cartItem, quantity: cartItem.quantity + 1} : cartItem)  
             }))
+        },
+        clearCart: () => {
+            set({cart: []})
         }
     })
 , {

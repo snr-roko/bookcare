@@ -1,11 +1,15 @@
-import { Button, ButtonText } from "@/components/ui/button"
+import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import CartItemCard from "@/src/components/cart/CartItemCard"
+import { colors } from "@/src/constants"
 import { useCartStore } from "@/src/store/useCartStore"
 import { useRouter } from "expo-router"
+import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const CartScreen = () => {
+
+    const [checkoutloading, setCheckoutLoading] = useState<boolean>(false) 
     
     const cart = useCartStore(state => state.cart)
 
@@ -13,6 +17,19 @@ const CartScreen = () => {
 
     const routeToHomepage = () => {
         router.push("/(tabs)")
+    }
+
+    const checkout = () => {
+        setCheckoutLoading(true)
+        setTimeout(() => {
+            setCheckoutLoading(false)
+            router.push({
+                pathname: "/(checkout)",
+                params: {
+                    "totalAmount": cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) + cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) * 0.03
+                }
+            })
+        }, 2000)
     }
 
     return (
@@ -49,8 +66,8 @@ const CartScreen = () => {
                             <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Total Amount Payable: </Text>
                             <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) + cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) * 0.03}</Text>
                         </View>
-                        <Button size="md" className="bg-bookcare-primary">
-                            <ButtonText className="text-white text-lg">Checkout</ButtonText>
+                        <Button onPress={checkout} size="lg" className="bg-bookcare-primary">
+                            {checkoutloading ? <ButtonSpinner color={colors.darkText} /> :<ButtonText className="text-white text-lg font-bold">Checkout</ButtonText>}
                         </Button>
                     </View>
                 </View>

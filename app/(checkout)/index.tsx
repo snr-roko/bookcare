@@ -2,8 +2,10 @@ import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import CardPaymentMethodCard from "@/src/components/checkout/cardPaymentMethod"
 import MobileMoneyPaymentMethod from "@/src/components/checkout/mobileMoneyCard"
 import { colors } from "@/src/constants"
+import { supabase } from "@/src/lib/supabase"
+import { useAuthStore } from "@/src/store"
 import { useCartStore } from "@/src/store/useCartStore"
-import { mobileMoneySelection } from "@/src/types"
+import { CartItemType, mobileMoneySelection, OrderItemType, SupabaseOrderItem } from "@/src/types"
 import { cn } from "@/src/utils"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { useState } from "react"
@@ -14,21 +16,68 @@ const CheckoutScreen = () => {
 
     const {totalAmount} = useLocalSearchParams<{totalAmount: string}>()
 
+    const userId = useAuthStore((state) => state.session?.user.id)
+
     const [paymentMethod, setPaymentMethod] = useState<"mobileMoney"|"card"|null>(null)
     const [isCompletingPayment, setIsCompletingPayment] = useState<boolean>(false)
-    const [mobileMoneySelected, setMobileMoneySelected] = useState<mobileMoneySelection>(null)
+    const [mobileMoneySelected, setMobileMoneySelected] = useState<mobileMoneySelection>("airtelTigo")
 
     const clearCart = useCartStore((state) => state.clearCart)
+    const cart = useCartStore((state) => state.cart)
+
+    const createOrder = async () => {
+        const deliveryDate = new Date()
+        deliveryDate.setDate(deliveryDate.getDate() + 2)
+        const deliveryDateString = deliveryDate.toISOString().split("T")[0]
+        const {data, error} = await supabase.from("Order").insert(
+            {
+                number_of_books: cart.reduce((prev, curr) => prev + curr.quantity, 0),
+                total_amount: totalAmount,
+                delivery_date: deliveryDateString,
+                user_id: userId
+            }
+        ).select().single()
+        if (error) throw new Error(error.message)
+        console.log(data)
+        return [data.id, data.delivery_date]
+    }
+
+    const createOrderItems = async (cartItems: CartItemType[], orderId: number) => {
+
+        const orderItems: SupabaseOrderItem[] = cartItems.map((cartItem) => ({
+            author_name: cartItem.itemDetails.authorName,
+            cover_url: cartItem.itemDetails.coverUrl,
+            order_id: orderId,
+            price: parseInt(cartItem.itemDetails.price),
+            quantity: cartItem.quantity,
+            title: cartItem.itemDetails.title
+        }) ) 
+        const {error} = await supabase.from("OrderItem").insert(
+            orderItems
+        )
+        if (error) throw new Error(error.message)
+    }
 
     const router = useRouter()
 
     const completePayment = () => {
         setIsCompletingPayment(true)
-        setTimeout(() => {
-            setIsCompletingPayment(false)
-            clearCart()
-            router.replace("/(checkout)/confirmation")
-        }, 2000)
+        createOrder()
+            .then(([orderId, deliveryDate]) => 
+                createOrderItems(cart, orderId)
+                    .then(() => {
+                        setIsCompletingPayment(false)
+                        clearCart()
+                        router.replace({
+                            pathname: "/(checkout)/confirmation",
+                            params: {
+                                orderId,
+                                deliveryDate
+                            }
+                        })
+                    })
+                    .catch(error => console.error(error)))
+            .catch(error => console.error(error))
     }
 
     return (

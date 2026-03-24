@@ -2,6 +2,7 @@ import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import CardPaymentMethodCard from "@/src/components/checkout/cardPaymentMethod"
 import MobileMoneyPaymentMethod from "@/src/components/checkout/mobileMoneyCard"
 import { colors } from "@/src/constants"
+import { queryClient } from "@/src/lib/queryClient"
 import { supabase } from "@/src/lib/supabase"
 import { useAuthStore } from "@/src/store"
 import { useCartStore } from "@/src/store/useCartStore"
@@ -50,7 +51,8 @@ const CheckoutScreen = () => {
             order_id: orderId,
             price: parseInt(cartItem.itemDetails.price),
             quantity: cartItem.quantity,
-            title: cartItem.itemDetails.title
+            title: cartItem.itemDetails.title,
+            payment_method: paymentMethod!
         }) ) 
         const {error} = await supabase.from("OrderItem").insert(
             orderItems
@@ -68,6 +70,7 @@ const CheckoutScreen = () => {
                     .then(() => {
                         setIsCompletingPayment(false)
                         clearCart()
+                        queryClient.invalidateQueries({queryKey: ["orders", "user", userId]})
                         router.replace({
                             pathname: "/(checkout)/confirmation",
                             params: {

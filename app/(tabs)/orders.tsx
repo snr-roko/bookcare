@@ -1,18 +1,53 @@
 import { Button, ButtonText } from "@/components/ui/button"
+import WishlistedBook from "@/src/components/books/wishlisted-book"
+import Skeleton from "@/src/components/common/skeleton"
+import OrderCard from "@/src/components/orders/orderCard"
+import { useFetchOrders } from "@/src/hooks"
 import { supabase } from "@/src/lib/supabase"
+import { useAuthStore } from "@/src/store"
+import { useRouter } from "expo-router"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const OrdersScreen = () => {
-    const logoutUser = async() => {
-        await supabase.auth.signOut()
+
+    const router = useRouter()
+    
+    const userId = useAuthStore(state => state.session?.user.id)
+
+    const {data, isLoading} = useFetchOrders(userId!)
+
+    const routeToHomepage = () => {
+        router.push("/(tabs)")
     }
+
     return (
-        <SafeAreaView className="flex-1 py-20 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <View className="flex-1 items-center justify-center">
-                <Text className="text-white">Orders</Text>
-                <Button onPress={logoutUser}><ButtonText>Logout</ButtonText></Button>
-            </View>
+        <SafeAreaView className="flex-1 py-10 px-5 gap-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
+            <Text className="text-bookcare-primary text-3xl">Orders</Text>
+            {
+                isLoading ? 
+                    <View className="gap-5">
+                        <Skeleton height={50} width={300} />
+                        <Skeleton height={50} width={300} />
+                        <Skeleton height={50} width={300} />
+                        <Skeleton height={50} width={300} />
+                    </View> :
+                    data?.length === 0 ? 
+                    <View className="gap-2 justify-center flex-1 items-center">
+                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl">No Orders Yet</Text>
+                        <Text className="text-bookcare-textMuted text-lg">Add books to your cart to checkout</Text>
+                        <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary rounded-xl">
+                            <ButtonText className="text-white font-semibold">Browse Books</ButtonText>
+                        </Button>
+                    </View> :
+                    <View className="gap-3 flex-1">
+                        {
+                            data?.map((order) => (
+                                <OrderCard key={order.id} order={order} />
+                        ))
+                        }
+                    </View>
+            }
         </SafeAreaView>
     )
 }

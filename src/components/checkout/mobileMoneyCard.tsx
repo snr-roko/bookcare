@@ -84,9 +84,11 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
                 </View>
             </View>
             <View className="gap-2">
-                <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">Number</Text>
+                <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">Phone Number</Text>
                 <TextInput
                     inputMode="tel"
+                    editable={false}
+                    placeholder="0244 4444 44"
                     maxLength={10}
                     placeholderTextColor={colors.textMuted}
                     className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"

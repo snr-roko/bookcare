@@ -6,6 +6,7 @@ export type OrderItemType = {
     price: number
     quantity: number
     orderId: number
+    paymentMethod: "card" | "mobileMoney"
 }
 
 export type Order = {
@@ -28,9 +29,10 @@ export type SupabaseOrder = {
 export type SupabaseOrderItem = {
     id?: number
     author_name: string
-    cover_url: string,
-    order_id: number,
-    price: number,
-    quantity: number,
+    cover_url: string
+    order_id: number
+    price: number
+    quantity: number
     title: string
+    payment_method: "card" | "mobileMoney"
 }

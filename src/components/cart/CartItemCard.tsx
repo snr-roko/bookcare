@@ -32,9 +32,9 @@ const CartItemCard = ({cartItem}: {cartItem: CartItemType}) => {
             style={{
                 overflow: "hidden",
                 borderRadius: 1,
-                elevation: 2
+                elevation: 2,
             }}
-            className="flex-row p-3 gap-5">
+            className="flex-row p-3 gap-5 bg-white dark:bg-bookcare-darkCard">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}

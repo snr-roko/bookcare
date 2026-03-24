@@ -27,10 +27,10 @@ const WishlistedBook = ({book}: {book: WishlistItem}) => {
             onPress={routeToBookDetailsPage} 
             style={{
                 overflow: "hidden",
-                borderRadius: 1,
-                elevation: 2
+                borderRadius: 8,
+                elevation: 2,
             }}
-            className="flex-row p-3 gap-5">
+            className="flex-row p-3 gap-5 items-center bg-white dark:bg-bookcare-darkCard">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}

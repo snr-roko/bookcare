@@ -1,12 +1,16 @@
 export type OrderItemType = {
     id?: number
     title: string
+    coverId: string
     authorName: string
     coverUrl: string
+    authorKey: string
+    yearFirstPublished: string
     price: number
+    editionCount: number
     quantity: number
     orderId: number
-    paymentMethod: "card" | "mobileMoney"
+    workKey: string
 }
 
 export type Order = {
@@ -16,6 +20,7 @@ export type Order = {
     orderDate?: string
     deliveryDate: string
     userId: number
+    PaymentMethod: "card" | "mobileMoney"
 }
 
 export type SupabaseOrder = {
@@ -23,16 +28,24 @@ export type SupabaseOrder = {
     number_of_books: number
     total_amount: number
     delivery_date: string
+    order_date: string
     user_id: number
+    payment_method: "card" | "mobileMoney"
 }
 
 export type SupabaseOrderItem = {
     id?: number
+    cover_id: string
     author_name: string
     cover_url: string
+    author_key: string
+    year_first_published: string
+    edition_count: number
     order_id: number
     price: number
     quantity: number
     title: string
-    payment_method: "card" | "mobileMoney"
+    work_key: string
 }
+
+export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'

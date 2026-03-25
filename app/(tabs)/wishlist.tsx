@@ -1,6 +1,5 @@
 import { Button, ButtonText } from "@/components/ui/button"
 import WishlistedBook from "@/src/components/books/wishlisted-book"
-import { supabase } from "@/src/lib/supabase"
 import { useWhishlistStore } from "@/src/store/useWishlistStore"
 import { useRouter } from "expo-router"
 import { ScrollView, Text, View } from "react-native"
@@ -14,7 +13,7 @@ const WishlistScreen = () => {
     
     const routeToHomepage = () => {
         router.push("/(tabs)")
-    }
+    }    
 
     return (
         <SafeAreaView className="flex-1 pt-10 px-5 gap-3 bg-bookcare-cream dark:bg-bookcare-darkBg">

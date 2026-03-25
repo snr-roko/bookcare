@@ -6,12 +6,17 @@ import { Button, ButtonText } from "@/components/ui/button"
 import { Ionicons } from "@expo/vector-icons"
 import { useWhishlistStore } from "@/src/store/useWishlistStore"
 import { useRouter } from "expo-router"
+import { useCartBottomSheetStore } from "@/src/store"
+import { useCartStore } from "@/src/store/useCartStore"
+import { cn } from "@/src/utils"
 
 const WishlistedBook = ({book}: {book: WishlistItem}) => {
 
     const router = useRouter()
 
     const removeFromWishlist = useWhishlistStore((state) => state.removeFromWishlist)
+
+    const openCartSheet = useCartBottomSheetStore(state => state.openSheet)
 
     const routeToBookDetailsPage = () => {
         router.push({
@@ -21,6 +26,12 @@ const WishlistedBook = ({book}: {book: WishlistItem}) => {
             }
         })
     } 
+
+    const openCartModal = () => {
+        openCartSheet(book)
+    }
+
+    const isInCart = useCartStore(state => state.cart.some(cartItem => cartItem.itemDetails.id === book.id))
 
     return (
         <Pressable
@@ -52,7 +63,14 @@ const WishlistedBook = ({book}: {book: WishlistItem}) => {
                     </Text>
                     <Text className="text-lg font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {book.price}</Text>
                     <View className="gap-3 flex-row">
-                        <Button size="sm" className="bg-bookcare-primary rounded-xl">
+                        <Button 
+                            disabled={isInCart} 
+                            onPress={openCartModal} 
+                            size="sm" 
+                            className={cn([
+                                {"bg-bookcare-primary": !isInCart, "bg-bookcare-mid": isInCart},
+                                "rounded-xl" 
+                            ])}>
                             <ButtonText className="text-white font-bold">
                                 Add to Cart
                             </ButtonText>

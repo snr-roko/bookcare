@@ -16,16 +16,7 @@ import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const BookDetailsScreen = () => {
-    const [expanded, setExpanded] = useState(false)
-    const [quantity, setQuantity] = useState<number>(0)
-
-    const addTowishlist = useWhishlistStore((state) => state.addToWishlist)
-    const wishlistedItems = useWhishlistStore(state => state.items)
-    const removeFromWishlist = useWhishlistStore(state => state.removeFromWishlist)
-
-    const addToCart = useCartStore((state) => state.addToCart)
-    const removeFromCart = useCartStore(state => state.removeFromCart)
-
+    
     const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
         coverId: string,
@@ -39,7 +30,20 @@ const BookDetailsScreen = () => {
         authorKey: string
     }>()
 
+    const [expanded, setExpanded] = useState(false)
+    const [quantity, setQuantity] = useState<number>(0)
+
+    const addTowishlist = useWhishlistStore((state) => state.addToWishlist)
+    const removeFromWishlist = useWhishlistStore(state => state.removeFromWishlist)
+    const isWishlisted = useWhishlistStore(state => state.items.some(item => item.id === id))
     
+
+    const addToCart = useCartStore((state) => state.addToCart)
+    const isInCart = useCartStore(state => state.cart.some(cartItem => cartItem.itemDetails.id === id))
+    const cartItemQuantity = useCartStore(state => state.cart.reduce((prev, currCartItem) => prev + (currCartItem.itemDetails.id === id ? currCartItem.quantity : 0), 0))
+    const increaseCartQuantity = useCartStore(state => state.increaseCartItemQuantity)
+    const decreaseCartQuantity = useCartStore(state => state.decreaseCartItemQuantity)
+
     const {isLoading: isBookDetailsLoading, data: bookDetails} = useBookDetails(id)
     
     let isLong = false;
@@ -69,8 +73,6 @@ const BookDetailsScreen = () => {
     const RemoveBookFromwishlist = () => {
         removeFromWishlist(id)
     }
-
-    const isWishlisted = wishlistedItems.some(item => item.id === id)
 
     const increaseQuantity = () => {
         if (quantity === 20) return
@@ -260,27 +262,22 @@ const BookDetailsScreen = () => {
                 className="p-3 flex-row items-center justify-between"
                 style={{
                     borderTopWidth: 2,
-                    borderTopColor: colors.mid,
-                    // shadowColor: colors.mid,
-                    // shadowOffset: {width: 0, height: -3},
-                    // shadowOpacity: 0.08,
-                    // shadowRadius: 8,
-                    // elevation: 1
+                    borderTopColor: colors.mid
                 }}
                 >
                 <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-xl">GHS {price}</Text>
                 <View className="flex-row items-center gap-2">
-                    <Button onPress={decreaseQuantity} size="sm" className="rounded-xl bg-bookcare-mid">
+                    <Button onPress={() => isInCart ? decreaseCartQuantity(id) : decreaseQuantity()} size="sm" className="rounded-xl bg-bookcare-mid">
                         <ButtonText className="text-bookcare-primary font-bold text-2xl">-</ButtonText>
                     </Button>
-                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{quantity}</Text>
-                    <Button onPress={increaseQuantity} size="sm" className="rounded-xl bg-bookcare-mid">
+                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{isInCart ? cartItemQuantity: quantity}</Text>
+                    <Button onPress={() => isInCart ? increaseCartQuantity(id) : increaseQuantity()} size="sm" className="rounded-xl bg-bookcare-mid">
                         <ButtonText className="text-bookcare-primary font-bold text-2xl">+</ButtonText>
                     </Button>
                 </View>
                 <View className="flex-row items-center gap-3">
-                    <Button disabled={quantity < 1} onPress={addCartItemToCart} className={cn([
-                        {"bg-bookcare-primary": quantity > 0, "bg-bookcare-mid": quantity < 1},
+                    <Button disabled={isInCart || quantity < 1} onPress={addCartItemToCart} className={cn([
+                        {"bg-bookcare-primary": !isInCart && quantity > 0, "bg-bookcare-mid": isInCart || quantity < 1},
                         "rounded-xl", "px-5" 
                     ])}>
                         <ButtonText className="text-white font-semibold">

@@ -14,16 +14,22 @@ export const useCartStore = create<CartStoreType>()(
                 cart: state.cart.filter((cartItem) => cartItem.itemDetails.id !== cartKey)
             }))
         },
-        decreateCartItemQuantity: (cartKey) => {
+        decreaseCartItemQuantity: (cartKey) => {
             set((state) => ({
-                cart: state.cart.map((cartItem) => cartItem.itemDetails.id === cartKey ? 
-                {...cartItem, quantity: cartItem.quantity - 1} : cartItem)  
+                cart: state.cart
+                    .map((cartItem) => cartItem.itemDetails.id === cartKey
+                        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                        : cartItem
+                    )
+                    .filter((cartItem) => cartItem.quantity > 0)
             }))
         },
         increaseCartItemQuantity: (cartKey) => {
             set((state) => ({
-                cart: state.cart.map((cartItem) => cartItem.itemDetails.id === cartKey ? 
-                {...cartItem, quantity: cartItem.quantity + 1} : cartItem)  
+                cart: state.cart.map((cartItem) => cartItem.itemDetails.id === cartKey
+                    ? { ...cartItem, quantity: Math.min(cartItem.quantity + 1, 20) }
+                    : cartItem
+                )
             }))
         },
         clearCart: () => {

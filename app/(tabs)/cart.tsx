@@ -2,6 +2,7 @@ import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import CartItemCard from "@/src/components/cart/CartItemCard"
 import { colors } from "@/src/constants"
 import { useCartStore } from "@/src/store/useCartStore"
+import { calculateDeliveryFee, calculateSubTotal, calculateTotalAmount } from "@/src/utils"
 import { useRouter } from "expo-router"
 import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
@@ -18,7 +19,11 @@ const CartScreen = () => {
     const routeToHomepage = () => {
         router.push("/(tabs)")
     }
-
+    
+    const subTotal = calculateSubTotal(cart)
+    const deliveryFee = calculateDeliveryFee(parseInt(subTotal))
+    const totalAmountPayable = calculateTotalAmount(parseInt(subTotal), parseInt(deliveryFee))
+    
     const checkout = () => {
         setCheckoutLoading(true)
         setTimeout(() => {
@@ -26,7 +31,7 @@ const CartScreen = () => {
             router.push({
                 pathname: "/(checkout)",
                 params: {
-                    "totalAmount": cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) + cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) * 0.03
+                    "totalAmount": totalAmountPayable
                 }
             })
         }, 2000)
@@ -55,16 +60,16 @@ const CartScreen = () => {
                     <View className="gap-3">
                         <Text className="text-bookcare-primary text-xl">Summary</Text>
                             <View className="flex-row justify-between items-center">
-                                <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Total Amount: </Text>
-                                <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0)}</Text>
+                                <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Sub Total: </Text>
+                                <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{subTotal}</Text>
                             </View>
                         <View className="flex-row justify-between">
-                            <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl items-center">3% Witholding Tax: </Text>
-                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) * 0.03}</Text>
+                            <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl items-center">Delivery Fee: </Text>
+                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{deliveryFee}</Text>
                         </View>
                         <View className="flex-row justify-between items-center">
                             <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Total Amount Payable: </Text>
-                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) + cart.reduce((sum, cartItem) => sum + parseInt(cartItem.itemDetails.price) * cartItem.quantity, 0) * 0.03}</Text>
+                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{totalAmountPayable}</Text>
                         </View>
                         <Button onPress={checkout} size="lg" className="bg-bookcare-primary">
                             {checkoutloading ? <ButtonSpinner color={colors.darkText} /> :<ButtonText className="text-white text-lg font-bold">Checkout</ButtonText>}

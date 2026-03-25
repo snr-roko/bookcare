@@ -9,6 +9,7 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
     const router = useRouter()
 
     const status = deriveOrderStatus(order.order_date, order.delivery_date)
+    const statusColor = getStatusColor(status)
 
     const routeToOrderDetailsScreen = () => {
         router.push({
@@ -40,9 +41,9 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
                 style={{ flex: 1 }}
                 className="items-center justify-center"
             >
-                <Ionicons name="bag-handle-outline" size={40} color="#8d4a1a" />
-                <Text style={{ color: getStatusColor(status) }}>
-                    ● {status.charAt(0).toUpperCase() + status.slice(1)}
+                <Ionicons name="bag-handle-outline" size={40} color={statusColor} />
+                <Text style={{ color: statusColor }}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
                 </Text>
             </View>
 

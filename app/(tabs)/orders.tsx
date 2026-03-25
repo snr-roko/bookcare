@@ -1,12 +1,10 @@
 import { Button, ButtonText } from "@/components/ui/button"
-import WishlistedBook from "@/src/components/books/wishlisted-book"
 import Skeleton from "@/src/components/common/skeleton"
 import OrderCard from "@/src/components/orders/orderCard"
 import { useFetchOrders } from "@/src/hooks"
-import { supabase } from "@/src/lib/supabase"
 import { useAuthStore } from "@/src/store"
 import { useRouter } from "expo-router"
-import { Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const OrdersScreen = () => {
@@ -22,15 +20,15 @@ const OrdersScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 gap-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <Text className="text-bookcare-primary text-3xl">Orders</Text>
             {
                 isLoading ? 
                     <View className="gap-5">
-                        <Skeleton height={50} width={300} />
-                        <Skeleton height={50} width={300} />
-                        <Skeleton height={50} width={300} />
-                        <Skeleton height={50} width={300} />
+                        <Skeleton height={20} width={300} />
+                        <Skeleton height={20} width={300} />
+                        <Skeleton height={20} width={300} />
+                        <Skeleton height={20} width={300} />
                     </View> :
                     data?.length === 0 ? 
                     <View className="gap-2 justify-center flex-1 items-center">
@@ -40,13 +38,13 @@ const OrdersScreen = () => {
                             <ButtonText className="text-white font-semibold">Browse Books</ButtonText>
                         </Button>
                     </View> :
-                    <View className="gap-3 flex-1">
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-3 pb-3 flex-1">
                         {
                             data?.map((order) => (
                                 <OrderCard key={order.id} order={order} />
                         ))
                         }
-                    </View>
+                    </ScrollView>
             }
         </SafeAreaView>
     )

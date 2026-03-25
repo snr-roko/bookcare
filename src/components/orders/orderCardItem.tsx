@@ -1,13 +1,34 @@
 import { Button, ButtonText } from "@/components/ui/button"
 import { colors } from "@/src/constants"
+import { useCartBottomSheetStore } from "@/src/store"
+import { useCartStore } from "@/src/store/useCartStore"
 import { OrderItemType, OrderStatus } from "@/src/types"
-import { getStatusColor } from "@/src/utils"
+import { cn, deriveRating, getStatusColor } from "@/src/utils"
 import { Image } from "expo-image"
 import { Text, View } from "react-native"
 
 const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
-    console.log(orderItem.coverUrl)
-        return (
+    const openCartSheet = useCartBottomSheetStore(state => state.openSheet)
+
+    const openCartModal = () => {
+        openCartSheet({
+            authorKey: orderItem.authorKey,
+            authorName: orderItem.authorName,
+            coverId: orderItem.coverId,
+            coverUrl: orderItem.coverUrl,
+            editionCount: String(orderItem.editionCount),
+            id: String(orderItem.id),
+            price: String(orderItem.price),
+            rating: String(deriveRating(String(orderItem.id), orderItem.editionCount)),
+            title: orderItem.title,
+            yearFirstPublished: orderItem.yearFirstPublished
+        })
+    }
+
+    const isInCart = useCartStore(state => state.cart.some(cartItem => cartItem.itemDetails.id === String(orderItem.id)))
+
+
+    return (
         <View
             style={{
                 overflow: "hidden",
@@ -36,7 +57,14 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
                     </Text>
                     <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">GHS {orderItem.price}</Text>
                     <View className="flex-row justify-between items-end">
-                        <Button size="sm" className="bg-bookcare-primary rounded-xl">
+                        <Button 
+                            disabled={isInCart} 
+                            onPress={openCartModal} 
+                            size="sm" 
+                            className={cn([
+                                {"bg-bookcare-primary": !isInCart, "bg-bookcare-mid": isInCart},
+                                "rounded-xl" 
+                            ])}>
                             <ButtonText className="text-white font-bold">
                                 Buy Again
                             </ButtonText>

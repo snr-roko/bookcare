@@ -55,6 +55,7 @@ const CartBottomModal = () => {
         }
 
         addToCart(cartItem)
+        setQuantity(0)
         closeSheet()
     }
 

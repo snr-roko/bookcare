@@ -13,3 +13,10 @@ export type CartStoreType = {
     decreaseCartItemQuantity: (cartKey: string) => void
     clearCart: () => void
 }
+
+export type CartBottomSheetStoreType = {
+    cartItem: WishlistItem | null
+    isOpen: boolean
+    openSheet: (item: WishlistItem) => void
+    closeSheet: () => void
+}

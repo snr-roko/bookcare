@@ -15,5 +15,4 @@ export type WishlistStore = {
     items: WishlistItem[]
     addToWishlist: (item: WishlistItem) => void
     removeFromWishlist: (workKey: string) => void
-    isInWishlist: (workKey: string) => boolean
 }

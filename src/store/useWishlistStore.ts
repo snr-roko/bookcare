@@ -12,8 +12,7 @@ export const useWhishlistStore = create<WishlistStore>()(
             },
             removeFromWishlist: (workKey) => {
                 set(state => ({items: state.items.filter(item => item.id !== workKey)}))
-            },
-            isInWishlist: (workKey) => (get().items.some(item => item.id === workKey))
+            }
         }),
         {
             name: "bookcare-wishlist",

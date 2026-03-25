@@ -18,6 +18,7 @@ const CheckoutScreen = () => {
     const {totalAmount} = useLocalSearchParams<{totalAmount: string}>()
 
     const userId = useAuthStore((state) => state.session?.user.id)
+    const name = useAuthStore(state => state.session?.user.user_metadata.full_name)
 
     const [paymentMethod, setPaymentMethod] = useState<"mobileMoney"|"card">("mobileMoney")
     const [isCompletingPayment, setIsCompletingPayment] = useState<boolean>(false)
@@ -93,7 +94,7 @@ const CheckoutScreen = () => {
             <Text className="text-bookcare-primary text-3xl">Bookcare Pay</Text>
             <View className="items-center gap-10 flex-1">
                 <View className="gap-10 items-center">
-                    <Text className="text-2xl text-bookcare-textMuted">Rabbi Agyei</Text>
+                    <Text className="text-2xl text-bookcare-textMuted">{name}</Text>
                     <Text className="text-4xl text-bookcare-textDark dark:text-bookcare-darkText">GHS {totalAmount}</Text>
                 </View>
                 <View className="mt-10 gap-5 justify-center items-center w-full">

@@ -23,7 +23,7 @@ const RootLayout = () => {
 
     const mode = useThemeStore((state) => state.mode)
     const { loadMode, setMode } = useThemeStore(
-    useShallow(state => ({ loadMode: state.loadMode, setMode: state.setMode }))
+        useShallow(state => ({ loadMode: state.loadMode, setMode: state.setMode }))
     )
 
     const {setColorScheme} = useColorScheme()

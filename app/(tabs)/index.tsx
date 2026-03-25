@@ -8,12 +8,12 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { OpenLibraryResponseBook } from "@/src/types"
 import BookCard from "@/src/components/books/BookCard"
 import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import ProfileModal from "@/src/components/profile/ProfileModal"
 
 const DiscoverScreen = () => {
-    const logoutUser = async() => {
-        await supabase.auth.signOut()
-    }
+
+    const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false)
 
     const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
     const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
@@ -29,9 +29,10 @@ const DiscoverScreen = () => {
         <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row justify-between">
                 <Text className="text-bookcare-primary text-3xl" >Discover</Text>
-                <Button size="xs" className="bg-transparent">
-                    <Ionicons name="person-circle" size={28} color={colors.primary} />
+                <Button variant="link" onPress={() => setIsProfileModalOpen(true)} size="xs">
+                    <Ionicons name="person-circle" size={30} color={colors.primary} />
                 </Button>
+                <ProfileModal isOpen={isProfileModalOpen} setIsOpen={setIsProfileModalOpen} />
             </View>
             <View>
                 <TextInput

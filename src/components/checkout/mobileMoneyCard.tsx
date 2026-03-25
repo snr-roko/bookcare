@@ -88,9 +88,7 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
                 <TextInput
                     inputMode="tel"
                     editable={false}
-                    placeholder="0244 4444 44"
-                    maxLength={10}
-                    placeholderTextColor={colors.textMuted}
+                    value="0244 4444 44"
                     className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
                 />
             </View>

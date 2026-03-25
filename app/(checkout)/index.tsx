@@ -19,7 +19,7 @@ const CheckoutScreen = () => {
 
     const userId = useAuthStore((state) => state.session?.user.id)
 
-    const [paymentMethod, setPaymentMethod] = useState<"mobileMoney"|"card"|null>(null)
+    const [paymentMethod, setPaymentMethod] = useState<"mobileMoney"|"card">("mobileMoney")
     const [isCompletingPayment, setIsCompletingPayment] = useState<boolean>(false)
     const [mobileMoneySelected, setMobileMoneySelected] = useState<mobileMoneySelection>("airtelTigo")
 
@@ -35,7 +35,8 @@ const CheckoutScreen = () => {
                 number_of_books: cart.reduce((prev, curr) => prev + curr.quantity, 0),
                 total_amount: totalAmount,
                 delivery_date: deliveryDateString,
-                user_id: userId
+                user_id: userId,
+                payment_method: paymentMethod!,
             }
         ).select().single()
         if (error) throw new Error(error.message)
@@ -52,7 +53,11 @@ const CheckoutScreen = () => {
             price: parseInt(cartItem.itemDetails.price),
             quantity: cartItem.quantity,
             title: cartItem.itemDetails.title,
-            payment_method: paymentMethod!
+            work_key: cartItem.itemDetails.id,
+            author_key: cartItem.itemDetails.authorKey,
+            cover_id: cartItem.itemDetails.coverId,
+            edition_count: parseInt(cartItem.itemDetails.editionCount),
+            year_first_published: cartItem.itemDetails.yearFirstPublished
         }) ) 
         const {error} = await supabase.from("OrderItem").insert(
             orderItems
@@ -87,9 +92,9 @@ const CheckoutScreen = () => {
         <SafeAreaView className="flex-1 py-10 px-5 gap-14 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <Text className="text-bookcare-primary text-3xl">Bookcare Pay</Text>
             <View className="items-center gap-10 flex-1">
-                <View className="gap-10">
+                <View className="gap-10 items-center">
                     <Text className="text-2xl text-bookcare-textMuted">Rabbi Agyei</Text>
-                    <Text className="text-2xl text-bookcare-textDark dark:text-bookcare-darkText">GHS {totalAmount}</Text>
+                    <Text className="text-4xl text-bookcare-textDark dark:text-bookcare-darkText">GHS {totalAmount}</Text>
                 </View>
                 <View className="mt-10 gap-5 justify-center items-center w-full">
                     <View className="gap-5 justify-center items-center">

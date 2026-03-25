@@ -10,6 +10,7 @@ import { ActivityIndicator } from "react-native"
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { colorScheme, useColorScheme } from "nativewind"
 import * as SplashScreen from "expo-splash-screen"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 const RootLayout = () => {
     const {loadAuth, isLoggedIn, isLoading} = useAuthStore(useShallow(
@@ -48,26 +49,28 @@ const RootLayout = () => {
     )
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <GluestackUIProvider mode={mode}>
-                <SafeAreaProvider>
-                    <Stack screenOptions={{
-                        headerShown: false
-                    }}>
-                        <Stack.Protected guard={isLoggedIn}>
-                            <Stack.Screen
-                                name="(tabs)"
-                            />
-                        </Stack.Protected>
-                        <Stack.Protected guard={!isLoggedIn}>
-                            <Stack.Screen
-                                name="(auth)"
-                            />
-                        </Stack.Protected>
-                    </Stack>
-                </SafeAreaProvider>
-            </GluestackUIProvider>
-        </QueryClientProvider>   
+        <GestureHandlerRootView style={{flex: 1}}>
+            <QueryClientProvider client={queryClient}>
+                <GluestackUIProvider mode={mode}>
+                    <SafeAreaProvider>
+                        <Stack screenOptions={{
+                            headerShown: false
+                        }}>
+                            <Stack.Protected guard={isLoggedIn}>
+                                <Stack.Screen
+                                    name="(tabs)"
+                                />
+                            </Stack.Protected>
+                            <Stack.Protected guard={!isLoggedIn}>
+                                <Stack.Screen
+                                    name="(auth)"
+                                />
+                            </Stack.Protected>
+                        </Stack>
+                    </SafeAreaProvider>
+                </GluestackUIProvider>
+            </QueryClientProvider>
+        </GestureHandlerRootView>   
     )
 }
 

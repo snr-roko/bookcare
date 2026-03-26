@@ -30,6 +30,21 @@ export const fetchBookAuthorDetails = async (authorKey: string) => {
     return retrieveAuthorDetailsFromPayload(payload)
 }
 
+export const fetchBooksBySubject = async (subject: string) => {
+    const url = `${openLibraryBaseUrl}/subjects/${subject}.json?details=true`
+    const response = await fetch(url, {
+        method: "GET"
+    })
+
+    if (!response.ok) {
+        throw new Error("Error fetching Popular books")
+    }
+
+    const payload = await response.json()
+    
+    return retrieveWorksFromPayloadForSubjects(payload.works)
+}
+
 export const fetchBooksBySubjectFew = async (subject: string) => {
     const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=5&details=true`
     const response = await fetch(url, {
@@ -43,4 +58,21 @@ export const fetchBooksBySubjectFew = async (subject: string) => {
     const payload = await response.json()
     
     return retrieveWorksFromPayloadForSubjects(payload.works)
+}
+
+
+export const fetchWorksByAuthor = async (authorKey: string) => {
+    const formattedAuthorKey = authorKey.startsWith("/authors/") ? authorKey.replace("/authors/", "") : authorKey
+
+    const url =  `${openLibraryBaseUrl}/authors/${formattedAuthorKey}/works.json`
+
+    const response = await fetch(url, {
+            method: "GET"
+        })
+    
+    if (!response.ok) throw new Error("Error fetching Book Details")
+        
+    const payload = await response.json()
+
+    console.log(payload)
 }

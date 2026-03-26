@@ -1,7 +1,6 @@
 import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import { BOOK_QUOTES, CATEGORIES, colors } from "@/src/constants"
-import { usePopularBooks, useTrendingNowBooks } from "@/src/hooks"
-import { supabase } from "@/src/lib/supabase"
+import { usePopularBooks, useSearchBooksBySubject, useTrendingNowBooks } from "@/src/hooks"
 import { Ionicons } from "@expo/vector-icons"
 import { ScrollView, Text, TextInput, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -10,13 +9,19 @@ import BookCard from "@/src/components/books/BookCard"
 import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
 import { useRef, useState } from "react"
 import ProfileModal from "@/src/components/profile/ProfileModal"
+import BookList from "@/src/components/common/BookList"
+import { FlashList } from "@shopify/flash-list"
+import { cn } from "@/src/utils"
 
 const DiscoverScreen = () => {
+
+    const [subject, setSubject] = useState<string>("")
 
     const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false)
 
     const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
     const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
+    const {data: subjectSearchedBooks, isLoading: isSearchBySubjectLoading} = useSearchBooksBySubject(subject)
 
     const quote = BOOK_QUOTES[Math.floor(Math.random() * BOOK_QUOTES.length)]
 
@@ -49,13 +54,45 @@ const DiscoverScreen = () => {
                     showsHorizontalScrollIndicator={false}
                     >
                     {CATEGORIES.map((category) => (
-                        <Button variant="outline" key={category.value} size="sm" className="rounded-full">
-                            <ButtonText className="text-bookcare-primary font-semibold text-center">{category.label}</ButtonText>
+                        <Button 
+                            onPress={() => setSubject(category.value === "all" ? "" : category.value)}
+                            variant="outline" 
+                            key={category.value} 
+                            size="sm" 
+                            className={cn([
+                                {"bg-bookcare-primary": subject === category.value}
+                            ])}>
+                            <ButtonText
+                                className={cn([
+                                "text-bookcare-primary font-semibold text-center",
+                                {"text-bookcare-surface": subject === category.value}
+                            ])} 
+                            >   
+                                {category.label}
+                            </ButtonText>
                         </Button>
                     ))}
                 </ScrollView>
             </View>
-            <ScrollView
+            {
+                subject ?
+                    isSearchBySubjectLoading ?
+                        (
+                            <FlashList
+                                data={[1,2,3,4,5,6]}
+                                renderItem={() => <SkeletonBookCard />}
+                                numColumns={2}
+                                ItemSeparatorComponent={() => <View style={{ height: 16}} />}
+                            />
+                        ) :
+                    (<BookList 
+                        heading={subject
+                            .split('_')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ')} 
+                        books={subjectSearchedBooks!} />)
+                        :
+                <ScrollView
                 contentContainerClassName="pb-5 gap-5"
                 showsVerticalScrollIndicator={false}
                 ref={scrollRef}
@@ -124,7 +161,9 @@ const DiscoverScreen = () => {
                             </ButtonText>
                         </Button>
                 </View>
-            </ScrollView>
+            </ScrollView> 
+
+            }
         </SafeAreaView>
     )
 }

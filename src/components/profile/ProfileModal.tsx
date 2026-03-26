@@ -111,7 +111,7 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
                                 }}>
                                 <Text style={{
                                     color: colors.cream,
-                                    fontSize: 32,
+                                    fontSize: 56,
                                     fontWeight: 'bold',
                                 }}>
                                     {name.charAt(0).toUpperCase()}

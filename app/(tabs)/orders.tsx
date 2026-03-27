@@ -23,7 +23,7 @@ const OrdersScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-bg dark:bg-bookcare-bgDark">
             <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">Orders</Text>
             {
                 isLoading ? 

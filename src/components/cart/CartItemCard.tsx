@@ -39,7 +39,7 @@ const CartItemCard = memo(
                 borderRadius: 1,
                 elevation: 2,
             }}
-            className="flex-row p-3 gap-5 bg-white dark:bg-bookcare-darkCard">
+            className="border border-bookcare-border dark:border-bookcare-borderDark flex-row p-3 gap-5 bg-bookcare-surface dark:bg-bookcare-surfaceDark">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}
@@ -51,24 +51,24 @@ const CartItemCard = memo(
             </View>
             <View className="flex-1 justify-between">
                 <View>
-                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold leading-tight text-bookcare-textDark dark:text-bookcare-darkText">
+                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold leading-tight text-bookcare-text dark:text-bookcare-textDark">
                         {cartItem.itemDetails.title}
                     </Text>
                 </View>
                 <View>
-                    <Text numberOfLines={1} className="text-bookcare-textMuted text-sm">
+                    <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-sm">
                         {cartItem.itemDetails.authorName}
                     </Text>
-                    <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">GHS {cartItem.itemDetails.price}</Text>
+                    <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark">GHS {cartItem.itemDetails.price}</Text>
                     <View className="flex-row justify-between items-end">
-                        <Button onPress={removeCartItemFromCart} size="sm" className="bg-bookcare-primary rounded-xl">
-                            <ButtonText className="text-white font-bold">
+                        <Button onPress={removeCartItemFromCart} size="sm" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                            <ButtonText className="text-bookcare-whiteSoft font-bold">
                                 Remove
                             </ButtonText>
                         </Button>
                         <View className="flex-row gap-5">
-                            <Text className="text-xl font-semibold text-bookcare-textMuted">x{cartItem.quantity}</Text>
-                            <Text className="text-lg font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {parseInt(cartItem.itemDetails.price) * cartItem.quantity}</Text>
+                            <Text className="text-xl font-semibold text-bookcare-muted dark:text-bookcare-mutedDark">x{cartItem.quantity}</Text>
+                            <Text className="text-lg font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {parseInt(cartItem.itemDetails.price) * cartItem.quantity}</Text>
                         </View>
                     </View>
                 </View>

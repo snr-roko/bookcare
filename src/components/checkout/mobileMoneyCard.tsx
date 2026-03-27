@@ -13,24 +13,24 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
     return (
         <View className="gap-10">
             <View className="gap-2">
-                <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">Select Network</Text>
+                <Text className="text-lg text-bookcare-text dark:text-bookcare-textDark">Select Network</Text>
                 <View className="flex-row gap-5">
                     <Button 
                         variant="outline" 
                         size="xs" 
                         onPress={() => selectMobileMoneyMethod("mtn")}
                         className={cn([
-                            "border-bookcare-primary",
+                            "border-bookcare-border dark:border-bookcare-borderDark",
                             {
-                                "bg-bookcare-primary": mobileMoneyCard.mobileMoneySelection === "mtn",
+                                "bg-bookcare-primary dark:bg-bookcare-primaryDark": mobileMoneyCard.mobileMoneySelection === "mtn",
                             }
                         ])}
                         >
                         <ButtonText
                             className={cn([
-                                "text-bookcare-primary",
+                                "text-bookcare-text dark:text-bookcare-textDark",
                                 {
-                                    "text-bookcare-surface": mobileMoneyCard.mobileMoneySelection === "mtn"
+                                    "text-bookcare-whiteSoft": mobileMoneyCard.mobileMoneySelection === "mtn"
                                 }
                             ])}
                         >
@@ -42,17 +42,17 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
                         size="xs" 
                         onPress={() => selectMobileMoneyMethod("telecel")}
                         className={cn([
-                            "border-bookcare-primary",
+                            "border-bookcare-border dark:border-bookcare-borderDark",
                             {
-                                "bg-bookcare-primary": mobileMoneyCard.mobileMoneySelection === "telecel",
+                                "bg-bookcare-primary dark:bg-bookcare-primaryDark": mobileMoneyCard.mobileMoneySelection === "telecel",
                             }
                         ])}
                         >
                         <ButtonText
                             className={cn([
-                            "text-bookcare-primary",
+                            "text-bookcare-text dark:text-bookcare-textDark",
                             {
-                                "text-bookcare-surface": mobileMoneyCard.mobileMoneySelection === "telecel"
+                                "text-bookcare-whiteSoft": mobileMoneyCard.mobileMoneySelection === "telecel"
                             }
                         ])}
                         >
@@ -64,17 +64,17 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
                         size="xs" 
                         onPress={() => selectMobileMoneyMethod("airtelTigo")}
                         className={cn([
-                            "border-bookcare-primary",
+                            "border-bookcare-border dark:border-bookcare-borderDark",
                             {
-                                "bg-bookcare-primary": mobileMoneyCard.mobileMoneySelection === "airtelTigo",
+                                "bg-bookcare-primary dark:bg-bookcare-primaryDark": mobileMoneyCard.mobileMoneySelection === "airtelTigo",
                             }
                         ])}
                         >
                         <ButtonText
                             className={cn([
-                                "text-bookcare-primary",
+                                "text-bookcare-text dark:text-bookcare-textDark",
                                 {
-                                    "text-bookcare-surface": mobileMoneyCard.mobileMoneySelection === "airtelTigo"
+                                    "text-bookcare-whiteSoft": mobileMoneyCard.mobileMoneySelection === "airtelTigo"
                                 }
                             ])}
                         >
@@ -84,12 +84,12 @@ const MobileMoneyPaymentMethod = (mobileMoneyCard: mobileMoneyCardType) => {
                 </View>
             </View>
             <View className="gap-2">
-                <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">Phone Number</Text>
+                <Text className="text-lg text-bookcare-text dark:text-bookcare-textDark">Phone Number</Text>
                 <TextInput
                     inputMode="tel"
                     editable={false}
                     value="0244 4444 44"
-                    className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
+                    className="p-4 border border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"
                 />
             </View>
         </View>

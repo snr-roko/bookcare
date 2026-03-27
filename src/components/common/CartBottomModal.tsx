@@ -10,8 +10,12 @@ import { CartItemType, WishlistItem } from "@/src/types"
 import { useCartStore } from "@/src/store/useCartStore"
 import * as Haptics from "expo-haptics"
 import { toast } from "sonner-native"
+import { useColorScheme } from "react-native"
 
 const CartBottomModal = () => {
+
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
 
     const [quantity, setQuantity] = useState<number>(0)
 
@@ -20,9 +24,6 @@ const CartBottomModal = () => {
     const isOpen = useCartBottomSheetStore(state => state.isOpen)
     const item = useCartBottomSheetStore(state => state.cartItem)
     const closeSheet = useCartBottomSheetStore(state => state.closeSheet)
-    console.log(isOpen)
-    console.log("item: ", item)
-
 
     const increaseQuantity = () => {
         if (quantity === 20) return
@@ -78,21 +79,21 @@ const CartBottomModal = () => {
             />
 
             <View 
-                className="bg-bookcare-surface p-5 gap-5 pb-5 justify-center"
+                className="bg-bookcare-surface dark:bg-bookcare-surfaceDark p-5 gap-5 pb-5 justify-center"
                 style={{
                     borderTopWidth: 2,
-                    borderTopColor: colors.mid,
+                    borderTopColor: isDark ? colors.borderDark : colors.border,
                     flex: 2
                 }}
                 >
-                <Text className="text-2xl text-bookcare-primary font-bold text-center">Add Book to cart</Text>
+                <Text className="text-2xl text-bookcare-heading dark:text-bookcare-headingDark font-bold text-center">Add Book to cart</Text>
                 <View
                     style={{
                         overflow: "hidden",
                         borderRadius: 8,
                         elevation: 2,
                     }}
-                    className="flex-row p-3 gap-5 bg-white dark:bg-bookcare-darkCard">
+                    className="border border-bookcare-border dark:border-bookcare-borderDark flex-row p-3 gap-5 bg-bookcare-surface/70 dark:bg-bookcare-surfaceDark/70">
                     <View className="items-center">
                         <Image
                             style={{ height: 130, width: 100}}
@@ -104,24 +105,24 @@ const CartBottomModal = () => {
                     </View>
                     <View className="flex-1 justify-between">
                         <View>
-                            <Text numberOfLines={2} className="text-lg flex-shrink font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
+                            <Text numberOfLines={2} className="text-lg flex-shrink font-semibold text-bookcare-text dark:text-bookcare-textDark">
                                 {item?.title}
                             </Text>
                         </View>
                         <View>
-                            <Text numberOfLines={1} className="text-bookcare-textMuted text-sm">
+                            <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-sm">
                                 {item?.authorName}
                             </Text>
-                            <Text className="text-lg font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {item?.price}</Text>
+                            <Text className="text-lg font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {item?.price}</Text>
                         </View>
                         <View className="flex-row justify-between">
                             <View className="flex-row items-center gap-3">
-                                <Button onPress={decreaseQuantity} size="md" className="rounded-xl bg-bookcare-mid">
-                                    <ButtonText className="text-bookcare-primary font-bold text-2xl">-</ButtonText>
+                                <Button onPress={decreaseQuantity} size="md" className="rounded-xl bg-bookcare-primary dark:bg-bookcare-primaryDark">
+                                    <ButtonText className="text-bookcare-whiteSoft font-bold text-2xl">-</ButtonText>
                                 </Button>
-                                <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-xl">{quantity}</Text>
-                                <Button onPress={increaseQuantity} size="md" className="rounded-xl bg-bookcare-mid">
-                                    <ButtonText className="text-bookcare-primary font-bold text-2xl">+</ButtonText>
+                                <Text className="text-bookcare-text dark:text-bookcare-textDark font-semibold text-xl">{quantity}</Text>
+                                <Button onPress={increaseQuantity} size="md" className="rounded-xl bg-bookcare-primary dark:bg-bookcare-primaryDark">
+                                    <ButtonText className="text-bookcare-whiteSoft font-bold text-2xl">+</ButtonText>
                                 </Button>
                             </View>
                             <View>
@@ -129,10 +130,10 @@ const CartBottomModal = () => {
                                 onPress={addCartItemToCart} 
                                 disabled={quantity < 1}
                                 className={cn([
-                                    {"bg-bookcare-primary":  quantity > 0, "bg-bookcare-mid": quantity < 1},
+                                    {"bg-bookcare-primary dark:bg-bookcare-primaryDark":  quantity > 0, "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": quantity < 1},
                                     "rounded-xl", "px-5" 
                                 ])}>
-                                    <ButtonText className="text-white font-semibold">
+                                    <ButtonText className="text-whiteSoft font-semibold">
                                         Add
                                     </ButtonText>
                                 </Button>

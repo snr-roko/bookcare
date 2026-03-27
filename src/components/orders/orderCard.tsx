@@ -37,7 +37,7 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
                 borderRadius: 8,
                 elevation: 2,
             }}
-            className="flex-row p-4 gap-3 items-center bg-bookcare-surface dark:bg-bookcare-surfaceDark"
+            className="border border-bookcare-border dark:border-bookcare-borderDark flex-row p-4 gap-3 items-center bg-bookcare-surface dark:bg-bookcare-surfaceDark"
             >
             <View
                 style={{ flex: 1 }}

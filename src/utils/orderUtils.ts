@@ -26,7 +26,7 @@ export const fetchOrderItemsOfAnOrder = async (orderId: number) => {
 
 export const getStatusColor = (status: OrderStatus): string => {
   switch (status) {
-    case 'pending':    return colors.textMuted  
+    case 'pending':    return colors.muted  
     case 'confirmed':  return colors.primary  
     case 'processing': return colors.accent  
     case 'shipped':    return `${colors.success}/10`  

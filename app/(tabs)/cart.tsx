@@ -38,15 +38,15 @@ const CartScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <Text className="text-bookcare-primary text-3xl">Cart</Text>
+        <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-bg dark:bg-bookcare-bgDark">
+            <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">Cart</Text>
             {
                 cart.length === 0 ? 
                 <View className="gap-2 justify-center flex-1 items-center">
-                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl">Your cart is empty</Text>
-                    <Text className="text-bookcare-textMuted text-lg">Start adding books you love</Text>
-                    <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary rounded-xl">
-                        <ButtonText className="text-white font-semibold">Browse Books</ButtonText>
+                    <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">Your cart is empty</Text>
+                    <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Start adding books you love</Text>
+                    <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                        <ButtonText className="text-bookcare-whiteSoft font-semibold">Browse Books</ButtonText>
                     </Button>
                 </View> :
                 <View className="flex-1 justify-between">
@@ -58,21 +58,21 @@ const CartScreen = () => {
                         }
                     </ScrollView>
                     <View className="gap-3">
-                        <Text className="text-bookcare-primary text-xl">Summary</Text>
+                        <Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark text-xl">Summary</Text>
                             <View className="flex-row justify-between items-center">
-                                <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Sub Total: </Text>
-                                <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{subTotal}</Text>
+                                <Text className="text-bookcare-text dark:text-bookcare-textDark text-xl">Sub Total: </Text>
+                                <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark text-2xl">{subTotal}</Text>
                             </View>
                         <View className="flex-row justify-between">
-                            <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl items-center">Delivery Fee: </Text>
-                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{deliveryFee}</Text>
+                            <Text className="text-bookcare-text dark:text-bookcare-textDark text-xl items-center">Delivery Fee: </Text>
+                            <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark text-2xl">{deliveryFee}</Text>
                         </View>
                         <View className="flex-row justify-between items-center">
-                            <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Total Amount Payable: </Text>
-                            <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{totalAmountPayable}</Text>
+                            <Text className="text-bookcare-text dark:text-bookcare-textDark text-xl">Total Amount Payable: </Text>
+                            <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark text-2xl">{totalAmountPayable}</Text>
                         </View>
-                        <Button onPress={checkout} size="lg" className="bg-bookcare-primary">
-                            {checkoutloading ? <ButtonSpinner color={colors.darkText} /> :<ButtonText className="text-white text-lg font-bold">Checkout</ButtonText>}
+                        <Button onPress={checkout} size="lg" className="bg-bookcare-primary dark:bg-bookcare-primaryDark">
+                            {checkoutloading ? <ButtonSpinner color={colors.whiteSoft} /> :<ButtonText className="text-bookcare-whiteSoft text-lg font-bold">Checkout</ButtonText>}
                         </Button>
                     </View>
                 </View>

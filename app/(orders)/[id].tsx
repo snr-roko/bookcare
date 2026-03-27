@@ -9,8 +9,13 @@ import { Ionicons } from "@expo/vector-icons"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useColorScheme } from "react-native"
 
 const OrderDetailsScreen = () => {
+
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
+    
 
     const router = useRouter()
 
@@ -28,15 +33,15 @@ const OrderDetailsScreen = () => {
     const formattedorderDate = new Date(orderDate).toLocaleString()
     const statusColor = getStatusColor(status as OrderStatus)
 
-    const {data, isLoading, isError, error} = useFetchOrderDetails(parseInt(id))
-    if(isError) console.log(error)
+    const {data, isLoading} = useFetchOrderDetails(parseInt(id))
+    
     return (
-        <SafeAreaView className="flex-1 pt-5 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 pt-5 px-5 bg-bookcare-bg dark:bg-bookcare-bgDark">
             <View className="flex-row items-center gap-5 mb-5">
                 <Button className="bg-transparent" variant="link"  onPress={() => router.back()}>
-                    <Ionicons size={30} name="arrow-back" color={colors.primary} />
+                    <Ionicons size={30} name="arrow-back" color={isDark ? colors.headingDark : colors.heading} />
                 </Button>
-                <Text className="text-bookcare-primary text-3xl">{`#BOOKCARE-${id}`}</Text>
+                <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">{`#BOOKCARE-${id}`}</Text>
             </View>
             {
                 isLoading ? 
@@ -48,8 +53,8 @@ const OrderDetailsScreen = () => {
                     </View> :
             <View className="flex-1 justify-between gap-3">
                 <View>
-                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-lg">Placed on {formattedorderDate}</Text>
-                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-lg">Delivery on {deliveryDate}</Text>
+                    <Text className="text-bookcare-text dark:text-bookcare-textDark text-lg">Placed on {formattedorderDate}</Text>
+                    <Text className="text-bookcare-text dark:text-bookcare-textDark text-lg">Delivery on {deliveryDate}</Text>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-3 pb-3">
                     { 
@@ -72,15 +77,15 @@ const OrderDetailsScreen = () => {
                 </ScrollView>
                 <View className="gap-3 py-5">
                     <View className="flex-row justify-between items-center">
-                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Payment Method: </Text>
-                        <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{paymentMethod === "mobileMoney" ? "Mobile Money" : "Card"}</Text>
+                        <Text className="text-bookcare-text dark:text-bookcare-textDark text-xl">Payment Method: </Text>
+                        <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark text-2xl">{paymentMethod === "mobileMoney" ? "Mobile Money" : "Card"}</Text>
                     </View>
                     <View className="flex-row justify-between items-center">
-                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText text-xl">Total Amount Paid: </Text>
-                        <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText text-2xl">{totalAmount}</Text>
+                        <Text className="text-bookcare-text dark:text-bookcare-textDark text-xl">Total Amount Paid: </Text>
+                        <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark text-2xl">{totalAmount}</Text>
                     </View>
                     <Button size="xl" disabled style={{backgroundColor: statusColor}} >
-                        <ButtonText>
+                        <ButtonText className="text-bookcare-whiteSoft">
                             {status.charAt(0).toUpperCase() + status.slice(1)}
                         </ButtonText>
                     </Button>

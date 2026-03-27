@@ -14,6 +14,7 @@ import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { toast } from "sonner-native"
 
+
 const CheckoutScreen = () => {
 
     const {totalAmount} = useLocalSearchParams<{totalAmount: string}>()
@@ -90,36 +91,36 @@ const CheckoutScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 py-10 px-5 gap-14 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <Text className="text-bookcare-primary text-3xl">Bookcare Pay</Text>
+        <SafeAreaView className="flex-1 py-10 px-5 gap-14 bg-bookcare-bg dark:bg-bookcare-bgDark">
+            <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">Bookcare Pay</Text>
             <View className="items-center gap-10 flex-1">
                 <View className="gap-10 items-center">
-                    <Text className="text-2xl text-bookcare-textMuted">{name}</Text>
-                    <Text className="text-4xl text-bookcare-textDark dark:text-bookcare-darkText">GHS {totalAmount}</Text>
+                    <Text className="text-2xl text-bookcare-muted dark:text-bookcare-mutedDark">{name}</Text>
+                    <Text className="text-4xl text-bookcare-text dark:text-bookcare-textDark">GHS {totalAmount}</Text>
                 </View>
                 <View className="mt-10 gap-5 justify-center items-center w-full">
                     <View className="gap-5 justify-center items-center">
-                        <Text className="text-bookcare-primary text-xl">Choose Payment Method</Text>
+                        <Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark text-xl">Choose Payment Method</Text>
                         <View className="flex-row justify-center">
                             <Button 
                                 className={
                                     cn(
-                                        [{"bg-bookcare-primary": paymentMethod === "mobileMoney",
-                                            "bg-bookcare-textMuted": paymentMethod !== "mobileMoney"}
+                                        [{"bg-bookcare-primary dark:bg-bookcare-primaryDark": paymentMethod === "mobileMoney",
+                                            "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": paymentMethod !== "mobileMoney"}
                                             ])} 
                                 size="xl" 
                                 onPress={() => setPaymentMethod("mobileMoney")}>
-                                <ButtonText>Mobile Money</ButtonText>
+                                <ButtonText className="text-bookcare-whiteSoft">Mobile Money</ButtonText>
                             </Button>
                             <Button
                                 className={
                                         cn(
-                                            [{"bg-bookcare-primary": paymentMethod === "card",
-                                                "bg-bookcare-textMuted": paymentMethod !== "card"}
+                                            [{"bg-bookcare-primary dark:bg-bookcare-primaryDark": paymentMethod === "card",
+                                                "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": paymentMethod !== "card"}
                                                 ])} 
                                 size="xl" 
                                 onPress={() => setPaymentMethod("card")}>
-                                <ButtonText>Card</ButtonText>
+                                <ButtonText className="text-bookcare-whiteSoft">Card</ButtonText>
                             </Button>
                         </View>
                     </View>
@@ -135,10 +136,10 @@ const CheckoutScreen = () => {
                     disabled={paymentMethod === null} size="xl" 
                     className={
                                         cn(
-                                            [{"bg-bookcare-primary": paymentMethod !== null,
-                                                "bg-bookcare-textMuted": paymentMethod === null}
+                                            [{"bg-bookcare-primary dark:bg-bookcare-primaryDark": paymentMethod !== null,
+                                                "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": paymentMethod === null}
                                                 ])}>
-                            {isCompletingPayment ? <ButtonSpinner color={colors.darkText} /> :<ButtonText className="text-white text-lg font-bold">Complete Payment</ButtonText>}
+                            {isCompletingPayment ? <ButtonSpinner color={colors.whiteSoft} /> :<ButtonText className="text-bookcare-whiteSoft text-lg font-bold">Complete Payment</ButtonText>}
                 </Button>
             </View>
         </SafeAreaView>

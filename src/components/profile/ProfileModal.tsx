@@ -12,9 +12,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Image } from "expo-image"
 import { Ionicons } from "@expo/vector-icons"
 import * as Haptics from "expo-haptics"
+import { useColorScheme } from "react-native"
 
 const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
     
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
+    
+
     const setTheme = useThemeStore(state => state.setMode)
     const mode = useThemeStore(state => state.mode)
 
@@ -83,14 +88,14 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
             />
 
             <View 
-                className="bg-bookcare-surface p-5 gap-5 pb-5"
+                className="bg-bookcare-surface dark:bg-bookcare-surfaceDark p-5 gap-5 pb-5"
                 style={{
                     borderTopWidth: 2,
-                    borderTopColor: colors.mid,
+                    borderTopColor: isDark ? colors.borderDark : colors.border,
                     flex: 3
                 }}
                 >
-                <Text className="text-2xl text-bookcare-primary font-bold text-center">Profile</Text>
+                <Text className="text-2xl text-bookcare-heading dark:text-bookcare-headingDark font-bold text-center">Profile</Text>
                 <View className="gap-8">
                     <View style={{ alignItems: 'center', marginBottom: 16 }}>
                         
@@ -107,12 +112,12 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
                                 width: 120,
                                 height: 120,         
                                 borderRadius: 60,
-                                backgroundColor: colors.primary,
+                                backgroundColor: isDark ? colors.primaryDark : colors.primary,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 }}>
                                 <Text style={{
-                                    color: colors.cream,
+                                    color: colors.whiteSoft,
                                     fontSize: 56,
                                     fontWeight: 'bold',
                                 }}>
@@ -128,12 +133,12 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
                                 position: 'absolute',
                                 bottom: 0,
                                 right: 0,
-                                backgroundColor: colors.accent,
+                                backgroundColor: isDark ? colors.primaryDark : colors.primary,
                                 borderRadius: 12,
                                 padding: 4,
                             }}
                             >
-                            <Ionicons name="camera" size={14} color={colors.surface} />
+                            <Ionicons name="camera" size={14} color={colors.whiteSoft} />
                             </Pressable>
                         </View>
 
@@ -145,64 +150,64 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
                             }}
                             className="mt-2"
                             >
-                            <Text className="text-bookcare-error text-xs">Remove photo</Text>
+                            <Text className="text-bookcare-error dark:text-bookcare-errorDark text-xs">Remove photo</Text>
                             </Pressable>
                         )}
 
                         </View>
                     <View className="gap-3">
-                        <Text className="font-semibold text-xl text-bookcare-textDark dark:text-bookcare-darkText">Full Name</Text>
+                        <Text className="font-semibold text-xl text-bookcare-text dark:text-bookcare-textDark">Full Name</Text>
                         <TextInput
                             inputMode="text"
                             value={name}
                             editable={false}
-                            className="text-xl p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"         
+                            className="text-xl p-4 border border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"         
                         />
                     </View>
                     <View className="gap-3">
-                        <Text className="font-semibold text-xl text-bookcare-textDark dark:text-bookcare-darkText">Change Theme</Text>
+                        <Text className="font-semibold text-xl text-bookcare-text dark:text-bookcare-textDark">Change Theme</Text>
                         <View className="flex-row justify-center gap-10">
                             <Button 
                                 onPress={() => changeTheme("light")} 
                                 size="lg"
                                 className={cn([
                                     {
-                                        "bg-bookcare-textMuted": mode !== "light",
-                                        "bg-bookcare-primary": mode === "light"
+                                        "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": mode !== "light",
+                                        "bg-bookcare-primary dark:bg-bookcare-primaryDark": mode === "light"
                                     }
                                 ])}
                                 >
-                                <ButtonText>Light</ButtonText>
+                                <ButtonText className="text-bookcare-whiteSoft">Light</ButtonText>
                             </Button>
                             <Button 
                                 onPress={() => changeTheme("dark")} 
                                 size="lg"
                                 className={cn([
                                     {
-                                        "bg-bookcare-textMuted": mode !== "dark",
-                                        "bg-bookcare-primary": mode === "dark"
+                                        "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": mode !== "dark",
+                                        "bg-bookcare-primary dark:bg-bookcare-primaryDark": mode === "dark"
                                     }
                                 ])}
                                 >
-                                <ButtonText>Dark</ButtonText>
+                                <ButtonText className="text-bookcare-whiteSoft">Dark</ButtonText>
                             </Button>
                             <Button 
                                 onPress={() => changeTheme("system")} 
                                 size="lg"
                                 className={cn([
                                     {
-                                        "bg-bookcare-textMuted": mode !== "system",
-                                        "bg-bookcare-primary": mode === "system"
+                                        "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": mode !== "system",
+                                        "bg-bookcare-primary dark:bg-bookcare-primaryDark": mode === "system"
                                     }
                                 ])}
                                 >
-                                <ButtonText>System</ButtonText>
+                                <ButtonText className="text-bookcare-whiteSoft">System</ButtonText>
                             </Button>
                         </View>
                     </View>
                     <View>
-                        <Button size="lg" className="bg-bookcare-error" onPress={alertUserOfLogout}>
-                            <ButtonText className="text-bookcare-surface font-semibold text-xl">Logout</ButtonText>
+                        <Button size="lg" className="bg-bookcare-error dark:bg-bookcare-errorDark" onPress={alertUserOfLogout}>
+                            <ButtonText className="text-bookcare-whiteSoft font-semibold text-xl">Logout</ButtonText>
                         </Button>
                     </View>
                 </View>

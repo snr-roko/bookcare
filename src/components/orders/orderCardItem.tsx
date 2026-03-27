@@ -34,7 +34,7 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
                 borderRadius: 1,
                 elevation: 2,
             }}
-            className="flex-row p-3 gap-5 bg-bookcare-surface dark:bg-bookcare-surfaceDark">
+            className="flex-row p-3 gap-5 border border-bookcare-border dark:border-bookcare-borderDark bg-bookcare-surface dark:bg-bookcare-surfaceDark">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}

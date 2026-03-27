@@ -18,22 +18,69 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: 
-        {
-          "bookcare":{
-            "cream":       "#FAF3E0", // Screen backgrounds (light mode) → bg-bookcare-cream dark:bg-bookcare-darkBg
-            "darkBg":      "#1A0F0A", // Screen backgrounds (dark mode)  → bg-bookcare-cream dark:bg-bookcare-darkBg
-            "surface":     "#FFFFFF", // Cards, inputs, modals (light)   → bg-bookcare-surface dark:bg-bookcare-darkSurface
-            "darkSurface": "#2C1810", // Cards, inputs, modals (dark)    → bg-bookcare-surface dark:bg-bookcare-darkSurface
-            "textDark":    "#2C1810", // All main text (light mode)      → text-bookcare-textDark dark:text-bookcare-darkText
-            "darkText":    "#FAF3E0", // All main text (dark mode)       → text-bookcare-textDark dark:text-bookcare-darkText
-            "textMuted":   "#8B6F5E", // Captions, authors, placeholders → text-bookcare-textMuted (same both modes)
-            "primary":     "#5C3D2E", // Buttons, active states, logo    → bg-bookcare-primary (same both modes)
-            "accent":      "#C8873A", // Prices, badges, highlights      → text-bookcare-accent (same both modes)
-            "mid":         "#E8D5B7", // Borders, dividers, separators   → border-bookcare-mid (same both modes)
-            "success":     "#4A7C59", // Order confirmed, cart added     → text-bookcare-success (same both modes)
-            "error":       "#C0392B"  // Form errors, failed states      → text-bookcare-error (same both modes)
-          },
+      colors: {
+        bookcare: {
+          // Backgrounds
+          bg: "#FAF3E0",
+          bgDark: "#140E0B",
+
+          // Surfaces
+          surface: "#FFFDF8",
+          surfaceDark: "#211814",
+
+          // Text
+          text: "#2B1D17",
+          textDark: "#F7EEDF",
+
+          muted: "#8A6F60",
+          mutedDark: "#B89F90",
+
+          // Headings
+          heading: "#3A2418",
+          headingDark: "#FFF4E8",
+
+          subheading: "#5C3D2E",
+          subheadingDark: "#E8C7A1",
+
+          // Actions / brand
+          primary: "#7A4B2A",
+          primaryDark: "#C58A52",
+
+          // Highlights
+          accent: "#D29A49",
+          accentDark: "#E3B36A",
+
+          // Borders / dividers
+          border: "#E7D7BE",
+          borderDark: "#3A2A22",
+
+          // Feedback
+          success: "#4F7A57",
+          successDark: "#6FA37A",
+
+          error: "#C4473A",
+          errorDark: "#E06A5F",
+
+          // Optional helpers
+          whiteSoft: "#FFFFFF",
+          blackSoft: "#120D0A",
+        },
+      // colors: 
+      //   {
+      //     "bookcare":{
+      //       "cream":       "#FAF3E0", // Screen backgrounds (light mode) → bg-bookcare-cream dark:bg-bookcare-darkBg
+      //       "darkBg":      "#1A0F0A", // Screen backgrounds (dark mode)  → bg-bookcare-cream dark:bg-bookcare-darkBg
+      //       "surface":     "#FFFFFF", // Cards, inputs, modals (light)   → bg-bookcare-surface dark:bg-bookcare-darkSurface
+      //       "darkSurface": "#2C1810", // Cards, inputs, modals (dark)    → bg-bookcare-surface dark:bg-bookcare-darkSurface
+      //       "textDark":    "#2C1810", // All main text (light mode)      → text-bookcare-textDark dark:text-bookcare-darkText
+      //       "darkText":    "#FAF3E0", // All main text (dark mode)       → text-bookcare-textDark dark:text-bookcare-darkText
+      //       "textMuted":   "#8B6F5E", // Captions, authors, placeholders → text-bookcare-textMuted (same both modes)
+      //       "primary":     "#5C3D2E", // Buttons, active states, logo    → bg-bookcare-primary (same both modes)
+      //       "accent":      "#C8873A", // Prices, badges, highlights      → text-bookcare-accent (same both modes)
+      //       "mid":         "#E8D5B7", // Borders, dividers, separators   → border-bookcare-mid (same both modes)
+      //       "success":     "#4A7C59", // Order confirmed, cart added     → text-bookcare-success (same both modes)
+      //       "error":       "#C0392B"  // Form errors, failed states      → text-bookcare-error (same both modes)
+      //     },
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
           50: 'rgb(var(--color-primary-50)/<alpha-value>)',

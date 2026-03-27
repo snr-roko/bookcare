@@ -37,7 +37,7 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
                 borderRadius: 8,
                 elevation: 2,
             }}
-            className="flex-row p-4 gap-3 items-center bg-white dark:bg-bookcare-darkCard"
+            className="flex-row p-4 gap-3 items-center bg-bookcare-surface dark:bg-bookcare-surfaceDark"
             >
             <View
                 style={{ flex: 1 }}
@@ -53,19 +53,19 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
                 style={{ flex: 2 }}
                 className="justify-center gap-1"
             >
-                <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
+                <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark">
                 {`#BOOKCARE-${order.id}`}
                 </Text>
 
-                <Text className="text-bookcare-textMuted text-xs">
+                <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-xs">
                 {order.number_of_books} book(s)
                 </Text>
 
-                <Text className="text-sm font-bold text-bookcare-textDark dark:text-bookcare-darkText">
+                <Text className="text-sm font-bold text-bookcare-text dark:text-bookcare-textDark">
                 GHS {order.total_amount}
                 </Text>
 
-                <Text className="text-xs text-bookcare-textMuted">
+                <Text className="text-xs text-bookcare-muted dark:text-bookcare-mutedDark">
                 Ordered on: {order.delivery_date}
                 </Text>
             </View>

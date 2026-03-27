@@ -5,7 +5,7 @@ import { useFetchOrders } from "@/src/hooks"
 import { useAuthStore } from "@/src/store"
 import { FlashList } from "@shopify/flash-list"
 import { useRouter } from "expo-router"
-import { ScrollView, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { RefreshControl } from "react-native"
 import { colors } from "@/src/constants"
@@ -24,7 +24,7 @@ const OrdersScreen = () => {
 
     return (
         <SafeAreaView className="flex-1 py-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
-            <Text className="text-bookcare-primary text-3xl">Orders</Text>
+            <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">Orders</Text>
             {
                 isLoading ? 
                     <View className="gap-5">
@@ -35,10 +35,10 @@ const OrdersScreen = () => {
                     </View> :
                     data?.length === 0 ? 
                     <View className="gap-2 justify-center flex-1 items-center">
-                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl">No Orders Yet</Text>
-                        <Text className="text-bookcare-textMuted text-lg">Add books to your cart to checkout</Text>
-                        <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary rounded-xl">
-                            <ButtonText className="text-white font-semibold">Browse Books</ButtonText>
+                        <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">No Orders Yet</Text>
+                        <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Add books to your cart to checkout</Text>
+                        <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                            <ButtonText className="text-bookcare-whiteSoft font-semibold">Browse Books</ButtonText>
                         </Button>
                     </View> :
                     <FlashList

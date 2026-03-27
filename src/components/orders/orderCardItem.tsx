@@ -34,7 +34,7 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
                 borderRadius: 1,
                 elevation: 2,
             }}
-            className="flex-row p-3 gap-5 bg-white dark:bg-bookcare-darkCard">
+            className="flex-row p-3 gap-5 bg-bookcare-surface dark:bg-bookcare-surfaceDark">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}
@@ -46,31 +46,31 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
             </View>
             <View className="flex-1 justify-between">
                 <View>
-                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold leading-tight text-bookcare-textDark dark:text-bookcare-darkText">
+                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold leading-tight text-bookcare-text dark:text-bookcare-textDark">
                         {orderItem.title}
                     </Text>
                 </View>
                 <View>
-                    <Text numberOfLines={1} className="text-bookcare-textMuted text-sm">
+                    <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-sm">
                         {orderItem.authorName}
                     </Text>
-                    <Text className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">GHS {orderItem.price}</Text>
+                    <Text className="font-semibold text-bookcare-text dark:text-bookcare-textDark">GHS {orderItem.price}</Text>
                     <View className="flex-row justify-between items-end">
                         <Button 
                             disabled={isInCart} 
                             onPress={openCartModal} 
                             size="sm" 
                             className={cn([
-                                {"bg-bookcare-primary": !isInCart, "bg-bookcare-mid": isInCart},
+                                {"bg-bookcare-primary dark:bg-bookcare-primaryDark": !isInCart, "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": isInCart},
                                 "rounded-xl" 
                             ])}>
-                            <ButtonText className="text-white font-bold">
+                            <ButtonText className="text-bookcare-whiteSoft font-bold">
                                 Buy Again
                             </ButtonText>
                         </Button>
                         <View className="flex-row gap-5">
-                            <Text className="text-xl font-semibold text-bookcare-textMuted">x{orderItem.quantity}</Text>
-                            <Text className="text-lg font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {orderItem.price * orderItem.quantity}</Text>
+                            <Text className="text-xl font-semibold text-bookcare-muted dark:text-bookcare-mutedDark">x{orderItem.quantity}</Text>
+                            <Text className="text-lg font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {orderItem.price * orderItem.quantity}</Text>
                         </View>
                     </View>
                 </View>

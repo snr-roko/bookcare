@@ -16,8 +16,12 @@ import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Haptics from "expo-haptics"
 import {toast} from "sonner-native"
+import { useColorScheme } from "react-native"
 
 const BookDetailsScreen = () => {
+
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark" 
     
     const {title, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
@@ -113,7 +117,7 @@ const BookDetailsScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 pt-10 bg-bookcare-bg dark:bg-bookcare-bgDark">
             <View className="flex-row gap-5 px-5 pb-5">
                 <View style={{overflow: 'hidden', borderRadius: 1, shadowRadius: 1, elevation: 2}}>
                     <Image
@@ -126,15 +130,15 @@ const BookDetailsScreen = () => {
                 </View>
                 <View className="flex-1 justify-between">
                     <View>
-                        <Text numberOfLines={2} className="text-xl flex-shrink font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
+                        <Text numberOfLines={2} className="text-xl flex-shrink font-semibold text-bookcare-text dark:text-bookcare-textDark">
                             {title}
                         </Text>
-                        <Text numberOfLines={1} className="text-bookcare-textMuted text-lg">
+                        <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-lg">
                                 {authorName}
                         </Text>
                     </View>
                     <View className="gap-2">
-                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText">{`${yearFirstPublished} (${editionCount})`}</Text>
+                        <Text className="text-bookcare-text dark:text-bookcare-textDark">{`${yearFirstPublished} (${editionCount})`}</Text>
                         <View className="flex-row gap-2 items-center">
                             <View className="flex-row">
                                 {[1, 2, 3, 4, 5].map(star => (
@@ -148,13 +152,13 @@ const BookDetailsScreen = () => {
                                             : 'star-outline'
                                         }
                                         size={16}
-                                        color={colors.accent}
+                                        color={isDark ? colors.accent : colors.accentDark}
                                     />
                                     ))}
                             </View>
-                            <Text className="text-bookcare-textDark dark:text-bookcare-darkText">{rating}</Text>
+                            <Text className="text-bookcare-text dark:text-bookcare-textDark">{rating}</Text>
                         </View>
-                        <Text className="text-2xl font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {parseInt(price)}</Text>
+                        <Text className="text-2xl font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {parseInt(price)}</Text>
                     </View>
                 </View>
             </View>
@@ -173,14 +177,14 @@ const BookDetailsScreen = () => {
                     </View>):
                     (<View className="gap-5">
                         <Text
-                            className="text-bookcare-textDark dark:text-bookcare-darkText text-sm leading-6"
+                            className="text-bookcare-text dark:text-bookcare-textDark text-sm leading-6"
                         >
                             {expanded ? bookDetails?.description : bookDetails?.description.slice(0, CHAR_LIMIT) + (isLong ? '...' : '')}
                         </Text>
                         {isLong && (
                             <Text
                                 onPress={() => setExpanded(!expanded)}
-                                className="text-bookcare-primary font-semibold mt-1"
+                                className="text-bookcare-primary dark:text-bookcare-primaryDark font-semibold mt-1"
                             >
                                 {expanded ? 'Show less ↑' : 'Read more ↓'}
                             </Text>
@@ -188,7 +192,7 @@ const BookDetailsScreen = () => {
                     </View>)
                 }
                 <View className="gap-3">
-                    <Text className="text-bookcare-primary font-bold">About The Author</Text>
+                    <Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark font-bold">About The Author</Text>
                     {
                         isAuthorDetailsLoading ?
                             (
@@ -215,10 +219,10 @@ const BookDetailsScreen = () => {
                                     </View>
                                     <View className="gap-5">
                                         <View>
-                                            <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">{authorDetails?.name}</Text>
+                                            <Text className="text-lg text-bookcare-text dark:text-bookcare-textDark">{authorDetails?.name}</Text>
                                             {
                                                 authorDetails?.birthDate ?
-                                                    <Text className="text-lg text-bookcare-textDark dark:text-bookcare-darkText">{authorDetails?.birthDate}</Text> :
+                                                    <Text className="text-lg text-bookcare-text dark:text-bookcare-textDark">{authorDetails?.birthDate}</Text> :
                                                     null
                                             }
                                         </View>
@@ -227,7 +231,7 @@ const BookDetailsScreen = () => {
                     }
                 </View>
                 <View className="gap-3">
-                    <Text className="text-bookcare-primary font-semibold text-xl" >Related Boooks</Text>
+                    <Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark font-semibold text-xl" >Related Boooks</Text>
                     <ScrollView
                         contentContainerClassName="gap-5"
                         horizontal
@@ -249,30 +253,30 @@ const BookDetailsScreen = () => {
                 className="p-3 flex-row items-center justify-between"
                 style={{
                     borderTopWidth: 2,
-                    borderTopColor: colors.mid
+                    borderTopColor: isDark ? colors.borderDark : colors.border
                 }}
                 >
-                <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-xl">GHS {price}</Text>
+                <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-xl">GHS {price}</Text>
                 <View className="flex-row items-center gap-2">
-                    <Button onPress={() => isInCart ? decreaseCartQuantity(id) : decreaseQuantity()} size="sm" className="rounded-xl bg-bookcare-mid">
-                        <ButtonText className="text-bookcare-primary font-bold text-2xl">-</ButtonText>
+                    <Button onPress={() => isInCart ? decreaseCartQuantity(id) : decreaseQuantity()} size="sm" className="rounded-xl bg-bookcare-primary dark:bg-bookcare-primaryDark">
+                        <ButtonText className="text-bookcare-whiteSoft font-bold text-2xl">-</ButtonText>
                     </Button>
-                    <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-semibold text-lg">{isInCart ? cartItemQuantity: quantity}</Text>
-                    <Button onPress={() => isInCart ? increaseCartQuantity(id) : increaseQuantity()} size="sm" className="rounded-xl bg-bookcare-mid">
-                        <ButtonText className="text-bookcare-primary font-bold text-2xl">+</ButtonText>
+                    <Text className="text-bookcare-text dark:text-bookcare-textDark font-semibold text-lg">{isInCart ? cartItemQuantity: quantity}</Text>
+                    <Button onPress={() => isInCart ? increaseCartQuantity(id) : increaseQuantity()} size="sm" className="rounded-xl bg-bookcare-primary dark:bg-bookcare-primaryDark">
+                        <ButtonText className="text-bookcare-whiteSoft font-bold text-2xl">+</ButtonText>
                     </Button>
                 </View>
                 <View className="flex-row items-center gap-3">
                     <Button disabled={isInCart || quantity < 1} onPress={addCartItemToCart} className={cn([
-                        {"bg-bookcare-primary": !isInCart && quantity > 0, "bg-bookcare-mid": isInCart || quantity < 1},
+                        {"bg-bookcare-primary dark:bg-bookcare-primaryDark": !isInCart && quantity > 0, "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": isInCart || quantity < 1},
                         "rounded-xl", "px-5" 
                     ])}>
-                        <ButtonText className="text-white font-semibold">
+                        <ButtonText className="text-bookcare-whiteSoft font-semibold">
                             Add to Cart
                         </ButtonText>
                     </Button>
-                    <Button onPress={isWishlisted ? RemoveBookFromwishlist : wishlistBook}  className="bg-bookcare-mid rounded-xl px-6">
-                        <Ionicons name="heart" color={isWishlisted ? colors.error : "white"} size={28}/>
+                    <Button onPress={isWishlisted ? RemoveBookFromwishlist : wishlistBook}  className="bg-bookcare-primary/25 rounded-xl px-6">
+                        <Ionicons name="heart" color={isWishlisted ? colors.error : colors.whiteSoft} size={28}/>
                     </Button>
                 </View>
             </View>

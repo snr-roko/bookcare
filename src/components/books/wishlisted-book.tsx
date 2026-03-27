@@ -47,7 +47,7 @@ const WishlistedBook = memo(
                 borderRadius: 8,
                 elevation: 2,
             }}
-            className="flex-row p-3 gap-5 items-center bg-white dark:bg-bookcare-darkCard">
+            className="border border-bookcare-border dark:border-bookcare-borderDark flex-row p-3 gap-5 items-center bg-bookcare-surface dark:bg-bookcare-surfaceDark">
             <View>
                 <Image
                     style={{ height: 120, width: 100}}
@@ -59,30 +59,30 @@ const WishlistedBook = memo(
             </View>
             <View className="flex-1 justify-between">
                 <View>
-                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
+                    <Text numberOfLines={2} className="text-lg flex-shrink font-semibold text-bookcare-text dark:text-bookcare-textDark">
                         {book.title}
                     </Text>
                 </View>
                 <View>
-                    <Text numberOfLines={1} className="text-bookcare-textMuted text-sm">
+                    <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-sm">
                         {book.authorName}
                     </Text>
-                    <Text className="text-lg font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {book.price}</Text>
+                    <Text className="text-lg font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {book.price}</Text>
                     <View className="gap-3 flex-row">
                         <Button 
                             disabled={isInCart} 
                             onPress={openCartModal} 
                             size="sm" 
                             className={cn([
-                                {"bg-bookcare-primary": !isInCart, "bg-bookcare-mid": isInCart},
+                                {"bg-bookcare-primary dark:bg-bookcare-primaryDark": !isInCart, "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": isInCart},
                                 "rounded-xl" 
                             ])}>
-                            <ButtonText className="text-white font-bold">
+                            <ButtonText className="text-bookcare-whiteSoft font-bold">
                                 Add to Cart
                             </ButtonText>
                         </Button>
-                        <Button onPress={() => removeFromWishlist(book.id)} size="sm" className="bg-bookcare-error rounded-xl">
-                            <Ionicons name="heart-dislike" size={28} color="#fff" />
+                        <Button onPress={() => removeFromWishlist(book.id)} size="sm" className="bg-bookcare-error dark:bg-bookcare-errorDark rounded-xl">
+                            <Ionicons name="heart-dislike" size={28} color={colors.whiteSoft} />
                         </Button>
                     </View>
                 </View>

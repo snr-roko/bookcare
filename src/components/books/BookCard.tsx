@@ -4,14 +4,17 @@ import { OpenLibraryResponseBook } from "@/src/types"
 import {derivePrice, deriveRating, getBookCoverUrl } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { colors } from "@/src/constants"
-import { useColorScheme } from "nativewind"
 import { useRouter } from "expo-router"
 import { memo, useCallback } from "react"
 import * as ExpoHaptics from "expo-haptics"
+import { useColorScheme } from "react-native"
 
 const BookCard = memo(
     ({work}: {work: OpenLibraryResponseBook}) => {
-    const {colorScheme} = useColorScheme()
+    
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
+    
     const router = useRouter()
 
     const imageUrl = getBookCoverUrl(work.coverId, "L")
@@ -40,18 +43,16 @@ const BookCard = memo(
 
     return (
         <Pressable
+            className="border border-bookcare-border dark:border-bookcare-borderDark"
             onPress={navigateToBookDetailsScreen} 
             style={{
                 height: 270,
                 width: 150,
-                padding: 2,
+                paddingBottom: 2,
                 shadowColor: colors.primary,
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
-                borderRadius: 1,
-                shadowRadius: 1,
-                elevation: 2,
-                backgroundColor: colorScheme === "dark" ? '#231208' : '#F5EDD8'
+                borderRadius: 2,
+                elevation: 3,
+                backgroundColor: isDark ? colors.surfaceDark : colors.surface
                 }}
             >
   
@@ -67,12 +68,12 @@ const BookCard = memo(
 
             <View style={{ height: 85, paddingHorizontal: 4, paddingVertical: 6, justifyContent: "space-between"}}>
                 <View>
-                    <Text numberOfLines={2} className="font-semibold text-bookcare-textDark dark:text-bookcare-darkText">
+                    <Text numberOfLines={2} className="font-semibold text-bookcare-text dark:text-bookcare-textDark">
                     {work.title}
                     </Text>
                 </View>
                 <View>
-                    <Text numberOfLines={1} className="text-bookcare-textMuted text-xs">
+                    <Text numberOfLines={1} className="text-bookcare-muted dark:text-bookcare-mutedDark text-xs">
                     {work.authorName}
                     </Text>
                     <View className="flex-row justify-between mt-1 items-center">
@@ -87,10 +88,10 @@ const BookCard = memo(
                                 : 'star-outline'
                             }
                             size={10}
-                            color={colors.accent}
+                            color={isDark ? colors.accentDark : colors.accent}
                         />
                         ))}
-                    <Text className="font-bold text-bookcare-textDark dark:text-bookcare-darkText">GHS {bookPrice}</Text>
+                    <Text className="font-bold text-bookcare-text dark:text-bookcare-textDark">GHS {bookPrice}</Text>
                 </View>
                 </View>
             </View>

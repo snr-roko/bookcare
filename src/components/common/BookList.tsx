@@ -8,7 +8,7 @@ const BookList = ({books, heading}: {books: OpenLibraryResponseBook[], heading: 
         <FlashList
             data={books}
             renderItem={({item}) => (<BookCard work={item} />)}
-            ListHeaderComponent={() => (<Text className="text-bookcare-primary font-semibold text-xl mb-2">{heading}</Text>)}
+            ListHeaderComponent={() => (<Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark font-semibold text-xl mb-2">{heading}</Text>)}
             keyExtractor={(item) => item.workKey}
             numColumns={2}
             ItemSeparatorComponent={() => <View style={{ height: 16}} />}

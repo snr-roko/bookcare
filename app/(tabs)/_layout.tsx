@@ -1,10 +1,13 @@
 import CartBottomModal from "@/src/components/common/CartBottomModal"
+import { colors } from "@/src/constants"
 import { Ionicons } from "@expo/vector-icons"
 import { Tabs } from "expo-router"
-import { useColorScheme } from 'nativewind'
+import { useColorScheme } from "react-native"
 
 const TabLayout = () => {
-    const { colorScheme } = useColorScheme()
+
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
 
     return (
         <>
@@ -13,12 +16,12 @@ const TabLayout = () => {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    backgroundColor: colorScheme === 'dark' ? '#2C1810' : '#FFFFFF',
-                    borderTopColor: '#E8D5B7',
-                    borderTopWidth: 1,
+                    backgroundColor: isDark ? colors.surfaceDark : colors.surface,
+                    borderTopColor: isDark ? colors.borderDark : colors.border,
+                    borderTopWidth: 1
                     },
-                tabBarActiveTintColor: '#5C3D2E',
-                tabBarInactiveTintColor: '#8B6F5E',
+                    tabBarActiveTintColor: isDark ? colors.primaryDark : colors.primary,
+                    tabBarInactiveTintColor: isDark ? colors.mutedDark : colors.muted,
             }}
             >
             <Tabs.Screen

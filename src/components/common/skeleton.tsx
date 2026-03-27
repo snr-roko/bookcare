@@ -1,4 +1,4 @@
-import {View} from "react-native"
+import {useColorScheme, View} from "react-native"
 import { colors } from "@/src/constants"
 import Animated, {useSharedValue, withRepeat, withTiming, useAnimatedStyle} from "react-native-reanimated"
 import { useEffect } from "react"
@@ -9,6 +9,9 @@ const Skeleton = ({
     borderRadius = 8
 }: {width: number, height: number, borderRadius?: number}) => {
     const opacity = useSharedValue(1)
+   
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
 
     useEffect(() => {
         opacity.value = withRepeat(
@@ -29,7 +32,7 @@ const Skeleton = ({
                     width,
                     height,
                     borderRadius,
-                    backgroundColor: colors.mid
+                    backgroundColor: isDark ? colors.textDark : colors.text
                 },
                 animatedStyle
             ]}

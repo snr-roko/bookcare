@@ -194,7 +194,7 @@ const SignUpScreen = () => {
                         }}
                     />
                     <Button className="bg-bookcare-primary dark:bg-bookcare-primaryDark" size="xl" onPress={handleSubmit((credentials) => {signUpUserToSupabase(credentials)})}>
-                        {isSigningUp ? <ButtonSpinner color={isDark ? colors.textDark : colors.text} /> : <ButtonText size="xl" className="text-bookcare-text dark:text-bookcare-textDark">Sign Up</ButtonText>}
+                        {isSigningUp ? <ButtonSpinner color={colors.whiteSoft} /> : <ButtonText size="xl" className="text-bookcare-whiteSoft">Sign Up</ButtonText>}
                     </Button>
                     <Button onPress={() => router.back()} variant="link"><ButtonText className="text-bookcare-muted dark:text-bookcare-mutedDark">Already A Bookcare User? Sign In</ButtonText></Button>
                 </ScrollView>

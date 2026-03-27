@@ -1,26 +1,25 @@
 import { View } from "react-native"
 import Skeleton from "../common/skeleton"
 import { colors } from "@/src/constants"
-import { useColorScheme } from "nativewind"
 import { memo } from "react"
+import { useColorScheme } from "react-native"
 
 const SkeletonBookCard = memo(
     () => {
 
-    const {colorScheme} = useColorScheme()
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"    
+    
     return (
         <View 
             style={{
                 height: 270,
                 width: 150,
-                padding: 2,
-                shadowColor: colors.primary,
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
+                paddingBottom: 2,
                 borderRadius: 1,
                 shadowRadius: 1,
                 elevation: 2,
-                backgroundColor: colorScheme === "dark" ? '#231208' : '#F5EDD8'
+                backgroundColor: isDark ? colors.surfaceDark : colors.surface
                 }}
             >
 

@@ -150,7 +150,7 @@ const LoginScreen = () => {
                     }}
                 />
                 <Button className="bg-bookcare-primary dark:bg-bookcare-primaryDark" size="xl" onPress={handleSubmit(({email, password}) => {logintoSupabase(email, password)})}>
-                    {isLoggingIn ? <ButtonSpinner color={isDark ? colors.textDark : colors.text} /> : <ButtonText size="xl" className="text-bookcare-text dark:text-bookcare-textDark">Login</ButtonText>}
+                    {isLoggingIn ? <ButtonSpinner color={colors.whiteSoft} /> : <ButtonText size="xl" className="text-bookcare-whiteSoft">Login</ButtonText>}
                 </Button>
                 <Button onPress={() => router.push("/signup")} variant="link"><ButtonText className="text-bookcare-muted dark:text-bookcare-mutedDark">Don't have an account? Register</ButtonText></Button>
             </KeyboardAvoidingView>

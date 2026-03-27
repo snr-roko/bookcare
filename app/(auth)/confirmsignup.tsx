@@ -120,7 +120,7 @@ const ConfirmSignUpScreen = () => {
                     "bg-bookcare-primary/50 dark:bg-bookcare-primaryDark/50": !isComplete
                 }
             ]) } size="xl">
-                {isVerifying ? <ButtonSpinner color={isDark ? colors.textDark : colors.text} /> : <ButtonText size="xl" className="text-bookcare-text dark:text-bookcare-textDark">Verify</ButtonText>}
+                {isVerifying ? <ButtonSpinner color={colors.whiteSoft} /> : <ButtonText size="xl" className="text-bookcare-whiteSoft">Verify</ButtonText>}
             </Button>
         </SafeAreaView>
     )

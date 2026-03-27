@@ -55,6 +55,7 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing : true,
             aspect: [1, 1],
             quality: 0.5
         })

@@ -56,7 +56,6 @@ const OrderDetailsScreen = () => {
                         data?.map((supabaseOrderItem: SupabaseOrderItem):OrderItemType => ({
                             authorKey: supabaseOrderItem.author_key,
                             authorName: supabaseOrderItem.author_name,
-                            coverId: supabaseOrderItem.cover_id,
                             coverUrl: supabaseOrderItem.cover_url,
                             editionCount: supabaseOrderItem.edition_count,
                             orderId: supabaseOrderItem.order_id,

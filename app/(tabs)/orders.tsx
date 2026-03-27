@@ -3,9 +3,12 @@ import Skeleton from "@/src/components/common/skeleton"
 import OrderCard from "@/src/components/orders/orderCard"
 import { useFetchOrders } from "@/src/hooks"
 import { useAuthStore } from "@/src/store"
+import { FlashList } from "@shopify/flash-list"
 import { useRouter } from "expo-router"
 import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { RefreshControl } from "react-native"
+import { colors } from "@/src/constants"
 
 const OrdersScreen = () => {
 
@@ -13,7 +16,7 @@ const OrdersScreen = () => {
     
     const userId = useAuthStore(state => state.session?.user.id)
 
-    const {data, isLoading} = useFetchOrders(userId!)
+    const {data, isLoading, isRefetching, refetch} = useFetchOrders(userId!)
 
     const routeToHomepage = () => {
         router.push("/(tabs)")
@@ -38,13 +41,20 @@ const OrdersScreen = () => {
                             <ButtonText className="text-white font-semibold">Browse Books</ButtonText>
                         </Button>
                     </View> :
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-3 pb-3 flex-1">
-                        {
-                            data?.map((order) => (
-                                <OrderCard key={order.id} order={order} />
-                        ))
+                    <FlashList
+                        data={data}
+                        renderItem={({item}) => (<OrderCard order={item} />)}
+                        keyExtractor={(item) => item.id}
+                        ItemSeparatorComponent={() => <View style={{ height: 16}} />}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={isRefetching}
+                                onRefresh={refetch}
+                                tintColor={colors.primary}
+                                colors={[colors.primary]}
+                            />
                         }
-                    </ScrollView>
+                    />
             }
         </SafeAreaView>
     )

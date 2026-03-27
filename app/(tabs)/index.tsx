@@ -1,4 +1,4 @@
-import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
+import { Button, ButtonText } from "@/components/ui/button"
 import { BOOK_QUOTES, CATEGORIES, colors } from "@/src/constants"
 import { usePopularBooks, useSearchBooks, useSearchBooksBySubject, useTrendingNowBooks } from "@/src/hooks"
 import { Ionicons } from "@expo/vector-icons"
@@ -7,12 +7,13 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { OpenLibraryResponseBook } from "@/src/types"
 import BookCard from "@/src/components/books/BookCard"
 import SkeletonBookCard from "@/src/components/books/SkeletonBookCard"
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import ProfileModal from "@/src/components/profile/ProfileModal"
 import BookList from "@/src/components/common/BookList"
 import { FlashList } from "@shopify/flash-list"
 import { cn } from "@/src/utils"
 import * as Haptics from "expo-haptics"
+import { RefreshControl } from "react-native"
 
 const DiscoverScreen = () => {
 
@@ -22,8 +23,8 @@ const DiscoverScreen = () => {
 
     const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false)
 
-    const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
-    const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
+    const {data: popularBooks, isLoading: isPopularBooksLoading, isRefetching: isPopularRefetching, refetch: refetchPopular} = usePopularBooks()
+    const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading, isRefetching: isTrendingRefetching, refetch: refetchTrending} = useTrendingNowBooks()
     const {data: subjectSearchedBooks, isLoading: isSearchBySubjectLoading} = useSearchBooksBySubject(subject)
     const {data: searchedBooks, isLoading: isSearchLoading} = useSearchBooks(query)
 
@@ -45,6 +46,13 @@ const DiscoverScreen = () => {
         setSearchQuery("")
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
     }
+
+    const isRefetching = isPopularRefetching || isTrendingRefetching
+
+    const handleRefetch = useCallback(() => {
+        refetchPopular()
+        refetchTrending()
+    }, [])
 
     return (
         <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
@@ -151,14 +159,22 @@ const DiscoverScreen = () => {
                                 </View>
                             ):
                             (
-                            <BookList 
+                            <BookList
                                 heading={query} 
                                 books={searchedBooks!} />
                         ) :
                 <ScrollView
-                contentContainerClassName="pb-5 gap-5"
-                showsVerticalScrollIndicator={false}
-                ref={scrollRef}
+                    contentContainerClassName="pb-5 gap-5"
+                    showsVerticalScrollIndicator={false}
+                    ref={scrollRef}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefetching}
+                            onRefresh={handleRefetch}
+                            tintColor={colors.primary}
+                            colors={[colors.primary]}
+                        />
+                    }
             >
                 <View className="gap-3">
                     <Text className="text-bookcare-primary font-semibold text-xl" >Popular</Text>

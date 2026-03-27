@@ -10,6 +10,7 @@ import { useCartBottomSheetStore } from "@/src/store"
 import { useCartStore } from "@/src/store/useCartStore"
 import { cn } from "@/src/utils"
 import { memo, useCallback } from "react"
+import * as Haptics from "expo-haptics"
 
 const WishlistedBook = memo(
     ({book}: {book: WishlistItem}) => {
@@ -28,6 +29,7 @@ const WishlistedBook = memo(
                 ...book
             }
         })
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     }, []
     ) 
 

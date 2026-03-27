@@ -2,25 +2,30 @@ import { Button, ButtonText } from "@/components/ui/button"
 import { colors } from "@/src/constants"
 import { useCartStore } from "@/src/store/useCartStore"
 import { CartItemType } from "@/src/types"
-import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { memo, useCallback } from "react"
 import { Pressable, Text, View } from "react-native"
+import * as Haptics from "expo-haptics"
 
-const CartItemCard = ({cartItem}: {cartItem: CartItemType}) => {
+const CartItemCard = memo(
+    ({cartItem}: {cartItem: CartItemType}) => {
 
     const router = useRouter()
 
     const removeFromCart = useCartStore((state) => state.removeFromCart)
 
-    const routeToBookDetailsPage = () => {
+    const routeToBookDetailsPage = useCallback(
+        () => {
         router.push({
             pathname: "/book/[id]",
             params: {
                 ...cartItem.itemDetails
             }
         })
-    } 
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    }, [] 
+    )
 
     const removeCartItemFromCart = () => {
         removeFromCart(cartItem.itemDetails.id)
@@ -71,5 +76,6 @@ const CartItemCard = ({cartItem}: {cartItem: CartItemType}) => {
         </Pressable>
     )
 }
+)
 
 export default CartItemCard

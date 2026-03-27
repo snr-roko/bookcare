@@ -12,6 +12,7 @@ import ProfileModal from "@/src/components/profile/ProfileModal"
 import BookList from "@/src/components/common/BookList"
 import { FlashList } from "@shopify/flash-list"
 import { cn } from "@/src/utils"
+import * as Haptics from "expo-haptics"
 
 const DiscoverScreen = () => {
 
@@ -36,18 +37,26 @@ const DiscoverScreen = () => {
     const searchForBooks = () => {
         setSubject("")
         setQuery(searchQuery)
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
     }
 
     const stopSearch = () => {
         setQuery("")
         setSearchQuery("")
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
     }
 
     return (
         <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row justify-between">
                 <Text className="text-bookcare-primary text-3xl" >Discover</Text>
-                <Button variant="link" onPress={() => setIsProfileModalOpen(true)} size="xs">
+                <Button 
+                    variant="link" 
+                    onPress={() => {
+                        setIsProfileModalOpen(true)
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
+                    }} 
+                    size="xs">
                     <Ionicons name="person-circle" size={30} color={colors.primary} />
                 </Button>
                 <ProfileModal isOpen={isProfileModalOpen} setIsOpen={setIsProfileModalOpen} />
@@ -78,7 +87,10 @@ const DiscoverScreen = () => {
                     >
                     {CATEGORIES.map((category) => (
                         <Button 
-                            onPress={() => setSubject(category.value === "all" ? "" : category.value)}
+                            onPress={() => {
+                                setSubject(category.value === "all" ? "" : category.value)
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
+                            }}
                             variant="outline" 
                             key={category.value} 
                             size="sm" 

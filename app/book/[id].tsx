@@ -14,6 +14,7 @@ import { useLocalSearchParams } from "expo-router"
 import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import * as Haptics from "expo-haptics"
 
 const BookDetailsScreen = () => {
     
@@ -105,6 +106,7 @@ const BookDetailsScreen = () => {
 
         addToCart(cartItem)
 
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     }
 
     return (

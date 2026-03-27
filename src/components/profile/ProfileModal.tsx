@@ -11,6 +11,7 @@ import * as ImagePicker from "expo-image-picker"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Image } from "expo-image"
 import { Ionicons } from "@expo/vector-icons"
+import * as Haptics from "expo-haptics"
 
 const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
     
@@ -26,6 +27,7 @@ const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dis
     }
 
     const alertUserOfLogout = () => {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning)
         Alert.alert(
         'Logout',
         'Are you sure you want to logout?',

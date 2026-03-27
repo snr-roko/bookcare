@@ -8,6 +8,7 @@ import { useState } from "react"
 import { cn } from "@/src/utils"
 import { CartItemType, WishlistItem } from "@/src/types"
 import { useCartStore } from "@/src/store/useCartStore"
+import * as Haptics from "expo-haptics"
 
 const CartBottomModal = () => {
 
@@ -54,6 +55,8 @@ const CartBottomModal = () => {
         }
 
         addToCart(cartItem)
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+
         setQuantity(0)
         closeSheet()
     }

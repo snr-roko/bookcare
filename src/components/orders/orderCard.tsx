@@ -3,6 +3,7 @@ import { deriveOrderStatus, getStatusColor } from "@/src/utils"
 import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { Pressable, Text, View } from "react-native"
+import * as Haptics from "expo-haptics"
 
 const OrderCard = ({order}: {order: SupabaseOrder}) => {
     
@@ -12,6 +13,7 @@ const OrderCard = ({order}: {order: SupabaseOrder}) => {
     const statusColor = getStatusColor(status)
 
     const routeToOrderDetailsScreen = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
         router.push({
             pathname: `(orders)/[id]`,
             params: {

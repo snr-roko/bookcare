@@ -7,6 +7,7 @@ import { colors } from "@/src/constants"
 import { useColorScheme } from "nativewind"
 import { useRouter } from "expo-router"
 import { memo, useCallback } from "react"
+import * as ExpoHaptics from "expo-haptics"
 
 const BookCard = memo(
     ({work}: {work: OpenLibraryResponseBook}) => {
@@ -19,6 +20,7 @@ const BookCard = memo(
 
     const navigateToBookDetailsScreen = useCallback(
         () => {
+        ExpoHaptics.impactAsync(ExpoHaptics.ImpactFeedbackStyle.Light)
         router.push({
             pathname: "/book/[id]",
             params: {

@@ -1,6 +1,6 @@
 import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button"
 import { BOOK_QUOTES, CATEGORIES, colors } from "@/src/constants"
-import { usePopularBooks, useSearchBooksBySubject, useTrendingNowBooks } from "@/src/hooks"
+import { usePopularBooks, useSearchBooks, useSearchBooksBySubject, useTrendingNowBooks } from "@/src/hooks"
 import { Ionicons } from "@expo/vector-icons"
 import { ScrollView, Text, TextInput, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -16,18 +16,31 @@ import { cn } from "@/src/utils"
 const DiscoverScreen = () => {
 
     const [subject, setSubject] = useState<string>("")
+    const [searchQuery, setSearchQuery] = useState<string>("")
+    const [query, setQuery] = useState<string>("")
 
     const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false)
 
     const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
     const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
     const {data: subjectSearchedBooks, isLoading: isSearchBySubjectLoading} = useSearchBooksBySubject(subject)
+    const {data: searchedBooks, isLoading: isSearchLoading, isError, error} = useSearchBooks(query)
 
     const quote = BOOK_QUOTES[Math.floor(Math.random() * BOOK_QUOTES.length)]
 
     const scrollRef = useRef<ScrollView>(null)
     const scrollToTop = () => {
         scrollRef.current?.scrollTo({y: 0, animated: true})
+    }
+
+    const searchForBooks = () => {
+        setSubject("")
+        setQuery(searchQuery)
+    }
+
+    const stopSearch = () => {
+        setQuery("")
+        setSearchQuery("")
     }
 
     return (
@@ -39,13 +52,23 @@ const DiscoverScreen = () => {
                 </Button>
                 <ProfileModal isOpen={isProfileModalOpen} setIsOpen={setIsProfileModalOpen} />
             </View>
-            <View>
+            <View className="flex-row gap-3 items-center">
                 <TextInput
                     inputMode="search"
+                    value={searchQuery}
+                    onChangeText={(text) => setSearchQuery(text)}
                     placeholder="type to search..."
                     placeholderTextColor={colors.textMuted}
-                    className="p-4 border border-bookcare-mid rounded-lg h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"         
+                    className="p-4 flex-1 border border-bookcare-mid rounded-lg h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"         
                 />
+                <Button onPress={searchForBooks} variant="outline">
+                    <Ionicons name="search" size={24} />
+                </Button>
+                {query.length > 0 && 
+                    <Button onPress={stopSearch} variant="outline">
+                        <Ionicons name="close" size={24} />
+                    </Button>
+                }
             </View>
             <View>
                 <ScrollView
@@ -75,7 +98,8 @@ const DiscoverScreen = () => {
                 </ScrollView>
             </View>
             {
-                subject ?
+                subject || query.length > 0 ?
+                    subject ?
                     isSearchBySubjectLoading ?
                         (
                             <FlashList
@@ -91,7 +115,34 @@ const DiscoverScreen = () => {
                             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                             .join(' ')} 
                         books={subjectSearchedBooks!} />)
-                        :
+                    : isSearchLoading ?    
+                        (
+                            <FlashList
+                                data={[1,2,3,4,5,6]}
+                                renderItem={() => <SkeletonBookCard />}
+                                numColumns={2}
+                                ItemSeparatorComponent={() => <View style={{ height: 16}} />}
+                            />
+                        ) : 
+                        
+                            searchedBooks?.length === 0 ?
+                            (
+                                <View className="gap-10">
+                                    <Text className="text-bookcare-primary font-semibold text-xl mb-2">{query}</Text>
+
+                                    <View className="items-center justify-center gap-3">
+                                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl" >No books found</Text>
+                                        <Button onPress={() => stopSearch()} size="xl" className="bg-bookcare-primary rounded-xl">
+                                            <ButtonText className="text-bookcare-surface">Try again</ButtonText>
+                                        </Button>
+                                    </View>
+                                </View>
+                            ):
+                            (
+                            <BookList 
+                                heading={query} 
+                                books={searchedBooks!} />
+                        ) :
                 <ScrollView
                 contentContainerClassName="pb-5 gap-5"
                 showsVerticalScrollIndicator={false}

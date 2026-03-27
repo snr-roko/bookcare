@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchPopularBooks, fetchTrendingNowBooks, searchForBook } from "../services"
-import { fetchBookAuthorDetails, fetchBookDetails, fetchBooksBySubject, fetchBooksBySubjectFew } from "../services/bookService"
+import { fetchBooksBySubject, fetchPopularBooks, fetchTrendingNowBooks, searchForBook } from "../services"
+import { fetchBookAuthorDetails, fetchBookDetails,  fetchBooksBySubjectFew } from "../services/bookService"
 import { fetchOrderItemsOfAnOrder, fetchOrders } from "../utils"
 
 export const usePopularBooks = () => {
@@ -23,8 +23,8 @@ export const useSearchBooks = (query: string) => {
     return useQuery({
         queryKey: ["search", "query", query],
         queryFn: () => searchForBook(query),
-        enabled: query.length >= 2,
-        staleTime: 1000 * 60 * 2
+        enabled: query.length > 0,
+        staleTime: 1000 * 60 * 5
     })
 }
 

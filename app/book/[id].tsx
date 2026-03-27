@@ -232,9 +232,6 @@ const BookDetailsScreen = () => {
                                                     null
                                             }
                                         </View>
-                                        <Button className="bg-bookcare-primary">
-                                            <ButtonText className="text-bookcare-darkText">See Other Works</ButtonText>
-                                        </Button>
                                     </View>
                                 </View>)      
                     }

@@ -79,11 +79,11 @@ const DiscoverScreen = () => {
                     className="p-4 flex-1 border border-bookcare-mid rounded-lg h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"         
                 />
                 <Button onPress={searchForBooks} variant="outline">
-                    <Ionicons name="search" size={24} />
+                    <Ionicons name="search" color={colors.primary} size={24} />
                 </Button>
                 {query.length > 0 && 
                     <Button onPress={stopSearch} variant="outline">
-                        <Ionicons name="close" size={24} />
+                        <Ionicons name="close" color={colors.primary} size={24} />
                     </Button>
                 }
             </View>

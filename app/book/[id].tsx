@@ -106,6 +106,7 @@ const BookDetailsScreen = () => {
         }
 
         addToCart(cartItem)
+        setQuantity(0)
 
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
         toast.success("Added to cart")

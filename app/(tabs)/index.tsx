@@ -2,7 +2,7 @@ import { Button, ButtonText } from "@/components/ui/button"
 import { BOOK_QUOTES, CATEGORIES, colors } from "@/src/constants"
 import { usePopularBooks, useSearchBooks, useSearchBooksBySubject, useTrendingNowBooks } from "@/src/hooks"
 import { Ionicons } from "@expo/vector-icons"
-import { ScrollView, Text, TextInput, View } from "react-native"
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { OpenLibraryResponseBook } from "@/src/types"
 import BookCard from "@/src/components/books/BookCard"
@@ -14,19 +14,23 @@ import { FlashList } from "@shopify/flash-list"
 import { cn } from "@/src/utils"
 import * as Haptics from "expo-haptics"
 import { RefreshControl } from "react-native"
+import { useAuthStore, useProfileStore } from "@/src/store"
+import { Image } from "expo-image"
 
 const DiscoverScreen = () => {
 
     const [subject, setSubject] = useState<string>("")
     const [searchQuery, setSearchQuery] = useState<string>("")
     const [query, setQuery] = useState<string>("")
-
     const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false)
 
     const {data: popularBooks, isLoading: isPopularBooksLoading, isRefetching: isPopularRefetching, refetch: refetchPopular} = usePopularBooks()
     const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading, isRefetching: isTrendingRefetching, refetch: refetchTrending} = useTrendingNowBooks()
     const {data: subjectSearchedBooks, isLoading: isSearchBySubjectLoading} = useSearchBooksBySubject(subject)
     const {data: searchedBooks, isLoading: isSearchLoading} = useSearchBooks(query)
+
+    const profileImage = useProfileStore(state => state.profileImage)
+    const name: string = useAuthStore(state => state.session?.user.user_metadata.full_name)
 
     const quote = BOOK_QUOTES[Math.floor(Math.random() * BOOK_QUOTES.length)]
 
@@ -58,15 +62,37 @@ const DiscoverScreen = () => {
         <SafeAreaView className="flex-1 pt-10 px-5 gap-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row justify-between">
                 <Text className="text-bookcare-primary text-3xl" >Discover</Text>
-                <Button 
-                    variant="link" 
+                <Pressable 
                     onPress={() => {
                         setIsProfileModalOpen(true)
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)
                     }} 
-                    size="xs">
-                    <Ionicons name="person-circle" size={30} color={colors.primary} />
-                </Button>
+                >
+                    {profileImage ? (
+                        <Image
+                        source={{ uri: profileImage }}
+                        style={{ width: 30, height: 30, borderRadius: 15 }}
+                        contentFit="cover"
+                        />
+                    ) : (
+                        <View style={{
+                            width: 30,
+                            height: 30,         
+                            borderRadius: 15,
+                            backgroundColor: colors.primary,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                        <Text style={{
+                            color: colors.cream,
+                            fontSize: 15,
+                            fontWeight: 'bold',
+                        }}>
+                            {name.charAt(0).toUpperCase()}
+                        </Text>
+                        </View>
+                    )}    
+                </Pressable>
                 <ProfileModal isOpen={isProfileModalOpen} setIsOpen={setIsProfileModalOpen} />
             </View>
             <View className="flex-row gap-3 items-center">

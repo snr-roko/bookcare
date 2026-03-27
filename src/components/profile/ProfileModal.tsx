@@ -1,7 +1,7 @@
 import { Button, ButtonText } from "@/components/ui/button"
 import { colors } from "@/src/constants"
 import { supabase } from "@/src/lib/supabase"
-import { useAuthStore, useThemeStore } from "@/src/store"
+import { useAuthStore, useProfileStore, useThemeStore } from "@/src/store"
 import { ThemeMode } from "@/src/types"
 import { cn } from "@/src/utils"
 import { BlurView } from "expo-blur"
@@ -15,11 +15,11 @@ import * as Haptics from "expo-haptics"
 
 const ProfileModal = ({isOpen, setIsOpen}:{isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
     
-    const [profileImage, setProfileImage] = useState<string | null>(null)
-
     const setTheme = useThemeStore(state => state.setMode)
     const mode = useThemeStore(state => state.mode)
 
+    const profileImage = useProfileStore(state => state.profileImage) 
+    const setProfileImage = useProfileStore(state => state.setProfileImage)
     const name: string = useAuthStore(state => state.session?.user.user_metadata.full_name)
 
     const logoutUser = async() => {

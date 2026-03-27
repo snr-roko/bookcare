@@ -9,8 +9,10 @@ import { useRouter } from "expo-router"
 import { useCartBottomSheetStore } from "@/src/store"
 import { useCartStore } from "@/src/store/useCartStore"
 import { cn } from "@/src/utils"
+import { memo, useCallback } from "react"
 
-const WishlistedBook = ({book}: {book: WishlistItem}) => {
+const WishlistedBook = memo(
+    ({book}: {book: WishlistItem}) => {
 
     const router = useRouter()
 
@@ -18,14 +20,16 @@ const WishlistedBook = ({book}: {book: WishlistItem}) => {
 
     const openCartSheet = useCartBottomSheetStore(state => state.openSheet)
 
-    const routeToBookDetailsPage = () => {
+    const routeToBookDetailsPage = useCallback(
+        () => {
         router.push({
             pathname: "/book/[id]",
             params: {
                 ...book
             }
         })
-    } 
+    }, []
+    ) 
 
     const openCartModal = () => {
         openCartSheet(book)
@@ -84,5 +88,6 @@ const WishlistedBook = ({book}: {book: WishlistItem}) => {
         </Pressable>
     )
 }
+)
 
 export default WishlistedBook

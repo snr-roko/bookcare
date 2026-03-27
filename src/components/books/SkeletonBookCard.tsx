@@ -2,8 +2,10 @@ import { View } from "react-native"
 import Skeleton from "../common/skeleton"
 import { colors } from "@/src/constants"
 import { useColorScheme } from "nativewind"
+import { memo } from "react"
 
-const SkeletonBookCard = () => {
+const SkeletonBookCard = memo(
+    () => {
 
     const {colorScheme} = useColorScheme()
     return (
@@ -38,5 +40,6 @@ const SkeletonBookCard = () => {
         
         </View>)
 }
+)
 
 export default SkeletonBookCard

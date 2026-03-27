@@ -6,8 +6,10 @@ import { Ionicons } from "@expo/vector-icons"
 import { colors } from "@/src/constants"
 import { useColorScheme } from "nativewind"
 import { useRouter } from "expo-router"
+import { memo, useCallback } from "react"
 
-const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
+const BookCard = memo(
+    ({work}: {work: OpenLibraryResponseBook}) => {
     const {colorScheme} = useColorScheme()
     const router = useRouter()
 
@@ -15,7 +17,8 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
     const bookPrice = derivePrice(work.coverId, work.yearFirstPublished)
     const bookRating = deriveRating(work.workKey, work.editionCount)
 
-    const navigateToBookDetailsScreen = () => {
+    const navigateToBookDetailsScreen = useCallback(
+        () => {
         router.push({
             pathname: "/book/[id]",
             params: {
@@ -31,6 +34,7 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
             }
         })
     }
+    , [])
 
     return (
         <Pressable
@@ -92,5 +96,6 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
         </Pressable>
     )
 }
+)
 
 export default BookCard

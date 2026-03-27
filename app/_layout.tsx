@@ -11,6 +11,7 @@ import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { colorScheme, useColorScheme } from "nativewind"
 import * as SplashScreen from "expo-splash-screen"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import {Toaster} from "sonner-native"
 
 const RootLayout = () => {
     const {loadAuth, isLoggedIn, isLoading} = useAuthStore(useShallow(
@@ -67,6 +68,7 @@ const RootLayout = () => {
                                 />
                             </Stack.Protected>
                         </Stack>
+                        <Toaster />
                     </SafeAreaProvider>
                 </GluestackUIProvider>
             </QueryClientProvider>

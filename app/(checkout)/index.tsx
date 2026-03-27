@@ -6,12 +6,13 @@ import { queryClient } from "@/src/lib/queryClient"
 import { supabase } from "@/src/lib/supabase"
 import { useAuthStore } from "@/src/store"
 import { useCartStore } from "@/src/store/useCartStore"
-import { CartItemType, mobileMoneySelection, OrderItemType, SupabaseOrderItem } from "@/src/types"
+import { CartItemType, mobileMoneySelection, SupabaseOrderItem } from "@/src/types"
 import { cn } from "@/src/utils"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { useState } from "react"
 import { Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { toast } from "sonner-native"
 
 const CheckoutScreen = () => {
 
@@ -41,7 +42,6 @@ const CheckoutScreen = () => {
             }
         ).select().single()
         if (error) throw new Error(error.message)
-        console.log(data)
         return [data.id, data.delivery_date]
     }
 
@@ -83,9 +83,10 @@ const CheckoutScreen = () => {
                                 deliveryDate
                             }
                         })
+                        toast.success("Order successful")
                     })
-                    .catch(error => console.error(error)))
-            .catch(error => console.error(error))
+                    .catch(error => toast.error(error)))
+            .catch(error => toast.error(error))
     }
 
     return (

@@ -1,5 +1,5 @@
 import { useCartBottomSheetStore } from "@/src/store"
-import { Modal, Pressable, Text, View } from "react-native"
+import { Modal, Text, View } from "react-native"
 import {BlurView} from "expo-blur"
 import { Image } from "expo-image"
 import { colors } from "@/src/constants"
@@ -9,6 +9,7 @@ import { cn } from "@/src/utils"
 import { CartItemType, WishlistItem } from "@/src/types"
 import { useCartStore } from "@/src/store/useCartStore"
 import * as Haptics from "expo-haptics"
+import { toast } from "sonner-native"
 
 const CartBottomModal = () => {
 
@@ -56,7 +57,7 @@ const CartBottomModal = () => {
 
         addToCart(cartItem)
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-
+        toast.success("Book added to cart")
         setQuantity(0)
         closeSheet()
     }

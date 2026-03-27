@@ -15,6 +15,7 @@ import { useState } from "react"
 import { ScrollView, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Haptics from "expo-haptics"
+import {toast} from "sonner-native"
 
 const BookDetailsScreen = () => {
     
@@ -107,6 +108,7 @@ const BookDetailsScreen = () => {
         addToCart(cartItem)
 
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+        toast.success("Added to cart")
     }
 
     return (

@@ -1,5 +1,4 @@
 import CartBottomModal from "@/src/components/common/CartBottomModal"
-import CartBottomSheet from "@/src/components/common/CartSheet"
 import { Ionicons } from "@expo/vector-icons"
 import { Tabs } from "expo-router"
 import { useColorScheme } from 'nativewind'

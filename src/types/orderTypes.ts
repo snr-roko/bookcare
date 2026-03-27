@@ -1,7 +1,6 @@
 export type OrderItemType = {
     id?: number
     title: string
-    coverId: string
     authorName: string
     coverUrl: string
     authorKey: string
@@ -35,7 +34,6 @@ export type SupabaseOrder = {
 
 export type SupabaseOrderItem = {
     id?: number
-    cover_id: string
     author_name: string
     cover_url: string
     author_key: string

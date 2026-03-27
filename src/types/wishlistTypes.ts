@@ -1,7 +1,6 @@
 export type WishlistItem = {
     id: string,
     title: string,
-    coverId: string,
     coverUrl: string,
     authorName: string,
     authorKey: string,

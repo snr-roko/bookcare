@@ -18,7 +18,7 @@ export const fetchPopularBooks = async () => {
 
 export const fetchTrendingNowBooks = async () => {
     const url = `${openLibraryBaseUrl}/trending/now.json?limit=5`
-const response = await fetch(url, {
+    const response = await fetch(url, {
         method: "GET"
     })
 
@@ -60,36 +60,20 @@ export const searchForBook = async (subject: string): Promise<OpenLibraryRespons
     }
 
     const payload = await response.json()
-//     const works: any[] = payload.docs
 
-//     return works.map((work) => (
-//         {
-//             authorKey: work.author_key[0],
-//             authorName: work.author_name[0],
-//             coverId: work.cover_i ?? 15124550,
-//             title: work.title,
-//             workKey: work.key,
-//             yearFirstPublished: work.first_publish_year,
-//             editionCount: work.edition_count
-//         }
-//     )
-// )  
+    const works: any[] = payload.docs ?? [];
 
-const works: any[] = payload.docs ?? [];
-
-  const books = works
-    .filter((work) => work?.title && work?.key)
-    .map((work) => ({
-      authorKey: work.author_key?.[0] ?? "",
-      authorName: work.author_name?.[0] ?? "Unknown Author",
-      coverId: work.cover_i ?? 15124550,
-      title: work.title ?? "Untitled",
-      workKey: work.key ?? "",
-      yearFirstPublished: work.first_publish_year ?? null,
-      editionCount: work.edition_count ?? 0,
+    const books = works
+        .filter((work) => work?.title && work?.key)
+        .map((work) => ({
+            authorKey: work.author_key?.[0] ?? "",
+            authorName: work.author_name?.[0] ?? "Unknown Author",
+            coverId: work.cover_i ?? -1,
+            title: work.title ?? "Untitled",
+            workKey: work.key ?? "",
+            yearFirstPublished: work.first_publish_year ?? null,
+            editionCount: work.edition_count ?? 0,
     }));
-
-  console.log("returned books", books);
 
   return books;
 

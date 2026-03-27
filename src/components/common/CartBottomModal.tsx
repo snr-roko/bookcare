@@ -37,7 +37,6 @@ const CartBottomModal = () => {
         const book: WishlistItem = {
             id: item!.id,
             title: item!.title,
-            coverId: item!.coverId,
             coverUrl: item!.coverUrl,
             authorName: item!.authorName,
             authorKey: item!.authorKey,
@@ -73,10 +72,6 @@ const CartBottomModal = () => {
                 style={{ flex: 5 }}
                 onTouchEnd={closeSheet}
             />
-            {/* <Pressable
-                onPress={closeSheet} 
-                className="bg-transparent flex-1"
-            /> */}
 
             <View 
                 className="bg-bookcare-surface p-5 gap-5 pb-5 justify-center"

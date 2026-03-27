@@ -24,7 +24,7 @@ const DiscoverScreen = () => {
     const {data: popularBooks, isLoading: isPopularBooksLoading} = usePopularBooks()
     const {data: trendingNowBooks, isLoading: isTrendingNowBooksLoading} = useTrendingNowBooks()
     const {data: subjectSearchedBooks, isLoading: isSearchBySubjectLoading} = useSearchBooksBySubject(subject)
-    const {data: searchedBooks, isLoading: isSearchLoading, isError, error} = useSearchBooks(query)
+    const {data: searchedBooks, isLoading: isSearchLoading} = useSearchBooks(query)
 
     const quote = BOOK_QUOTES[Math.floor(Math.random() * BOOK_QUOTES.length)]
 
@@ -131,9 +131,9 @@ const DiscoverScreen = () => {
                                     <Text className="text-bookcare-primary font-semibold text-xl mb-2">{query}</Text>
 
                                     <View className="items-center justify-center gap-3">
-                                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl" >No books found</Text>
+                                        <Text className="text-bookcare-textDark dark:text-bookcare-darkText font-bold text-2xl" >Sorry we do not have this book</Text>
                                         <Button onPress={() => stopSearch()} size="xl" className="bg-bookcare-primary rounded-xl">
-                                            <ButtonText className="text-bookcare-surface">Try again</ButtonText>
+                                            <ButtonText className="text-bookcare-surface">Try again Later</ButtonText>
                                         </Button>
                                     </View>
                                 </View>

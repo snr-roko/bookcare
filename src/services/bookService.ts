@@ -44,20 +44,3 @@ export const fetchBooksBySubjectFew = async (subject: string) => {
     
     return retrieveWorksFromPayloadForSubjects(payload.works)
 }
-
-
-export const fetchWorksByAuthor = async (authorKey: string) => {
-    const formattedAuthorKey = authorKey.startsWith("/authors/") ? authorKey.replace("/authors/", "") : authorKey
-
-    const url =  `${openLibraryBaseUrl}/authors/${formattedAuthorKey}/works.json`
-
-    const response = await fetch(url, {
-            method: "GET"
-        })
-    
-    if (!response.ok) throw new Error("Error fetching Book Details")
-        
-    const payload = await response.json()
-
-    console.log(payload)
-}

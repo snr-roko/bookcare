@@ -21,7 +21,6 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
             params: {
                 id: work.workKey.replace('/works/', ''),
                 title: work.title,
-                coverId: String(work.coverId),
                 coverUrl: imageUrl,
                 authorName: work.authorName,
                 authorKey: work.authorKey,
@@ -51,11 +50,6 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
             >
   
             <View style={{ height: 185, width: 150, overflow: 'hidden', borderRadius: 12 }}>
-                {work.coverId === -1 ? (
-                <View style={{ height: 185, width: 150, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
-                    <Ionicons name="book" size={48} color={colors.primary} />
-                </View>
-                ) : (
                 <Image
                     style={{ height: 185, width: 150 }}
                     source={{ uri: imageUrl }}
@@ -63,7 +57,6 @@ const BookCard = ({work}: {work: OpenLibraryResponseBook}) => {
                     transition={300}
                     contentFit="cover"
                 />
-                )}
             </View>
 
             <View style={{ height: 85, paddingHorizontal: 4, paddingVertical: 6, justifyContent: "space-between"}}>

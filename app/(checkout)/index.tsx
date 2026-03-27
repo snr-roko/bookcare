@@ -56,7 +56,6 @@ const CheckoutScreen = () => {
             title: cartItem.itemDetails.title,
             work_key: cartItem.itemDetails.id,
             author_key: cartItem.itemDetails.authorKey,
-            cover_id: cartItem.itemDetails.coverId,
             edition_count: parseInt(cartItem.itemDetails.editionCount),
             year_first_published: cartItem.itemDetails.yearFirstPublished
         }) ) 

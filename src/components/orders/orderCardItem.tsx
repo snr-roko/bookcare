@@ -14,7 +14,6 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
         openCartSheet({
             authorKey: orderItem.authorKey,
             authorName: orderItem.authorName,
-            coverId: orderItem.coverId,
             coverUrl: orderItem.coverUrl,
             editionCount: String(orderItem.editionCount),
             id: String(orderItem.id),

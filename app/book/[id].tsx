@@ -17,9 +17,8 @@ import { SafeAreaView } from "react-native-safe-area-context"
 
 const BookDetailsScreen = () => {
     
-    const {title, coverId, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
+    const {title, coverUrl, authorName, rating, price, editionCount, yearFirstPublished, id, authorKey} = useLocalSearchParams<{
         title: string,
-        coverId: string,
         coverUrl: string, 
         authorName: string,
         rating: string,
@@ -58,7 +57,6 @@ const BookDetailsScreen = () => {
         const book: WishlistItem = {
             id,
             title,
-            coverId,
             coverUrl,
             authorName,
             authorKey,
@@ -89,7 +87,6 @@ const BookDetailsScreen = () => {
         const book: WishlistItem = {
             id,
             title,
-            coverId,
             coverUrl,
             authorName,
             authorKey,
@@ -114,11 +111,6 @@ const BookDetailsScreen = () => {
         <SafeAreaView className="flex-1 pt-10 bg-bookcare-cream dark:bg-bookcare-darkBg">
             <View className="flex-row gap-5 px-5 pb-5">
                 <View style={{overflow: 'hidden', borderRadius: 1, shadowRadius: 1, elevation: 2}}>
-                    {parseInt(coverId)  === -1 ? (
-                    <View style={{ height: 180, width: 140, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
-                        <Ionicons name="book" size={48} color={colors.primary} />
-                    </View>
-                    ) : (
                     <Image
                         style={{ height: 180, width: 140}}
                         source={{ uri: coverUrl }}
@@ -126,7 +118,6 @@ const BookDetailsScreen = () => {
                         transition={300}
                         contentFit="cover"
                     />
-                    )}
                 </View>
                 <View className="flex-1 justify-between">
                     <View>
@@ -209,11 +200,6 @@ const BookDetailsScreen = () => {
                             ) : (
                                 <View className="flex-row gap-5">
                                     <View style={{overflow: 'hidden', borderRadius: 1, shadowRadius: 1, elevation: 2, }}>
-                                        {parseInt(coverId)  === -1 ? (
-                                        <View style={{ height: 150, width: 100, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
-                                            <Ionicons name="person" size={48} color={colors.primary} />
-                                        </View>
-                                    ) : (
                                         <Image
                                             style={{ height: 100, width: 100}}
                                             source={{ uri: getAuthorCoverUrl(String(authorDetails?.coverId), "L") }}
@@ -221,7 +207,6 @@ const BookDetailsScreen = () => {
                                             transition={300}
                                             contentFit="cover"
                                         />
-                                    )}
                                     </View>
                                     <View className="gap-5">
                                         <View>

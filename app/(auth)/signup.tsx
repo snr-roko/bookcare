@@ -10,8 +10,12 @@ import { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { View, Text, TextInput, ScrollView } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useColorScheme } from "react-native"
 
 const SignUpScreen = () => {
+
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
 
     const router = useRouter()
 
@@ -61,16 +65,16 @@ const SignUpScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 py-20 px-5 bg-bookcare-cream dark:bg-bookcare-darkBg">
+        <SafeAreaView className="flex-1 py-20 px-5 bg-bookcare-bg dark:bg-bookcare-bgDark">
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-5" >
                     <View>
-                        <Text className="text-bookcare-textMuted text-xl ">Your Story begins here</Text>
-                        <Text className="text-bookcare-primary text-4xl">Join Bookcare</Text>
+                        <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-xl ">Your Story begins here</Text>
+                        <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-4xl">Join Bookcare</Text>
                     </View>
                     {errorSigningUp && (
-                    <View className="flex-row gap-2 items-center p-3 bg-bookcare-error">
-                        <Ionicons name="warning-outline" color={colors.darkText} />
-                        <Text className="text-bookcare-darkText">{errorSigningUp}</Text>
+                    <View className="flex-row gap-2 items-center p-3 bg-bookcare-error dark:bg-bookcare-errorDark">
+                        <Ionicons name="warning-outline" color={isDark ? colors.textDark : colors.text} />
+                        <Text className="text-bookcare-text dark:text-bookcare-textDark">{errorSigningUp}</Text>
                     </View>
                 )}
                     <Controller
@@ -79,22 +83,22 @@ const SignUpScreen = () => {
                         render={({field, fieldState}) => {
                             return (
                                 <View className="gap-2">
-                                    <Text className="text-xl text-bookcare-textDark dark:text-bookcare-darkText" >Full Name</Text>
+                                    <Text className="text-xl text-bookcare-text dark:text-bookcare-textDark" >Full Name</Text>
                                     <TextInput
                                             inputMode="text"
                                             onChangeText={field.onChange}
                                             onBlur={field.onBlur}
                                             value={field.value}
                                             placeholder="John Doe"
-                                            placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
+                                            placeholderTextColor={isDark ? colors.mutedDark : colors.muted}
+                                            className="p-4 border border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"
                                         />
                     
-                                    <Text className="text-bookcare-textMuted">Please enter your real full name</Text>
+                                    <Text className="text-bookcare-muted dark:text-bookcare-mutedDark">Please enter your real full name</Text>
                                     {fieldState.error && (
                                         <View className="flex-row items-center gap-1">
-                                            <Ionicons name="alert-circle-outline" color={colors.error} />
-                                            <Text className="text-bookcare-error">{fieldState.error.message}</Text>
+                                            <Ionicons name="alert-circle-outline" color={isDark ? colors.errorDark : colors.error} />
+                                            <Text className="text-bookcare-error dark:text-bookcare-errorDark">{fieldState.error.message}</Text>
                                         </View>
                                     )
                                     }
@@ -108,22 +112,22 @@ const SignUpScreen = () => {
                         render={({field, fieldState}) => {
                             return (
                                 <View className="gap-2">
-                                    <Text className="text-xl text-bookcare-textDark dark:text-bookcare-darkText" >Email</Text>
+                                    <Text className="text-xl text-bookcare-text dark:text-bookcare-textDark" >Email</Text>
                                     <TextInput
                                             inputMode="email"
                                             onChangeText={field.onChange}
                                             onBlur={field.onBlur}
                                             value={field.value}
                                             placeholder="john.doe@bookcare.com"
-                                            placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
+                                            placeholderTextColor={isDark ? colors.mutedDark : colors.muted}
+                                            className="p-4 border border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"
                                         />
                     
-                                    <Text className="text-bookcare-textMuted">A valid email should have @ and .com/.org</Text>
+                                    <Text className="text-bookcare-muted dark:text-bookcare-mutedDark">A valid email should have @ and .com/.org</Text>
                                     {fieldState.error && (
                                         <View className="flex-row items-center gap-1">
-                                            <Ionicons name="alert-circle-outline" color={colors.error} />
-                                            <Text className="text-bookcare-error">{fieldState.error.message}</Text>
+                                            <Ionicons name="alert-circle-outline" color={isDark ? colors.errorDark : colors.error} />
+                                            <Text className="text-bookcare-error dark:text-bookcare-errorDark">{fieldState.error.message}</Text>
                                         </View>
                                     )
                                     }
@@ -137,22 +141,22 @@ const SignUpScreen = () => {
                         render={({field, fieldState}) => {
                             return (
                                 <View className="gap-2">
-                                    <Text className="text-xl text-bookcare-textDark dark:text-bookcare-darkText" >Password</Text>
+                                    <Text className="text-xl text-bookcare-text dark:text-bookcare-textDark" >Password</Text>
                                     <TextInput
                                             secureTextEntry={true}
                                             onChangeText={field.onChange}
                                             onBlur={field.onBlur}
                                             value={field.value}
                                             placeholder="********************"
-                                            placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
+                                            placeholderTextColor={isDark ? colors.mutedDark : colors.muted}
+                                            className="p-4 border border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"
                                         />
                     
-                                    <Text className="text-bookcare-textMuted">Password should be atleast 8 characters</Text>
+                                    <Text className="text-bookcare-muted dark:text-bookcare-mutedDark">Password should be atleast 8 characters</Text>
                                     {fieldState.error && (
                                         <View className="flex-row items-center gap-1">
-                                            <Ionicons name="alert-circle-outline" color={colors.error} />
-                                            <Text className="text-bookcare-error">{fieldState.error.message}</Text>
+                                            <Ionicons name="alert-circle-outline" color={isDark ? colors.errorDark : colors.error} />
+                                            <Text className="text-bookcare-error dark:text-bookcare-errorDark">{fieldState.error.message}</Text>
                                         </View>
                                     )
                                     }
@@ -166,22 +170,22 @@ const SignUpScreen = () => {
                         render={({field, fieldState}) => {
                             return (
                                 <View className="gap-2">
-                                    <Text className="text-xl text-bookcare-textDark dark:text-bookcare-darkText" >Confirm Password</Text>
+                                    <Text className="text-xl text-bookcare-text dark:text-bookcare-textDark" >Confirm Password</Text>
                                     <TextInput
                                             secureTextEntry={true}
                                             onChangeText={field.onChange}
                                             onBlur={field.onBlur}
                                             value={field.value}
                                             placeholder="********************"
-                                            placeholderTextColor={colors.textMuted}
-                                            className="p-4 border border-bookcare-mid rounded-sm h-15 text-bookcare-textDark dark:text-bookcare-darkText bg-bookcare-surface dark:bg-bookcare-darkSurface"
+                                            placeholderTextColor={isDark ? colors.mutedDark : colors.muted}
+                                            className="p-4 border-bookcare-border dark:border-bookcare-borderDark rounded-sm h-15 text-bookcare-text dark:text-bookcare-textDark bg-bookcare-surface dark:bg-bookcare-surfaceDark"
                                         />
                     
-                                    <Text className="text-bookcare-textMuted">Passwords should match</Text>
+                                    <Text className="text-bookcare-muted dark:text-bookcare-mutedDark">Passwords should match</Text>
                                     {fieldState.error && (
                                         <View className="flex-row items-center gap-1">
-                                            <Ionicons name="alert-circle-outline" color={colors.error} />
-                                            <Text className="text-bookcare-error">{fieldState.error.message}</Text>
+                                            <Ionicons name="alert-circle-outline" color={isDark ? colors.errorDark : colors.error} />
+                                            <Text className="text-bookcare-error dark:text-bookcare-errorDark">{fieldState.error.message}</Text>
                                         </View>
                                     )
                                     }
@@ -189,10 +193,10 @@ const SignUpScreen = () => {
                             )
                         }}
                     />
-                    <Button className="bg-bookcare-primary" size="xl" onPress={handleSubmit((credentials) => {signUpUserToSupabase(credentials)})}>
-                        {isSigningUp ? <ButtonSpinner color={colors.darkText} /> : <ButtonText size="xl" className="text-bookcare-darkText">Sign Up</ButtonText>}
+                    <Button className="bg-bookcare-primary dark:bg-bookcare-primaryDark" size="xl" onPress={handleSubmit((credentials) => {signUpUserToSupabase(credentials)})}>
+                        {isSigningUp ? <ButtonSpinner color={isDark ? colors.textDark : colors.text} /> : <ButtonText size="xl" className="text-bookcare-text dark:text-bookcare-textDark">Sign Up</ButtonText>}
                     </Button>
-                    <Button onPress={() => router.back()} variant="link"><ButtonText className="text-bookcare-textMuted">Already A Bookcare User? Sign In</ButtonText></Button>
+                    <Button onPress={() => router.back()} variant="link"><ButtonText className="text-bookcare-muted dark:text-bookcare-mutedDark">Already A Bookcare User? Sign In</ButtonText></Button>
                 </ScrollView>
             </SafeAreaView>
     )

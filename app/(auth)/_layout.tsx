@@ -1,7 +1,12 @@
 import { colors } from "@/src/constants"
 import { Stack } from "expo-router"
+import { useColorScheme } from "react-native"
 
 const AuthRootLayout = () => {
+    
+    const colorScheme = useColorScheme()
+    const isDark = colorScheme === "dark"
+
     return (
         <Stack screenOptions={{
             headerShown: false
@@ -17,9 +22,9 @@ const AuthRootLayout = () => {
                 options={{
                     headerShown: true,
                     headerTitle: "Confirm Email",
-                    headerTintColor: colors.darkText,
+                    headerTintColor: isDark ? colors.headingDark : colors.heading,
                     headerStyle: {
-                        backgroundColor: colors.primary
+                        backgroundColor: isDark ? colors.primaryDark : colors.primary
                     }
                 }}
             />

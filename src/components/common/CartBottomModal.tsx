@@ -133,7 +133,7 @@ const CartBottomModal = () => {
                                     {"bg-bookcare-primary dark:bg-bookcare-primaryDark":  quantity > 0, "bg-bookcare-primary/60 dark:bg-bookcare-primaryDark/60": quantity < 1},
                                     "rounded-xl", "px-5" 
                                 ])}>
-                                    <ButtonText className="text-whiteSoft font-semibold">
+                                    <ButtonText className="text-bookcare-whiteSoft font-semibold">
                                         Add
                                     </ButtonText>
                                 </Button>

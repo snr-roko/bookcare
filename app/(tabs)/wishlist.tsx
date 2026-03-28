@@ -24,10 +24,10 @@ const WishlistScreen = () => {
             <Text className="text-bookcare-heading dark:text-bookcare-headingDark text-3xl">Wishlist</Text>
                 {
                     wishlistedBooks.length === 0 ?
-                    <View className="gap-2 justify-center flex-1 items-center">
-                        <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">Your wishlist is empty</Text>
-                        <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Start adding books you love</Text>
-                        <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                    <View className="gap-2 flex-1 justify-center">
+                        <Text className="text-center text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">Your wishlist is empty</Text>
+                        <Text className="text-center text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Start adding books you love</Text>
+                        <Button onPress={routeToHomepage} size="lg" className="self-center bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
                             <ButtonText className="text-bookcare-whiteSoft font-semibold">Browse Books</ButtonText>
                         </Button>
                     </View> :

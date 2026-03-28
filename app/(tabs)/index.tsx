@@ -180,9 +180,9 @@ const DiscoverScreen = () => {
                                 <View className="gap-10">
                                     <Text className="text-bookcare-subheading dark:text-bookcare-subheadingDark font-semibold text-xl mb-2">{query}</Text>
 
-                                    <View className="items-center justify-center gap-3">
-                                        <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl" >Sorry we do not have this book</Text>
-                                        <Button onPress={() => stopSearch()} size="xl" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                                    <View className="justify-center gap-3">
+                                        <Text className="text-center text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl" >Sorry we do not have this book</Text>
+                                        <Button onPress={() => stopSearch()} size="xl" className="self-center bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
                                             <ButtonText className="text-bookcare-whiteSoft">Try again Later</ButtonText>
                                         </Button>
                                     </View>

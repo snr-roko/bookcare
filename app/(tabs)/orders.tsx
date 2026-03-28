@@ -34,10 +34,10 @@ const OrdersScreen = () => {
                         <Skeleton height={20} width={300} />
                     </View> :
                     data?.length === 0 ? 
-                    <View className="gap-2 justify-center flex-1 items-center">
-                        <Text className="text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">No Orders Yet</Text>
-                        <Text className="text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Add books to your cart to checkout</Text>
-                        <Button onPress={routeToHomepage} size="lg" className="bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
+                    <View className="gap-2 justify-center flex-1">
+                        <Text className="text-center text-bookcare-text dark:text-bookcare-textDark font-bold text-2xl">No Orders Yet</Text>
+                        <Text className="text-center text-bookcare-muted dark:text-bookcare-mutedDark text-lg">Add books to your cart to checkout</Text>
+                        <Button onPress={routeToHomepage} size="lg" className="self-center bg-bookcare-primary dark:bg-bookcare-primaryDark rounded-xl">
                             <ButtonText className="text-bookcare-whiteSoft font-semibold">Browse Books</ButtonText>
                         </Button>
                     </View> :

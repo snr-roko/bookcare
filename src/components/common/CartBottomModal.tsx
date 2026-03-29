@@ -98,7 +98,7 @@ const CartBottomModal = () => {
                         <Image
                             style={{ height: 130, width: 100}}
                             source={{ uri: item?.coverUrl }}
-                            placeholder={colors.bookCardBlurHash}
+                            placeholder={{blurhash: colors.bookCardBlurHash}}
                             transition={300}
                             contentFit="cover"
                         />

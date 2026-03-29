@@ -47,8 +47,8 @@ const BookCard = memo(
             onPress={navigateToBookDetailsScreen} 
             style={{
                 height: 270,
-                width: 150,
-                paddingBottom: 2,
+                width: 154,
+                padding: 2,
                 shadowColor: colors.primary,
                 borderRadius: 2,
                 elevation: 3,
@@ -60,7 +60,7 @@ const BookCard = memo(
                 <Image
                     style={{ height: 185, width: 150 }}
                     source={{ uri: imageUrl }}
-                    placeholder={colors.bookCardBlurHash}
+                    placeholder={{blurhash: colors.bookCardBlurHash}}
                     transition={300}
                     contentFit="cover"
                 />

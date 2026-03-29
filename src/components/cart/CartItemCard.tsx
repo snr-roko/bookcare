@@ -44,7 +44,7 @@ const CartItemCard = memo(
                 <Image
                     style={{ height: 120, width: 100}}
                     source={{ uri: cartItem.itemDetails.coverUrl }}
-                    placeholder={colors.bookCardBlurHash}
+                    placeholder={{blurhash: colors.bookCardBlurHash}}
                     transition={300}
                     contentFit="cover"
                 />

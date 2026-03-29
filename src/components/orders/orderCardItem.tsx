@@ -39,7 +39,7 @@ const OrderItemCard = ({orderItem}: {orderItem: OrderItemType}) => {
                 <Image
                     style={{ height: 120, width: 100}}
                     source={{ uri: orderItem.coverUrl }}
-                    placeholder={colors.bookCardBlurHash}
+                    placeholder={{blurhash: colors.bookCardBlurHash}}
                     transition={300}
                     contentFit="cover"
                 />

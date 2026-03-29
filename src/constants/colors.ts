@@ -45,7 +45,7 @@ export const colors = {
   blackSoft: "#120D0A",
 
   // Blur hash
-  bookCardBlurHash: "L1L_L6r?03$%^$jtWVj[03oLxsWV",
+  bookCardBlurHash: "L00000fQfQfQfQfQfQfQfQfQfQfQ"
 };
 
 // export const colors = {

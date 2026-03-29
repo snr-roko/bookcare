@@ -5,6 +5,8 @@
 
 Bookcare is a full-featured mobile bookstore e-commerce application built with React Native and Expo. It allows users to browse thousands of real books powered by the Open Library API, add books to their cart or wishlist, and place simulated orders with delivery tracking. The app supports both light and dark mode, provides a smooth and responsive experience across Android and iOS, and includes user authentication via Supabase.
 
+Test a Preview Build [here](https://expo.dev/accounts/mr-roko/projects/bookcare/builds/833da888-f254-4d6f-9a2a-b885b34539f3)
+
 ---
 
 ## Features Implemented

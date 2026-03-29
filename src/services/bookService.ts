@@ -1,17 +1,11 @@
 import { openLibraryBaseUrl } from "../constants"
+import { openLibraryFetch } from "../lib/openLibrary"
 import { retrieveAuthorDetailsFromPayload, retrieveBookDetailsFromPayload, retrieveWorksFromPayloadForSubjects } from "../utils"
 
 export const fetchBookDetails = async (olid: string) => {
     const url = `${openLibraryBaseUrl}/works/${olid}.json`
-    const response = await fetch(url, {
-        method: "GET"
-    })
 
-    if (!response.ok) {
-        throw new Error("Error fetching Book Details")
-    }
-
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
 
     return retrieveBookDetailsFromPayload(payload)
 }
@@ -19,28 +13,18 @@ export const fetchBookDetails = async (olid: string) => {
 export const fetchBookAuthorDetails = async (authorKey: string) => {
     const formattedAuthorKey = authorKey.startsWith("/authors/") ? authorKey.replace("/authors/", "") : authorKey
     const url = `${openLibraryBaseUrl}/authors/${formattedAuthorKey}.json`
-    const response = await fetch(url, {
-            method: "GET"
-        })
-    
-    if (!response.ok) throw new Error("Error fetching Book Details")
         
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
 
     return retrieveAuthorDetailsFromPayload(payload)
 }
 
 export const fetchBooksBySubjectFew = async (subject: string) => {
-    const url = `${openLibraryBaseUrl}/subjects/${subject}.json?limit=5&details=true`
-    const response = await fetch(url, {
-        method: "GET"
-    })
+    const formattedSubject = subject.toLowerCase().replace(/ /g, '_')
 
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
+    const url = `${openLibraryBaseUrl}/subjects/${formattedSubject}.json?limit=5&details=true`
 
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
     
     return retrieveWorksFromPayloadForSubjects(payload.works)
 }

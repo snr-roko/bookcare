@@ -45,8 +45,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "3bfce9b5-f387-428d-ac3d-42fbe57702d9"
+        "projectId": "5f8f18b9-d7f4-4981-b0a5-2e641ab87f1e"
       }
-    }
+    },
+    "owner": "mr-roko"
   }
 }

@@ -14,13 +14,13 @@ export const retrieveWorksFromPayload = (works: any[]) => {
     const data: OpenLibraryResponseBook[] = works.map((work) => {
 
         return {
-            authorKey: work.author_key[0],
-            authorName: work.author_name[0],
+            authorKey: work.author_key[0] ?? "",
+            authorName: work.author_name[0] ?? "Unknown Author",
             coverId: work.cover_i ?? -1,
-            title: work.title,
-            yearFirstPublished: work.first_publish_year,
-            workKey: work.key,
-            editionCount: work.edition_count
+            title: work.title ?? "Untitled",
+            yearFirstPublished: work.first_publish_year ?? 2000,
+            workKey: work.key ?? "",
+            editionCount: work.edition_count ?? 0
         }
 })
     
@@ -31,13 +31,13 @@ export const retrieveWorksFromPayloadForSubjects = (works: any[]) => {
     const data: OpenLibraryResponseBook[] = works.map((work) => {
 
         return {
-            authorKey: work.authors[0].key,
-            authorName: work.authors[0].name,
+            authorKey: work.authors[0].key ?? "",
+            authorName: work.authors[0].name ?? "Untitled Author",
             coverId: work.cover_id ?? -1,
-            title: work.title,
-            yearFirstPublished: work.first_publish_year,
-            workKey: work.key,
-            editionCount: work.edition_count
+            title: work.title ?? "Untitled",
+            yearFirstPublished: work.first_publish_year ?? 2000,
+            workKey: work.key ?? "",
+            editionCount: work.edition_count ?? 0
         }
 })
     
@@ -55,16 +55,16 @@ export const retrieveBookDetailsFromPayload = (work: any): BookDetailsResponse =
     const description = getDescription(work.description)
 
     return {
-        title: work.title,
+        title: work.title ?? "Untitled",
         description,
-        subjects: work.subjects
+        subjects: work.subjects ?? []
     }
 }
 
 export const retrieveAuthorDetailsFromPayload = (author: any): AuthorDetailsResponse => {
     return {
-        name: author.name,
+        name: author.name ?? "Untitled Author",
         coverId: author.photos?.[0] ?? "-1",
-        birthDate: author.birth_date
+        birthDate: author.birth_date ?? null
     }
 }

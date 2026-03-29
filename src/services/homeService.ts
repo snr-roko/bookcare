@@ -1,47 +1,27 @@
 import { OpenLibraryResponseBook } from "../types"
 import { retrieveWorksFromPayload, retrieveWorksFromPayloadForSubjects } from "../utils"
 import { openLibraryBaseUrl } from "../constants"
+import { openLibraryFetch } from "../lib/openLibrary"
 
 export const fetchPopularBooks = async () => {
     const url = `${openLibraryBaseUrl}/trending/daily.json?limit=5`
-    const response = await fetch(url, {
-        method: "GET"
-    })
 
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
-
-    const payload = await response.json()    
+    const payload = await openLibraryFetch(url)    
     return retrieveWorksFromPayload(payload.works)
 }
 
 export const fetchTrendingNowBooks = async () => {
     const url = `${openLibraryBaseUrl}/trending/now.json?limit=5`
-    const response = await fetch(url, {
-        method: "GET"
-    })
 
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
-
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
     
     return retrieveWorksFromPayload(payload.works)
 }
 
 export const fetchBooksBySubject = async (subject: string) => {
     const url = `${openLibraryBaseUrl}/subjects/${subject}.json?details=true`
-    const response = await fetch(url, {
-        method: "GET"
-    })
 
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
-
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
     
     return retrieveWorksFromPayloadForSubjects(payload.works)
 }
@@ -49,17 +29,8 @@ export const fetchBooksBySubject = async (subject: string) => {
 export const searchForBook = async (subject: string): Promise<OpenLibraryResponseBook[]> => {
     const formattedString = subject.replaceAll(" ", "+")
     const url = `${openLibraryBaseUrl}/search.json?q=${formattedString}&limit=10`
-    const response = await fetch(url, {
-        method: "GET"
-    })
 
-    console.log("search string", formattedString)
-
-    if (!response.ok) {
-        throw new Error("Error fetching Popular books")
-    }
-
-    const payload = await response.json()
+    const payload = await openLibraryFetch(url)
 
     const works: any[] = payload.docs ?? [];
 

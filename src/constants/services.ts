@@ -1,1 +1,1 @@
-export const openLibraryBaseUrl = "https://www.openlibrary.org"
+export const openLibraryBaseUrl = "https://openlibrary.org"
